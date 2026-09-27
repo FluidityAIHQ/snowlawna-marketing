@@ -1,0 +1,351 @@
+@import "tailwindcss";
+
+/* Brand tokens mirror the product's charcoal theme (snowlawna THEME.md). The default Tailwind
+   palette is removed so every colour on the site comes from this list. */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-canvas: #0e0f11;
+  --color-surface: #141518;
+  --color-surface-2: #1a1c1f;
+  --color-surface-3: #222428;
+  --color-ink: #121416;
+  --color-line: #26282c;
+  --color-line-strong: #32353a;
+
+  --color-fg: #e6e7e8;
+  --color-fg-2: #b4b8bc;
+  --color-fg-3: #878c92;
+  --color-snow: #f3f6f7;
+
+  --color-primary: #dcdfe1;
+  --color-primary-hover: #eceeef;
+
+  --color-ice: #92c6d2;
+  --color-ice-deep: #7fbccb;
+  --color-spruce: #6cbb91;
+  --color-spruce-deep: #3f9469;
+  --color-success: #7cc49d;
+  --color-warning: #dcb06a;
+  --color-danger: #e58a98;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ---------- Utilities ---------- */
+
+@utility wrap {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Archivo's width axis: semi-expanded headlines give the brand its engineered, livery-like stance. */
+@utility font-wide {
+  font-stretch: 112%;
+}
+@utility font-wider {
+  font-stretch: 125%;
+}
+
+@utility eyebrow {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ice);
+}
+
+/* Survey-sheet grid used behind the hero and a few panels. */
+@utility bg-survey {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility hairline-x {
+  background-image: linear-gradient(90deg, transparent, var(--color-line-strong) 20%, var(--color-line-strong) 80%, transparent);
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-canvas);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-canvas);
+    color: var(--color-fg);
+    font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: rgb(146 198 210 / 0.32);
+    color: var(--color-snow);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ice);
+    outline-offset: 3px;
+  }
+
+  :where(section[id], [data-anchor]) {
+    scroll-margin-top: 5.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+/* ---------- Motion ---------- */
+
+@property --split {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes split-hint {
+  0%,
+  100% {
+    --split: 50%;
+  }
+  35% {
+    --split: 42%;
+  }
+  70% {
+    --split: 56%;
+  }
+}
+
+@keyframes check-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-rise {
+    animation: rise 0.9s var(--ease-out-quint) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .anim-fade {
+    animation: fade-in 1.2s var(--ease-out-quint) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .anim-float {
+    animation: float-in 0.9s var(--ease-out-quint) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .anim-draw {
+    stroke-dasharray: 1;
+    animation: draw 2.4s var(--ease-in-out-quart) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .anim-ping {
+    animation: ping-soft 2.2s var(--ease-out-quint) infinite;
+  }
+  .anim-split-hint {
+    animation: split-hint 2.4s var(--ease-in-out-quart) 1.6s both;
+  }
+  .anim-check {
+    animation: check-pop 0.5s var(--ease-out-quint) both;
+  }
+  .anim-spin {
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* Scroll reveals. Content is only hidden when scripts can reveal it again, so the page stays
+     readable with JavaScript off. Put data-reveal on wrappers that have no transitions of their own. */
+  @media (scripting: enabled) {
+    [data-reveal] {
+      transition:
+        opacity 0.8s var(--ease-out-quint),
+        transform 0.9s var(--ease-out-quint);
+      transition-delay: var(--delay, 0ms);
+    }
+    [data-reveal]:not([data-revealed]) {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+
+    /* SVG strokes (pathLength="1") that draw in once their [data-reveal] ancestor is revealed. */
+    [data-reveal] .reveal-draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+    [data-reveal][data-revealed] .reveal-draw {
+      animation: draw 2.2s var(--ease-in-out-quart) forwards;
+      animation-delay: var(--delay, 0ms);
+    }
+  }
+}
+
+/* ---------- FAQ disclosure ---------- */
+
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+}
+
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item::details-content {
+    transition:
+      block-size 0.4s var(--ease-out-quint),
+      content-visibility 0.4s allow-discrete;
+  }
+}
+
+.faq-item > summary {
+  list-style: none;
+}
+
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---------- Legal pages ---------- */
+
+.legal-prose {
+  color: var(--color-fg-2);
+  line-height: 1.75;
+
+  & h2 {
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-fg);
+    font-size: 1.25rem;
+    font-weight: 650;
+    line-height: 1.3;
+    scroll-margin-top: 6rem;
+  }
+
+  & p + p {
+    margin-top: 1rem;
+  }
+
+  & ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  & li + li {
+    margin-top: 0.4rem;
+  }
+
+  & ul + p {
+    margin-top: 1rem;
+  }
+
+  & li::marker {
+    color: var(--color-fg-3);
+  }
+
+  & a {
+    color: var(--color-ice);
+    text-decoration: underline;
+    text-decoration-color: rgb(146 198 210 / 0.4);
+    text-underline-offset: 3px;
+  }
+
+  & a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  & strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+}
