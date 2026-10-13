@@ -138,10 +138,16 @@
 
 /* ---------- Motion ---------- */
 
-@property --split {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 50%;
+/* Season slider (components/home/season-slider.tsx): the divider position, 0–100. It doesn't inherit, so
+   moving the divider restyles only the parts that opt in with .season-mover, not the big SVG scenes. */
+@property --season {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 50;
+}
+
+.season-mover {
+  --season: inherit;
 }
 
 @keyframes rise {
@@ -185,16 +191,10 @@
   }
 }
 
-@keyframes split-hint {
-  0%,
-  100% {
-    --split: 50%;
-  }
-  35% {
-    --split: 42%;
-  }
-  70% {
-    --split: 56%;
+/* Winter thaws into summer from the right, ending wherever the divider rests. */
+@keyframes season-intro {
+  from {
+    --season: 100;
   }
 }
 
@@ -232,8 +232,16 @@
   .anim-ping {
     animation: ping-soft 2.2s var(--ease-out-quint) infinite;
   }
-  .anim-split-hint {
-    animation: split-hint 2.4s var(--ease-in-out-quart) 1.6s both;
+  .anim-season-intro {
+    animation: season-intro 1.8s var(--ease-in-out-quart) 0.9s both;
+  }
+  /* Clicks and key presses glide the divider; drags and the intro move it directly. */
+  .season-mover {
+    transition: transform 0.35s var(--ease-out-quint);
+  }
+  .anim-season-intro .season-mover,
+  [data-dragging] .season-mover {
+    transition: none;
   }
   .anim-check {
     animation: check-pop 0.5s var(--ease-out-quint) both;

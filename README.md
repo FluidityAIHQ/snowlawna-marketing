@@ -188,9 +188,9 @@ sync as the product changes.
   light backgrounds), plus `app/icon.svg`, a generated `apple-icon` and `opengraph-image`. The
   inline React version is `components/brand/logo.tsx`; keep its geometry in sync with the SVGs.
 - **Motifs:** survey grid, trace vertices, ft² labels, routes with stops. The logo's diagonal
-  blade marks eyebrows and angles the hero's winter/summer divider.
+  blade marks eyebrows.
 - **Motion:** staggered hero entrance, traces that draw in, scroll reveals (`data-reveal`, see
-  `components/reveal-observer.tsx`), a one-time hint on the season divider and small hover lifts.
+  `components/reveal-observer.tsx`), a one-time thaw on the season divider and small hover lifts.
   Every animation sits behind `prefers-reduced-motion: no-preference`. Scroll-revealed content is
   only hidden when scripting is available, so the page reads fully with JavaScript off.
 - **Accessibility:** skip link, landmarks, visible focus rings, an ARIA slider for the season
@@ -211,7 +211,8 @@ app/
 components/
   home/                 Landing page sections
   mockups/              App frame and product screens (dispatch, map, contracts, measure)
-  illustrations/        Property scene (winter/summer) and street map, as SVG
+  illustrations/        Property scene, its aerial winter/summer version for the hero, and street
+                        map, as SVG
   brand/logo.tsx        Mark and wordmark
   lead-form.tsx  intent-link.tsx  site-header.tsx  site-footer.tsx  …
 lib/
