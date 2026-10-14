@@ -441,8 +441,8 @@ export const SNOW_ZONES = [
  * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
 export const SNOW_OPACITY = "calc(var(--season, 50) / 100)";
 export const LAWN_OPACITY = "calc((100 - var(--season, 50)) / 100)";
-export const TRACE_STROKE = "#4AA8FF";
-export const TRACE_FILL = "rgba(74, 168, 255, 0.16)";
+export const TRACE_STROKE = "#00E5FF";
+export const TRACE_FILL = "rgba(0,229,255,0.14)";
 
 function Trace({
   zone,
@@ -460,13 +460,22 @@ function Trace({
   opacity?: string;
 }) {
   const pts = zonePoints(zone);
+  const pointsAttr = pts.map((p) => p.join(",")).join(" ");
+  const [labelX, labelY] = visualCentroid(pts);
   return (
     <g className="season-inherit" style={opacity ? { opacity } : undefined}>
       <polygon
-        points={pts.map((p) => p.join(",")).join(" ")}
+        points={pointsAttr}
+        fill="none"
+        stroke="rgba(0,0,0,0.35)"
+        strokeWidth="5"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points={pointsAttr}
         fill={fill}
         stroke={stroke}
-        strokeWidth="2.25"
+        strokeWidth="2.75"
         strokeLinejoin="round"
         pathLength={1}
         className={animate ? "anim-draw" : undefined}
@@ -483,16 +492,34 @@ function Trace({
           key={`${cx}-${cy}`}
           cx={cx}
           cy={cy}
-          r="3.25"
-          fill={stroke}
-          stroke={stroke}
-          strokeWidth="1.5"
+          r="3"
+          fill="#00E5FF"
+          stroke="rgba(0,0,0,0.5)"
+          strokeWidth="1"
           style={{
             fill: `var(--scene-trace-stroke, ${stroke})`,
-            stroke: `var(--scene-trace-stroke, ${stroke})`,
           }}
         />
       ))}
+      <text
+        x={round(labelX)}
+        y={round(labelY)}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize="16"
+        fontWeight={700}
+        paintOrder="stroke"
+        stroke="rgba(0,0,0,0.45)"
+        strokeWidth={3}
+        strokeLinejoin="round"
+        fill={stroke}
+        style={{
+          fill: `var(--scene-trace-stroke, ${stroke})`,
+          fontFamily: "var(--font-plex-mono), ui-monospace, monospace",
+        }}
+      >
+        {formatSqm(zone.sqft)}
+      </text>
     </g>
   );
 }
