@@ -4,7 +4,8 @@ import { sampleQuote } from "@/lib/sample-quote";
 /**
  * Scoped CSS tokens & animations for the 5-step workflow section.
  * Every keyframe and transition sits behind `@media (prefers-reduced-motion: no-preference)`
- * so reduced-motion visitors see the finished static visuals with zero movement.
+ * so reduced-motion visitors see the finished static visuals with zero movement, and
+ * animated states settle cleanly into the exact same final state.
  */
 export function WorkflowStyles() {
   return (
@@ -14,18 +15,24 @@ export function WorkflowStyles() {
         --wf-cyan-ink: #007a90;
         --wf-cyan-badge-bg: rgba(0, 180, 216, 0.12);
         --wf-cyan-badge-ring: rgba(0, 140, 170, 0.32);
+        --wf-map-road: #ffffff;
+        --wf-map-road-edge: #d8d8e0;
       }
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme="light"]) {
           --wf-cyan-ink: #00E5FF;
           --wf-cyan-badge-bg: rgba(0, 229, 255, 0.14);
           --wf-cyan-badge-ring: rgba(0, 229, 255, 0.35);
+          --wf-map-road: #2a2a33;
+          --wf-map-road-edge: #1e1e25;
         }
       }
       :root[data-theme="dark"] {
         --wf-cyan-ink: #00E5FF;
         --wf-cyan-badge-bg: rgba(0, 229, 255, 0.14);
         --wf-cyan-badge-ring: rgba(0, 229, 255, 0.35);
+        --wf-map-road: #2a2a33;
+        --wf-map-road-edge: #1e1e25;
       }
 
       @keyframes wf-dash-x {
@@ -71,52 +78,50 @@ export function WorkflowStyles() {
         }
       }
       @keyframes wf-pin-drop {
-        0%, 100% {
+        0% {
+          transform: translateY(-8px);
+        }
+        60% {
           transform: translateY(0);
         }
-        12% {
-          transform: translateY(-13px);
+        78% {
+          transform: translateY(-2.5px);
         }
-        24% {
-          transform: translateY(0);
-        }
-        30% {
-          transform: translateY(-3.5px);
-        }
-        36% {
+        100% {
           transform: translateY(0);
         }
       }
       @keyframes wf-pin-shadow {
-        0%, 24%, 36%, 100% {
+        0% {
+          transform: scale(0.65);
+          opacity: 0.22;
+        }
+        60%, 100% {
           transform: scale(1);
           opacity: 0.45;
         }
-        12% {
-          transform: scale(0.55);
-          opacity: 0.2;
-        }
-        30% {
-          transform: scale(0.82);
-          opacity: 0.32;
+        78% {
+          transform: scale(0.85);
+          opacity: 0.34;
         }
       }
       @keyframes wf-radar {
         0% {
-          transform: scale(0.45);
-          opacity: 0.85;
+          transform: scale(0.55);
+          opacity: 0.75;
         }
-        80%, 100% {
-          transform: scale(2.35);
+        75% {
+          transform: scale(2.1);
           opacity: 0;
         }
+        100% {
+          transform: scale(1);
+          opacity: 0.35;
+        }
       }
-      @keyframes wf-trace-loop {
+      @keyframes wf-trace-draw {
         0% {
           stroke-dashoffset: 1;
-        }
-        45%, 82% {
-          stroke-dashoffset: 0;
         }
         100% {
           stroke-dashoffset: 0;
@@ -127,7 +132,7 @@ export function WorkflowStyles() {
           transform: scale(1);
         }
         50% {
-          transform: scale(1.35);
+          transform: scale(1.25);
         }
       }
       @keyframes wf-send-float {
@@ -135,25 +140,25 @@ export function WorkflowStyles() {
           transform: translate(0, 0);
         }
         50% {
-          transform: translate(2px, -2px);
+          transform: translate(1.5px, -1.5px);
         }
       }
       @keyframes wf-sig-draw {
         0% {
           stroke-dashoffset: 1;
         }
-        40%, 100% {
+        100% {
           stroke-dashoffset: 0;
         }
       }
       @keyframes wf-seal-pulse {
-        0%, 32% {
-          transform: scale(0.88);
+        0% {
+          transform: scale(0.82);
         }
-        46% {
+        65% {
           transform: scale(1.08);
         }
-        58%, 100% {
+        100% {
           transform: scale(1);
         }
       }
@@ -164,16 +169,16 @@ export function WorkflowStyles() {
       }
       @keyframes wf-truck-run {
         0% {
-          transform: translate(-102px, -38px);
+          transform: translate(-110px, -52px);
         }
-        35% {
-          transform: translate(-34px, -38px);
+        38% {
+          transform: translate(-38px, -52px);
         }
-        60% {
-          transform: translate(-34px, 0px);
+        70% {
+          transform: translate(-38px, 0px);
         }
-        88%, 100% {
-          transform: translate(14px, 0px);
+        100% {
+          transform: translate(0px, 0px);
         }
       }
       @keyframes wf-icon-bob {
@@ -219,30 +224,30 @@ export function WorkflowStyles() {
         .wf-pin-drop {
           transform-box: fill-box;
           transform-origin: center bottom;
-          animation: wf-pin-drop 4.2s var(--ease-out-quint) infinite;
+          animation: wf-pin-drop 1.4s var(--ease-out-quint) both;
         }
         .wf-pin-shadow {
           transform-box: fill-box;
           transform-origin: center;
-          animation: wf-pin-shadow 4.2s var(--ease-out-quint) infinite;
+          animation: wf-pin-shadow 1.4s var(--ease-out-quint) both;
         }
         .wf-radar-1 {
           transform-box: fill-box;
           transform-origin: center;
-          animation: wf-radar 3.2s var(--ease-out-quint) infinite;
+          animation: wf-radar 2.8s var(--ease-out-quint) infinite;
         }
         .wf-radar-2 {
           transform-box: fill-box;
           transform-origin: center;
-          animation: wf-radar 3.2s var(--ease-out-quint) 1.6s infinite;
+          animation: wf-radar 2.8s var(--ease-out-quint) 1.4s infinite;
         }
         .wf-trace-poly {
           stroke-dasharray: 1;
-          animation: wf-trace-loop 5s var(--ease-in-out-quart) infinite;
+          animation: wf-trace-draw 1.8s var(--ease-in-out-quart) both;
         }
         .wf-trace-drive {
           stroke-dasharray: 1;
-          animation: wf-trace-loop 5s var(--ease-in-out-quart) 0.35s infinite;
+          animation: wf-trace-draw 1.8s var(--ease-in-out-quart) 0.25s both;
         }
         .wf-vertex-dot {
           transform-box: fill-box;
@@ -254,16 +259,16 @@ export function WorkflowStyles() {
         }
         .wf-sig-path {
           stroke-dasharray: 1;
-          animation: wf-sig-draw 4.6s var(--ease-in-out-quart) infinite;
+          animation: wf-sig-draw 1.8s var(--ease-in-out-quart) both;
         }
         .wf-seal-pop {
-          animation: wf-seal-pulse 4.6s var(--ease-out-quint) infinite;
+          animation: wf-seal-pulse 1.6s var(--ease-out-quint) both;
         }
         .wf-route-dash {
           animation: wf-route-flow 1.8s linear infinite;
         }
         .wf-truck-mover {
-          animation: wf-truck-run 5.2s var(--ease-in-out-quart) infinite alternate;
+          animation: wf-truck-run 2.2s var(--ease-in-out-quart) both;
         }
         .wf-step-icon {
           animation: wf-icon-bob 3.4s ease-in-out infinite;
@@ -274,116 +279,128 @@ export function WorkflowStyles() {
   );
 }
 
-/** Stop 01 preview: dual-season mini satellite map with address search bar and dropping cyan pin. */
+/** Stop 01 preview: dual-season mini satellite map with address search bar and centered pin on the house roof. */
 export function FindPropertyPreview() {
   return (
     <div className="relative h-full w-full overflow-hidden select-none">
-      <svg viewBox="0 0 240 144" className="size-full" aria-hidden preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 240 160" className="size-full" aria-hidden preserveAspectRatio="xMidYMid meet">
         <defs>
           <clipPath id="wf-s1-summer">
-            <polygon points="108,0 240,0 240,144 62,144" />
+            <rect x="120" y="-30" width="180" height="156" />
           </clipPath>
-          <pattern id="wf-s1-stripes" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)">
+          <pattern id="wf-s1-stripes" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-6)">
             <rect width="16" height="8" fill="var(--scene-summer-lawn-hi)" />
             <rect y="8" width="16" height="8" fill="var(--scene-summer-ground)" />
           </pattern>
         </defs>
 
-        {/* Winter base (left side) */}
-        <rect width="240" height="144" fill="var(--scene-winter-ground)" />
-        <rect x="16" y="14" width="208" height="94" rx="4" fill="var(--scene-winter-lawn-lo)" />
-        <ellipse cx="52" cy="52" rx="22" ry="7" fill="var(--scene-winter-drift)" opacity="0.85" />
-        <ellipse cx="66" cy="88" rx="18" ry="6" fill="var(--scene-winter-drift)" opacity="0.7" />
+        {/* Winter ground base (left side, bleeding beyond viewBox so aspect ratios never letterbox) */}
+        <rect x="-60" y="-30" width="360" height="220" fill="var(--scene-winter-ground)" />
+        <rect x="14" y="42" width="50" height="80" rx="3" fill="var(--scene-winter-lawn-lo)" />
+        <rect x="72" y="42" width="96" height="80" rx="3" fill="var(--scene-winter-lawn-lo)" />
+        <ellipse cx="38" cy="54" rx="16" ry="5" fill="var(--scene-winter-drift)" opacity="0.85" />
+        <ellipse cx="42" cy="108" rx="14" ry="4.5" fill="var(--scene-winter-drift)" opacity="0.7" />
 
-        {/* Neighbour lots (winter) */}
-        <rect x="24" y="48" width="34" height="26" rx="2" fill="var(--scene-winter-roof-s)" stroke="var(--scene-winter-roof-ridge)" strokeWidth="1" />
-        <rect x="182" y="46" width="34" height="28" rx="2" fill="var(--scene-winter-roof-s)" />
+        {/* Left neighbour house (winter) */}
+        <rect
+          x="22"
+          y="64"
+          width="34"
+          height="28"
+          rx="2"
+          fill="var(--scene-winter-roof-s)"
+          stroke="var(--scene-winter-roof-ridge)"
+          strokeWidth="1"
+        />
 
-        {/* Summer clipped window (right side) */}
+        {/* Summer clipped right half (strictly above sidewalk, no diagonal line into road) */}
         <g clipPath="url(#wf-s1-summer)">
-          <rect width="240" height="144" fill="var(--scene-summer-neighbour)" />
-          <rect x="74" y="14" width="96" height="94" fill="url(#wf-s1-stripes)" />
-          <rect x="182" y="46" width="34" height="28" rx="2" fill="#35353b" stroke="#4e4e56" strokeWidth="1" />
-          <circle cx="158" cy="36" r="11" fill="var(--scene-summer-leaf-mid)" />
-          <circle cx="155" cy="33" r="6" fill="var(--scene-summer-leaf-hi)" opacity="0.8" />
-          <circle cx="198" cy="88" r="9" fill="var(--scene-summer-leaf-mid)" />
+          <rect x="120" y="-30" width="180" height="156" fill="var(--scene-summer-neighbour)" />
+          <rect x="72" y="42" width="96" height="80" rx="3" fill="url(#wf-s1-stripes)" />
+          <rect x="176" y="42" width="50" height="80" rx="3" fill="var(--scene-summer-ground)" opacity="0.55" />
+          <rect x="184" y="64" width="34" height="28" rx="2" fill="#35353b" stroke="#4e4e56" strokeWidth="1" />
+          <circle cx="156" cy="52" r="8" fill="var(--scene-summer-leaf-mid)" />
+          <circle cx="154" cy="50" r="4.5" fill="var(--scene-summer-leaf-hi)" opacity="0.8" />
+          <circle cx="204" cy="108" r="7.5" fill="var(--scene-summer-leaf-mid)" />
         </g>
 
-        {/* Street along the bottom */}
-        <rect x="0" y="108" width="240" height="6" fill="var(--scene-winter-sidewalk)" />
-        <rect x="0" y="114" width="240" height="30" fill="var(--scene-winter-street)" />
-        <line x1="0" y1="129" x2="240" y2="129" stroke="#5c6470" strokeWidth="1.5" strokeDasharray="8 8" />
-
-        {/* Target property lot boundary */}
+        {/* Target property lot boundary — aligned with the target lot (x=72..168, y=42..122) */}
         <rect
-          x="74"
-          y="26"
+          x="72"
+          y="42"
           width="96"
           height="80"
           rx="3"
           fill="none"
           stroke="var(--scene-trace-stroke)"
-          strokeOpacity="0.6"
-          strokeWidth="1.25"
-          strokeDasharray="3 3"
+          strokeOpacity="0.85"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
         />
 
-        {/* Target house + driveway */}
-        <rect x="132" y="76" width="18" height="38" fill="var(--scene-winter-driveway)" />
-        <rect x="94" y="48" width="54" height="34" rx="2" fill="#35353b" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="94" y1="48" x2="108" y2="65" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="94" y1="82" x2="108" y2="65" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="148" y1="48" x2="134" y2="65" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="148" y1="82" x2="134" y2="65" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="108" y1="65" x2="134" y2="65" stroke="#4e4e56" strokeWidth="1.2" />
+        {/* Target walkway & driveway */}
+        <rect x="116" y="96" width="8" height="28" fill="var(--scene-winter-walkway)" />
+        <rect x="130" y="96" width="16" height="34" fill="var(--scene-winter-driveway)" />
 
-        {/* Season split seam */}
-        <line x1="108" y1="0" x2="62" y2="144" stroke="#ffffff" strokeOpacity="0.65" strokeWidth="1.2" />
+        {/* Sidewalk and street along the bottom */}
+        <rect x="-60" y="124" width="360" height="6" fill="var(--scene-winter-sidewalk)" />
+        <rect x="-60" y="130" width="360" height="60" fill="var(--scene-winter-street)" />
+        <line x1="-60" y1="145" x2="300" y2="145" stroke="#5c6470" strokeWidth="1.5" strokeDasharray="8 8" />
 
-        {/* Neon cyan radar ripples around the pin target */}
+        {/* Target house centered in lot at (120, 78) */}
+        <rect x="92" y="60" width="56" height="36" rx="2" fill="#35353b" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="92" y1="60" x2="106" y2="78" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="92" y1="96" x2="106" y2="78" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="148" y1="60" x2="134" y2="78" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="148" y1="96" x2="134" y2="78" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="106" y1="78" x2="134" y2="78" stroke="#4e4e56" strokeWidth="1.2" />
+
+        {/* Neon cyan radar ripples centered on the house roof */}
         <circle
-          cx="121"
-          cy="65"
+          cx="120"
+          cy="78"
           r="11"
           fill="none"
           stroke="var(--scene-trace-stroke)"
-          strokeWidth="1.75"
+          strokeWidth="1.6"
+          opacity="0.35"
           className="wf-radar-1"
         />
         <circle
-          cx="121"
-          cy="65"
+          cx="120"
+          cy="78"
           r="11"
           fill="none"
           stroke="var(--scene-trace-stroke)"
-          strokeWidth="1.5"
+          strokeWidth="1.4"
+          opacity="0"
           className="wf-radar-2"
         />
 
-        {/* Pin shadow */}
-        <ellipse cx="121" cy="67" rx="6" ry="2.6" fill="rgba(0,0,0,0.45)" className="wf-pin-shadow" />
+        {/* Pin shadow on the roof */}
+        <ellipse cx="120" cy="87.5" rx="5.5" ry="2.2" fill="rgba(0,0,0,0.45)" className="wf-pin-shadow" />
 
-        {/* Dropping Map Pin */}
+        {/* Map Pin centered on the house roof (spans y=62.5..86.5 inside roof y=60..96) */}
         <g className="wf-pin-drop">
           <path
-            d="M121 65 C121 65 110 51.5 110 43.5 C110 37.4 114.9 32.5 121 32.5 C127.1 32.5 132 37.4 132 43.5 C132 51.5 121 65 121 65 Z"
+            d="M120 86.5 C120 86.5 111.5 76.5 111.5 71 C111.5 66.3 115.3 62.5 120 62.5 C124.7 62.5 128.5 66.3 128.5 71 C128.5 76.5 120 86.5 120 86.5 Z"
             fill="var(--scene-trace-stroke)"
             stroke="#08130d"
-            strokeWidth="2"
+            strokeWidth="1.8"
             strokeLinejoin="round"
           />
-          <circle cx="121" cy="43.5" r="4.2" fill="#08130d" />
-          <circle cx="121" cy="43.5" r="1.8" fill="#ffffff" />
+          <circle cx="120" cy="71" r="3.4" fill="#08130d" />
+          <circle cx="120" cy="71" r="1.5" fill="#ffffff" />
         </g>
       </svg>
 
-      {/* Floating address search bar */}
-      <div className="pointer-events-none absolute inset-x-2.5 top-2.5 flex items-center justify-between gap-1.5 rounded-lg border border-line-strong/90 bg-surface/92 px-2.5 py-1 shadow-sm backdrop-blur-md">
-        <span className="flex min-w-0 items-center gap-1.5 text-[11px] font-medium text-fg">
+      {/* Floating address search bar — sits in top band (y=8..32), well above lot (y=42) and pin (y=62.5) */}
+      <div className="pointer-events-none absolute inset-x-2.5 top-2 flex items-center justify-between gap-1.5 rounded-lg border border-line-strong/90 bg-surface/94 px-2.5 py-1 shadow-sm backdrop-blur-md">
+        <span className="flex min-w-0 items-center gap-1.5 text-[11px] leading-tight font-medium text-fg">
           <span className="size-2 shrink-0 rounded-full bg-[#00E5FF] ring-1 ring-black/20 shadow-[0_0_6px_#00E5FF]" />
           <span className="truncate">{sampleQuote.address}</span>
         </span>
-        <span className="shrink-0 rounded bg-spruce/14 px-1.5 py-0.5 font-mono text-[9px] font-semibold tracking-wider text-spruce uppercase">
+        <span className="shrink-0 rounded bg-spruce/14 px-1.5 py-0.5 font-mono text-[9px] leading-none font-semibold tracking-wider text-spruce uppercase">
           GPS
         </span>
       </div>
@@ -391,32 +408,37 @@ export function FindPropertyPreview() {
   );
 }
 
-const TRACE_LAWN_PTS: readonly [number, number][] = [
-  [20, 16],
-  [148, 16],
-  [148, 110],
-  [112, 110],
-  [112, 74],
-  [66, 74],
-  [66, 34],
-  [20, 34],
+// Back & side wrap-around lawn (1468 m²): hugs the lot perimeter (x=28..212, y=16..108)
+// and wraps cleanly around the house/garage (x=76..184, y=44..74), driveway (x=154..184), and walkway (x=100..110).
+const TRACE_BACK_LAWN_PTS: readonly [number, number][] = [
+  [28, 16],
+  [212, 16],
+  [212, 108],
+  [184, 108],
+  [184, 44],
+  [76, 44],
+  [76, 74],
+  [100, 74],
+  [100, 108],
+  [28, 108],
 ];
 
-const TRACE_SNOW_PTS: readonly [number, number][] = [
-  [158, 54],
-  [214, 54],
-  [214, 114],
-  [158, 114],
+// Front lawn between walkway (x=110) and driveway (x=154), from house front (y=74) to sidewalk (y=108): 150 m².
+const TRACE_FRONT_LAWN_PTS: readonly [number, number][] = [
+  [110, 74],
+  [154, 74],
+  [154, 108],
+  [110, 108],
 ];
 
-/** Stop 02 preview: neon cyan polygon & snow driveway trace with corner vertex dots and live m² chips. */
+/** Stop 02 preview: neon cyan polygon traces for back lawn (1468 m²) and front lawn (150 m²), total 1618 m². */
 export function TracePropertyPreview() {
-  const lawnAttr = TRACE_LAWN_PTS.map((p) => p.join(",")).join(" ");
-  const snowAttr = TRACE_SNOW_PTS.map((p) => p.join(",")).join(" ");
+  const backLawnAttr = TRACE_BACK_LAWN_PTS.map((p) => p.join(",")).join(" ");
+  const frontLawnAttr = TRACE_FRONT_LAWN_PTS.map((p) => p.join(",")).join(" ");
 
   return (
     <div className="relative h-full w-full overflow-hidden select-none">
-      <svg viewBox="0 0 240 144" className="size-full" aria-hidden preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 240 160" className="size-full" aria-hidden preserveAspectRatio="xMidYMid meet">
         <defs>
           <pattern id="wf-s2-lawn" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(-5)">
             <rect width="18" height="9" fill="var(--scene-summer-lawn-hi)" />
@@ -424,118 +446,120 @@ export function TracePropertyPreview() {
           </pattern>
         </defs>
 
-        {/* Summer lawn side (left) + Winter snow driveway side (right) */}
-        <rect width="154" height="144" fill="url(#wf-s2-lawn)" />
-        <rect x="154" width="86" height="144" fill="var(--scene-winter-ground)" />
-        <ellipse cx="196" cy="30" rx="24" ry="8" fill="var(--scene-winter-drift)" opacity="0.85" />
-        <line x1="154" y1="0" x2="154" y2="144" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="1" />
+        {/* Neighbour ground & striped lawn lot */}
+        <rect x="-60" y="-30" width="360" height="220" fill="var(--scene-summer-neighbour)" />
+        <rect x="28" y="16" width="184" height="92" fill="url(#wf-s2-lawn)" />
 
-        {/* House footprint */}
-        <rect x="66" y="32" width="68" height="42" rx="2" fill="#35353b" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="66" y1="32" x2="82" y2="53" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="66" y1="74" x2="82" y2="53" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="134" y1="32" x2="118" y2="53" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="134" y1="74" x2="118" y2="53" stroke="#4e4e56" strokeWidth="1.2" />
-        <line x1="82" y1="53" x2="118" y2="53" stroke="#4e4e56" strokeWidth="1.2" />
+        {/* Walkway (x=100..110, y=74..110) & Driveway (x=154..184, y=74..116) */}
+        <rect x="100" y="74" width="10" height="36" fill="#4e555e" />
+        <rect x="154" y="74" width="30" height="42" fill="#3a3d44" />
+        <line x1="154" y1="86" x2="184" y2="86" stroke="#2f3238" strokeWidth="1" />
+        <line x1="154" y1="98" x2="184" y2="98" stroke="#2f3238" strokeWidth="1" />
 
-        {/* Driveway surface in winter zone */}
-        <rect x="158" y="54" width="56" height="60" rx="2" fill="var(--scene-winter-driveway)" />
-        <rect x="153" y="56" width="4" height="52" rx="2" fill="var(--scene-winter-bank)" />
-        <rect x="215" y="56" width="4" height="52" rx="2" fill="var(--scene-winter-bank)" />
+        {/* Sidewalk & street at bottom (bottom bar sits over the street, well below y=108 vertices) */}
+        <rect x="-60" y="108" width="360" height="6" fill="#464a52" />
+        <rect x="-60" y="114" width="360" height="76" fill="#1e2026" />
+        <line x1="-60" y1="124" x2="300" y2="124" stroke="#525864" strokeWidth="1.2" strokeDasharray="8 8" />
 
-        {/* Sidewalk & street at bottom */}
-        <rect x="0" y="114" width="240" height="30" fill="var(--scene-winter-street)" />
-        <rect x="0" y="112" width="240" height="3" fill="var(--scene-winter-curb)" />
+        {/* House + garage footprint (x=76..184, y=44..74) — untraced so polygons hug around it */}
+        <rect x="76" y="44" width="76" height="30" rx="1.5" fill="#35353b" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="76" y1="44" x2="90" y2="59" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="76" y1="74" x2="90" y2="59" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="152" y1="44" x2="138" y2="59" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="152" y1="74" x2="138" y2="59" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="90" y1="59" x2="138" y2="59" stroke="#4e4e56" strokeWidth="1.2" />
+        <rect x="152" y="44" width="32" height="30" rx="1.5" fill="#2f2f35" stroke="#4e4e56" strokeWidth="1.2" />
+        <line x1="168" y1="44" x2="168" y2="74" stroke="#4e4e56" strokeWidth="1.2" />
 
-        {/* Traced Lawn Polygon (Neon Cyan) */}
+        {/* Zone 1: Traced Back & Side Lawn Polygon (1468 m²) */}
         <polygon
-          points={lawnAttr}
+          points={backLawnAttr}
           fill="none"
           stroke="rgba(0,0,0,0.4)"
-          strokeWidth="4"
+          strokeWidth="3.8"
           strokeLinejoin="round"
         />
         <polygon
-          points={lawnAttr}
+          points={backLawnAttr}
           fill="var(--scene-trace-fill)"
           stroke="var(--scene-trace-stroke)"
-          strokeWidth="2.2"
+          strokeWidth="2"
           strokeLinejoin="round"
           pathLength={1}
           className="wf-trace-poly"
         />
 
-        {/* Traced Snow Driveway Polygon (Neon Cyan) */}
+        {/* Zone 2: Traced Front Lawn Polygon (150 m²) */}
         <polygon
-          points={snowAttr}
+          points={frontLawnAttr}
           fill="none"
           stroke="rgba(0,0,0,0.4)"
-          strokeWidth="4"
+          strokeWidth="3.8"
           strokeLinejoin="round"
         />
         <polygon
-          points={snowAttr}
+          points={frontLawnAttr}
           fill="var(--scene-trace-fill)"
           stroke="var(--scene-trace-stroke)"
-          strokeWidth="2.2"
+          strokeWidth="2"
           strokeLinejoin="round"
           pathLength={1}
           className="wf-trace-drive"
         />
 
-        {/* Neon cyan vertex corner dots */}
-        {[...TRACE_LAWN_PTS, ...TRACE_SNOW_PTS].map(([cx, cy], idx) => (
+        {/* Neon cyan vertex corner dots — all inside x∈[28,212], y∈[16,108] */}
+        {[...TRACE_BACK_LAWN_PTS, ...TRACE_FRONT_LAWN_PTS].map(([cx, cy], idx) => (
           <circle
             key={`${cx}-${cy}-${idx}`}
             cx={cx}
             cy={cy}
-            r="3.4"
+            r="2.8"
             fill="var(--scene-trace-stroke)"
-            stroke="rgba(0,0,0,0.6)"
-            strokeWidth="1.4"
+            stroke="rgba(0,0,0,0.65)"
+            strokeWidth="1.2"
             className="wf-vertex-dot"
             style={{ animationDelay: `${(idx % 6) * 180}ms` }}
           />
         ))}
 
-        {/* Geodesic area labels */}
+        {/* Geodesic area labels matching the hero season slider */}
         <text
-          x="64"
-          y="94"
-          textAnchor="middle"
-          fontSize="11"
-          fontWeight="700"
-          paintOrder="stroke"
-          stroke="rgba(0,0,0,0.65)"
-          strokeWidth="3"
-          fill="var(--scene-trace-stroke)"
-          style={{ fontFamily: "var(--font-plex-mono), monospace" }}
-        >
-          447 m²
-        </text>
-        <text
-          x="186"
-          y="86"
+          x="120"
+          y="33"
           textAnchor="middle"
           fontSize="10.5"
           fontWeight="700"
           paintOrder="stroke"
-          stroke="rgba(0,0,0,0.65)"
+          stroke="rgba(0,0,0,0.7)"
           strokeWidth="3"
           fill="var(--scene-trace-stroke)"
           style={{ fontFamily: "var(--font-plex-mono), monospace" }}
         >
-          78 m²
+          1468 m²
+        </text>
+        <text
+          x="132"
+          y="94"
+          textAnchor="middle"
+          fontSize="9.5"
+          fontWeight="700"
+          paintOrder="stroke"
+          stroke="rgba(0,0,0,0.7)"
+          strokeWidth="2.8"
+          fill="var(--scene-trace-stroke)"
+          style={{ fontFamily: "var(--font-plex-mono), monospace" }}
+        >
+          150 m²
         </text>
       </svg>
 
-      {/* Bottom measurement telemetry chip */}
-      <div className="pointer-events-none absolute right-2 bottom-2 left-2 flex items-center justify-between rounded-md border border-line-strong/90 bg-surface/92 px-2 py-1 text-[10px] shadow-sm backdrop-blur-md">
-        <span className="inline-flex items-center gap-1 font-mono font-medium text-fg">
+      {/* Bottom measurement telemetry chip (sits at y=130..152 over the street, clear of y=108 vertices) */}
+      <div className="pointer-events-none absolute right-2.5 bottom-2 left-2.5 flex items-center justify-between rounded-md border border-line-strong/90 bg-surface/94 px-2.5 py-1 text-[10px] leading-tight shadow-sm backdrop-blur-md">
+        <span className="inline-flex items-center gap-1.5 font-mono font-medium text-fg">
           <span className="size-2 rounded-[2px] bg-[#00E5FF] ring-1 ring-black/20" />
           2 zones traced
         </span>
-        <span className="font-mono font-semibold text-spruce">525 m²</span>
+        <span className="font-mono font-semibold text-spruce tabular-nums">1618 m²</span>
       </div>
     </div>
   );
@@ -544,16 +568,16 @@ export function TracePropertyPreview() {
 /** Stop 03 preview: mini seasonal estimate card with Snow & lawn bundle, line items and total. */
 export function SendEstimatePreview() {
   return (
-    <div className="relative flex h-full w-full flex-col justify-center overflow-hidden p-2.5 select-none">
+    <div className="relative flex h-full w-full flex-col justify-center overflow-hidden p-3 select-none">
       {/* Subtle seasonal radial light */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_70%_at_85%_15%,rgba(0,229,255,0.14),transparent_70%),radial-gradient(60%_65%_at_15%_90%,color-mix(in_oklab,var(--color-spruce)_18%,transparent),transparent_70%)]"
       />
 
-      <div className="relative flex flex-col rounded-xl border border-line-strong/80 bg-surface p-2.5 shadow-sm">
+      <div className="relative flex flex-col rounded-xl border border-line-strong/80 bg-surface px-3 py-2 shadow-sm">
         {/* Top season selector row */}
-        <div className="flex items-center justify-between gap-1.5 border-b border-line pb-1.5">
+        <div className="flex items-center justify-between gap-1.5 border-b border-line pb-1.5 leading-tight">
           <span className="inline-flex items-center gap-1 rounded-md bg-spruce/12 px-1.5 py-0.5 text-[10px] font-semibold text-spruce ring-1 ring-spruce/30">
             <Snowflake aria-hidden className="size-2.5 text-fg-2" />
             <Sprout aria-hidden className="size-2.5 text-spruce" />
@@ -572,12 +596,12 @@ export function SendEstimatePreview() {
           </span>
         </div>
 
-        {/* Line items */}
-        <dl className="mt-1.5 grid gap-1 text-[10.5px]">
+        {/* Line items: $2,165.40 + $1,079.20 = $3,244.60; less 10% ($324.46) = $2,920.14 */}
+        <dl className="mt-1.5 grid gap-1 text-[10.5px] leading-tight">
           <div className="flex items-center justify-between gap-1">
             <dt className="flex items-center gap-1.5 truncate text-fg-2">
               <span className="size-1.5 shrink-0 rounded-full bg-spruce" />
-              Lawn (447 m²)
+              Lawn (1618 m²)
             </dt>
             <dd className="font-mono text-fg tabular-nums">$2,165.40</dd>
           </div>
@@ -595,30 +619,30 @@ export function SendEstimatePreview() {
         </dl>
 
         {/* Seasonal total */}
-        <div className="mt-1.5 flex items-baseline justify-between border-t border-line pt-1.5">
+        <div className="mt-1.5 flex items-baseline justify-between border-t border-line pt-1.5 leading-none">
           <span className="font-mono text-[9.5px] tracking-wider text-fg-3 uppercase">Total</span>
-          <span className="font-wide text-sm font-bold text-snow tabular-nums">{sampleQuote.total}</span>
+          <span className="font-wide text-[13px] font-bold text-snow tabular-nums">{sampleQuote.total}</span>
         </div>
       </div>
     </div>
   );
 }
 
-/** Stop 04 preview: active contract card with self-drawing signature and checkmark seal. */
+/** Stop 04 preview: active contract card with self-drawing signature on the baseline and checkmark seal. */
 export function WinContractPreview() {
   return (
-    <div className="relative flex h-full w-full flex-col justify-center overflow-hidden p-2.5 select-none">
+    <div className="relative flex h-full w-full flex-col justify-center overflow-hidden p-3 select-none">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_80%_20%,color-mix(in_oklab,var(--color-spruce)_20%,transparent),transparent_70%)]"
       />
 
-      <div className="relative flex flex-col justify-between gap-1.5 rounded-xl border border-line-strong/80 bg-surface p-2.5 shadow-sm">
+      <div className="relative flex flex-col justify-between gap-1.5 rounded-xl border border-line-strong/80 bg-surface px-3 py-2 shadow-sm">
         {/* Top client & status row */}
-        <div className="flex items-center justify-between gap-1.5">
+        <div className="flex items-center justify-between gap-1.5 leading-tight">
           <div className="min-w-0">
             <p className="truncate text-[11px] leading-tight font-semibold text-snow">Hollis Residence</p>
-            <p className="truncate font-mono text-[9.5px] text-fg-3">2026–27 · {sampleQuote.total}</p>
+            <p className="mt-0.5 truncate font-mono text-[9.5px] leading-tight text-fg-3">2026–27 · {sampleQuote.total}</p>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-spruce/15 px-2 py-0.5 text-[10px] font-semibold text-spruce ring-1 ring-spruce/30">
             <span className="size-1.5 rounded-full bg-spruce" />
@@ -629,13 +653,31 @@ export function WinContractPreview() {
         {/* Signature pad + Checkmark seal */}
         <div className="flex items-center justify-between gap-2 rounded-lg border border-line bg-surface-2/70 px-2.5 py-1.5">
           <div className="min-w-0 flex-1">
-            <span className="block font-mono text-[8.5px] tracking-wider text-fg-3 uppercase">Quote paid &amp; signed</span>
-            <svg viewBox="0 0 120 24" className="mt-0.5 h-5 w-full overflow-visible" aria-hidden fill="none">
-              <line x1="0" y1="20" x2="112" y2="20" stroke="var(--color-line-strong)" strokeWidth="1" strokeDasharray="2 2" />
+            <span className="block font-mono text-[8.5px] leading-none tracking-wider text-fg-3 uppercase">
+              Quote paid &amp; signed
+            </span>
+            <svg
+              viewBox="0 0 150 30"
+              className="mt-1 h-7 w-full overflow-visible"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden
+              fill="none"
+            >
+              {/* Dotted signature baseline */}
+              <line
+                x1="2"
+                y1="24"
+                x2="148"
+                y2="24"
+                stroke="var(--color-line-strong)"
+                strokeWidth="1.2"
+                strokeDasharray="3 3"
+              />
+              {/* Full cursive signature ("M. Hollis") sitting directly on the y=24 baseline */}
               <path
-                d="M4 16 C12 5, 18 18, 25 10 C30 4, 33 17, 42 13 C50 9, 56 5, 63 15 C68 19, 76 7, 86 12 C94 16, 102 8, 108 11"
+                d="M 10 23.5 C 12 10, 17 4.5, 20 6 C 23 7.5, 19 22, 22 23.5 C 25 24, 30 8, 33 6 C 36 4.5, 32 22, 36 23.5 C 40 24.5, 44 15, 48 15.5 C 52 16, 48 23.5, 53 23.5 C 58 23.5, 68 6, 71 5 C 74 4, 67 23.5, 72 23.5 C 77 23.5, 84 6, 87 5 C 90 4, 83 23.5, 88 23.5 C 93 23.5, 97 14, 102 14.5 C 106 15, 102 23.5, 107 23.5 C 112 23.5, 116 9, 119 8 C 122 7, 116 23.5, 121 23.5 C 125 23.5, 129 15, 134 17.5 C 138 19.5, 134 24, 140 22.5 C 143 21.5, 145 19, 147 17.5"
                 stroke="var(--wf-cyan-ink)"
-                strokeWidth="2"
+                strokeWidth="2.1"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 pathLength={1}
@@ -649,7 +691,7 @@ export function WinContractPreview() {
         </div>
 
         {/* Auto-created records footer */}
-        <div className="flex items-center justify-between gap-1 text-[9.5px] font-medium text-fg-2">
+        <div className="flex items-center justify-between gap-1 text-[9.5px] leading-tight font-medium text-fg-2">
           <span className="inline-flex items-center gap-1 truncate">
             <ShieldCheck aria-hidden className="size-3 shrink-0 text-spruce" />
             Client + contract ready
@@ -661,51 +703,57 @@ export function WinContractPreview() {
   );
 }
 
-/** Stop 05 preview: live dispatch route map with a truck moving along Route 3 toward the property. */
+/** Stop 05 preview: live dispatch route map with a truck moving along Route 3 toward the destination pin. */
 export function RollCrewPreview() {
   return (
     <div className="relative h-full w-full overflow-hidden select-none">
-      <svg viewBox="0 0 240 144" className="size-full" aria-hidden preserveAspectRatio="xMidYMid slice" fill="none">
-        {/* Cartographic map background */}
-        <rect width="240" height="144" fill="var(--map-bg)" />
+      <svg viewBox="0 0 240 160" className="size-full" aria-hidden preserveAspectRatio="xMidYMid meet" fill="none">
+        {/* Cartographic map background (extended beyond viewBox so aspect ratios never letterbox) */}
+        <rect x="-60" y="-30" width="360" height="220" fill="var(--map-bg)" />
 
-        {/* Winter snow block (left) and summer lawn park block (right) */}
-        <rect x="12" y="64" width="88" height="62" rx="6" fill="var(--scene-winter-lawn-lo)" opacity="0.22" />
-        <rect x="132" y="10" width="94" height="50" rx="6" fill="var(--map-park)" />
-        <rect x="132" y="100" width="94" height="32" rx="6" fill="var(--map-park)" opacity="0.7" />
-        <rect x="18" y="14" width="68" height="24" rx="4" fill="var(--map-lot)" />
+        {/* Neighbourhood blocks nestled inside the street grid (x=44, 116, 192; y=62, 114) */}
+        <rect x="52" y="70" width="56" height="36" rx="4" fill="var(--scene-winter-lawn-lo)" opacity="0.28" />
+        <rect x="124" y="70" width="60" height="36" rx="4" fill="var(--map-park)" />
+        <rect x="52" y="122" width="56" height="26" rx="4" fill="var(--map-lot)" />
+        <rect x="124" y="122" width="60" height="26" rx="4" fill="var(--map-park)" opacity="0.7" />
+        <rect x="124" y="36" width="60" height="18" rx="3" fill="var(--map-lot)" />
 
-        {/* Street grid */}
-        <g stroke="var(--map-street-minor)" strokeWidth="6" strokeLinecap="round">
-          <path d="M0 26H240" />
-          <path d="M0 116H240" />
-          <path d="M46 0V144" />
-          <path d="M196 0V144" />
-        </g>
-        <g stroke="var(--map-street-major)" strokeWidth="9" strokeLinecap="round">
-          <path d="M0 50H240" />
-          <path d="M0 88H240" />
-          <path d="M114 0V144" />
+        {/* Street grid casing (subtle edge so white roads pop in both light & dark modes) */}
+        <g stroke="var(--wf-map-road-edge)" strokeWidth="12" strokeLinecap="round">
+          <path d="M-60 62H300" />
+          <path d="M-60 114H300" />
+          <path d="M44 -30V190" />
+          <path d="M116 -30V190" />
+          <path d="M192 -30V190" />
         </g>
 
-        {/* Active Route 3 Halo & Path */}
+        {/* White street grid (horizontal streets at y=62 and y=114, vertical at x=44, 116, 192) */}
+        <g stroke="var(--wf-map-road)" strokeWidth="9.5" strokeLinecap="round">
+          <path d="M-60 62H300" />
+          <path d="M-60 114H300" />
+          <path d="M44 -30V190" />
+          <path d="M116 -30V190" />
+          <path d="M192 -30V190" />
+        </g>
+
+        {/* Active Route 3 Halo & Path — aligned 100% on the white streets (y=62 -> x=116 -> y=114) ending at pin (192,114) */}
         <path
-          d="M 18 50 H 114 V 88 H 206"
+          d="M 20 62 H 116 V 114 H 192"
           stroke="var(--color-spruce)"
-          strokeOpacity="0.25"
-          strokeWidth="13"
+          strokeOpacity="0.24"
+          strokeWidth="12"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M 18 50 H 114 V 88 H 206"
+          d="M 20 62 H 116 V 114 H 192"
           stroke="var(--color-spruce)"
           strokeWidth="3.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M 18 50 H 114 V 88 H 206"
+          d="M 20 62 H 116 V 114 H 192"
           stroke="var(--scene-trace-stroke)"
           strokeWidth="2"
           strokeDasharray="5 11"
@@ -714,34 +762,43 @@ export function RollCrewPreview() {
           className="wf-route-dash"
         />
 
-        {/* Completed route stops */}
-        <circle cx="46" cy="50" r="4.5" fill="var(--color-spruce)" stroke="var(--map-node-bg)" strokeWidth="1.75" />
-        <circle cx="114" cy="50" r="4.5" fill="var(--color-spruce)" stroke="var(--map-node-bg)" strokeWidth="1.75" />
+        {/* Completed route stops along y=62 */}
+        <circle cx="44" cy="62" r="4.2" fill="var(--color-spruce)" stroke="var(--map-node-bg)" strokeWidth="1.75" />
+        <circle cx="116" cy="62" r="4.2" fill="var(--color-spruce)" stroke="var(--map-node-bg)" strokeWidth="1.75" />
 
-        {/* Destination stop: 18 Juniper Cres. */}
-        <circle cx="186" cy="88" r="9" fill="none" stroke="var(--scene-trace-stroke)" strokeWidth="1.5" className="wf-radar-1" />
-        <circle cx="186" cy="88" r="5.5" fill="var(--scene-trace-stroke)" stroke="#08130d" strokeWidth="2" />
+        {/* Destination stop at (192, 114): 18 Juniper Cres. */}
+        <circle
+          cx="192"
+          cy="114"
+          r="9"
+          fill="none"
+          stroke="var(--scene-trace-stroke)"
+          strokeWidth="1.5"
+          opacity="0.35"
+          className="wf-radar-1"
+        />
+        <circle cx="192" cy="114" r="5.5" fill="var(--scene-trace-stroke)" stroke="#08130d" strokeWidth="2" />
 
-        {/* Animated Truck moving along the route path (rests at (148, 88) in reduced motion) */}
-        <g className="wf-truck-mover">
-          <g transform="translate(148, 88)">
+        {/* Animated Truck moving along the route path and resting on the route at (154, 114) */}
+        <g transform="translate(154, 114)">
+          <g className="wf-truck-mover">
             <rect
-              x="-12"
-              y="-12"
-              width="24"
-              height="24"
-              rx="7"
+              x="-11"
+              y="-11"
+              width="22"
+              height="22"
+              rx="6.5"
               fill="var(--map-chip-bg)"
               stroke="var(--color-spruce)"
               strokeWidth="2"
             />
-            <Truck x={-7} y={-7} width={14} height={14} color="var(--color-spruce)" strokeWidth={2.2} />
+            <Truck x={-6.5} y={-6.5} width={13} height={13} color="var(--color-spruce)" strokeWidth={2.2} />
           </g>
         </g>
       </svg>
 
-      {/* Top Route & Vehicle dispatch pill */}
-      <div className="pointer-events-none absolute top-2 right-2 left-2 flex items-center justify-between gap-1 rounded-md border border-line-strong/90 bg-surface/92 px-2 py-1 text-[10px] shadow-sm backdrop-blur-md">
+      {/* Top Route & Vehicle dispatch pill (sits in y=8..32, well above the y=62 top street) */}
+      <div className="pointer-events-none absolute top-2 right-2.5 left-2.5 flex items-center justify-between gap-1 rounded-md border border-line-strong/90 bg-surface/94 px-2.5 py-1 text-[10px] leading-tight shadow-sm backdrop-blur-md">
         <span className="inline-flex items-center gap-1.5 font-medium text-fg">
           <span className="size-2 rounded-full bg-spruce" />
           Route 3 · Plow 12

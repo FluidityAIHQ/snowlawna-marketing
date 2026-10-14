@@ -198,7 +198,7 @@ export function Workflow() {
                   {/* Visual preview stage */}
                   <div
                     aria-hidden
-                    className="relative h-[148px] w-full shrink-0 overflow-hidden border-b border-line bg-surface-2/65 sm:h-full sm:min-h-[152px] sm:border-r sm:border-b-0 lg:h-[148px] lg:min-h-0 lg:border-r-0 lg:border-b"
+                    className="relative h-[160px] w-full shrink-0 overflow-hidden border-b border-line bg-surface-2/65 sm:h-full sm:min-h-[160px] sm:border-r sm:border-b-0 lg:h-[160px] lg:min-h-0 lg:border-r-0 lg:border-b"
                   >
                     <Preview />
                   </div>

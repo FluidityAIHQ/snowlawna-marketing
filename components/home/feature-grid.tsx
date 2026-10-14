@@ -1,13 +1,42 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { CloudSnow, ContactRound, CreditCard, Download, Maximize2, Printer } from "lucide-react";
+import { Mark } from "@/components/brand/logo";
+import { GreenworksMark, HarbourMark, NorthlineMark } from "@/components/home/example-marks";
+import { PropertyScene, PropertyTraces } from "@/components/illustrations/property-scene";
+import { StreetMap } from "@/components/illustrations/street-map";
 import { SectionHeading } from "@/components/section-heading";
 import { sampleQuote } from "@/lib/sample-quote";
+
+type TileProps = {
+  index: string;
+  title: string;
+  children: ReactNode;
+  tone?: "spruce" | "ice";
+  className?: string;
+  delay?: number;
+} & (
+  | {
+      visual: ReactNode;
+      imageSrc?: never;
+      imageAlt?: never;
+      imageSizes?: never;
+      chip?: never;
+    }
+  | {
+      visual?: never;
+      imageSrc: string;
+      imageAlt: string;
+      imageSizes?: string;
+      chip?: string;
+    }
+);
 
 function Tile({
   index,
   title,
   children,
+  visual,
   imageSrc,
   imageAlt,
   imageSizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
@@ -15,44 +44,39 @@ function Tile({
   tone = "spruce",
   className = "",
   delay = 0,
-}: {
-  index: string;
-  title: string;
-  children: ReactNode;
-  imageSrc: string;
-  imageAlt: string;
-  imageSizes?: string;
-  chip?: string;
-  tone?: "spruce" | "ice";
-  className?: string;
-  delay?: number;
-}) {
+}: TileProps) {
   return (
     <div data-reveal style={{ "--delay": `${delay}ms` } as React.CSSProperties} className={className}>
       <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card hover:border-spruce/45 motion-safe:transition-colors motion-safe:duration-300">
-        <div className="relative h-56 overflow-hidden border-b border-line bg-surface-2 sm:h-60">
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            sizes={imageSizes}
-            loading="lazy"
-            className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent"
-          />
-          {chip && (
-            <span
+        {imageSrc ? (
+          <div className="relative h-56 overflow-hidden border-b border-line bg-surface-2">
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              sizes={imageSizes}
+              loading="lazy"
+              className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03]"
+            />
+            <div
               aria-hidden
-              className="pointer-events-none absolute right-3.5 bottom-3.5 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface/95 px-3 py-1 font-mono text-[11px] font-medium text-snow shadow-card backdrop-blur-md tabular-nums"
-            >
-              <span className={`size-1.5 rounded-full ${tone === "ice" ? "bg-ice" : "bg-spruce"}`} />
-              {chip}
-            </span>
-          )}
-        </div>
+              className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent"
+            />
+            {chip && (
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-3.5 bottom-3.5 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface/95 px-3 py-1 font-mono text-[11px] font-medium text-snow shadow-card backdrop-blur-md tabular-nums"
+              >
+                <span className={`size-1.5 rounded-full ${tone === "ice" ? "bg-ice" : "bg-spruce"}`} />
+                {chip}
+              </span>
+            )}
+          </div>
+        ) : (
+          <div aria-hidden className="relative h-56 overflow-hidden border-b border-line bg-surface-2/60">
+            {visual}
+          </div>
+        )}
         <div className="flex flex-1 flex-col p-6 sm:p-7">
           <p className="inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-[0.14em] text-fg-3 uppercase">
             <span aria-hidden className={`size-1.5 rounded-full ${tone === "ice" ? "bg-ice" : "bg-spruce"}`} />
@@ -62,6 +86,31 @@ function Tile({
           <p className="mt-2.5 text-[15px] leading-relaxed text-fg-2">{children}</p>
         </div>
       </article>
+    </div>
+  );
+}
+
+const BRANDS = [
+  { name: "Snowlawna", Logo: Mark, bar: "#14633a" },
+  { name: "Northline Snow Co.", Logo: NorthlineMark, bar: "#d9821b" },
+  { name: "Rideau Greenworks", Logo: GreenworksMark, bar: "#2e8b57" },
+  { name: "Harbour & Pine", Logo: HarbourMark, bar: "#df8a62" },
+];
+
+function BrandingVisual() {
+  return (
+    <div className="absolute inset-0 flex flex-col justify-center gap-2 px-5 py-3.5">
+      {BRANDS.map(({ name, Logo, bar }, i) => (
+        <div
+          key={name}
+          className="flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-1.5 shadow-[0_1px_2px_rgb(10_30_20/0.04)] transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+          style={{ transitionDelay: `${i * 60}ms` }}
+        >
+          <Logo className="size-7 shrink-0" />
+          <span className="truncate text-[13px] font-medium text-fg">{name}</span>
+          <span className="ml-auto h-5 w-12 shrink-0 rounded-md" style={{ backgroundColor: bar }} />
+        </div>
+      ))}
     </div>
   );
 }
@@ -106,9 +155,7 @@ export function FeatureGrid() {
             title="Live & prospecting maps"
             tone="spruce"
             delay={80}
-            imageSrc="/features/maps.webp"
-            imageAlt="Aerial view of a snowy suburban neighborhood with freshly plowed driveways"
-            chip="Live routes"
+            visual={<StreetMap className="absolute inset-0 size-full" viewBox="250 20 500 330" labels={false} animate />}
           >
             Routes, vehicles, crews and contracted properties on one map, with traffic, picket and visit overlays and a
             full-screen mode.
@@ -117,9 +164,16 @@ export function FeatureGrid() {
             index="03 · Measure-to-quote"
             title="Measure from satellite"
             tone="spruce"
-            imageSrc="/features/measure.webp"
-            imageAlt="Top-down aerial view of a single suburban house with a cleared driveway and snowy lawn"
-            chip={`Seasonal total · ${sampleQuote.total}`}
+            visual={
+              <>
+                <PropertyScene season="summer" idPrefix="feature" viewBox="20 236 560 300" className="absolute inset-0 size-full" />
+                <PropertyTraces viewBox="20 236 560 300" className="absolute inset-0 size-full" />
+                <span className="absolute right-4 bottom-4 rounded-xl border border-line-strong bg-surface/95 px-3 py-2 shadow-md backdrop-blur">
+                  <span className="block font-mono text-[10px] tracking-[0.14em] text-fg-3 uppercase">Seasonal total</span>
+                  <span className="font-wide text-lg font-semibold text-snow tabular-nums">{sampleQuote.total}</span>
+                </span>
+              </>
+            }
           >
             Trace lawns, snow surfaces, driveways and walkways on satellite imagery. Areas, line items and the total
             update as you draw.
@@ -136,15 +190,7 @@ export function FeatureGrid() {
             Every Snow, Lawn and Snow &amp; lawn contract, with nine filters, instant search, status tracking and
             exports.
           </Tile>
-          <Tile
-            index="05 · Branding"
-            title="Multi-company branding"
-            tone="spruce"
-            delay={160}
-            imageSrc="/features/branding.webp"
-            imageAlt="Operator holding a tablet inside a work truck cab with a snowy windshield"
-            chip="3 brands active"
-          >
+          <Tile index="05 · Branding" title="Multi-company branding" tone="spruce" delay={160} visual={<BrandingVisual />}>
             Each company on Snowlawna gets its own logo, colors and tagline across the workspace, sign-in, maps and
             customer quotes.
           </Tile>
