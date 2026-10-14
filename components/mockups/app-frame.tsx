@@ -48,8 +48,8 @@ const NAV: { group: string; items: [NavKey, string, LucideIcon][] }[] = [
 type Tone = "success" | "info" | "neutral" | "warning" | "danger";
 
 const toneClass: Record<Tone, string> = {
-  success: "bg-spruce/12 text-success",
-  info: "bg-ice/12 text-ice",
+  success: "bg-success/12 text-success",
+  info: "bg-fg/12 text-fg",
   neutral: "bg-surface-3 text-fg-2",
   warning: "bg-warning/12 text-warning",
   danger: "bg-danger/12 text-danger",
@@ -94,11 +94,11 @@ function Sidebar({ active }: { active: NavKey }) {
                 <li
                   key={key}
                   className={`relative flex items-center gap-2.5 rounded-md px-2 py-1.5 text-[13px] ${
-                    key === active ? "bg-spruce/12 font-medium text-snow" : "text-fg-2"
+                    key === active ? "bg-surface-3 font-medium text-snow" : "text-fg-2"
                   }`}
                 >
-                  {key === active && <span className="absolute top-1.5 bottom-1.5 -left-3 w-0.5 rounded-full bg-spruce" />}
-                  <Icon aria-hidden className={`size-4 ${key === active ? "text-spruce" : "text-fg-3"}`} strokeWidth={1.8} />
+                  {key === active && <span className="absolute top-1.5 bottom-1.5 -left-3 w-0.5 rounded-full bg-fg" />}
+                  <Icon aria-hidden className={`size-4 ${key === active ? "text-fg" : "text-fg-3"}`} strokeWidth={1.8} />
                   {label}
                 </li>
               ))}
@@ -107,7 +107,7 @@ function Sidebar({ active }: { active: NavKey }) {
         ))}
       </nav>
       <div className="mt-auto flex items-center gap-2.5 rounded-lg border border-line bg-surface p-2">
-        <span className="flex size-7 items-center justify-center rounded-full bg-spruce/15 text-[11px] font-semibold text-spruce">
+        <span className="flex size-7 items-center justify-center rounded-full bg-surface-3 text-[11px] font-semibold text-fg">
           AR
         </span>
         <div className="min-w-0">
@@ -143,7 +143,7 @@ export function AppFrame({
           <span className="size-2.5 rounded-full bg-line-strong" />
         </div>
         <div className="mx-auto flex h-6 max-w-[70%] min-w-0 items-center gap-1.5 rounded-md border border-line bg-surface px-3 font-mono text-[11px] text-fg-3">
-          <Lock aria-hidden className="size-3 shrink-0 text-spruce" />
+          <Lock aria-hidden className="size-3 shrink-0 text-fg-3" />
           <span className="truncate">snowlawna.vercel.app{path}</span>
         </div>
         <div aria-hidden className="w-10" />
@@ -161,7 +161,7 @@ export function AppFrame({
                 <Search aria-hidden className="size-3.5" /> Search
               </span>
               <span className="hidden items-center gap-1.5 rounded-md border border-line bg-surface-2/50 px-2.5 py-1 text-[12px] text-fg-2 @2xl:flex">
-                <CloudSnow aria-hidden className="size-4 text-ice" />
+                <CloudSnow aria-hidden className="size-4 text-fg-2" />
                 <span className="font-medium text-fg">−7°</span> Light snow · Ottawa
               </span>
               {actions}

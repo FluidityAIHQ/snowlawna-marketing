@@ -25,12 +25,12 @@ export function Pricing() {
                 <div
                   className={`relative flex h-full flex-col rounded-2xl border p-7 ${
                     featured
-                      ? "border-spruce/50 bg-linear-to-b from-surface-2/85 to-surface shadow-float"
+                      ? "border-fg/35 bg-linear-to-b from-surface-2/85 to-surface shadow-float"
                       : "border-line bg-surface shadow-card"
                   }`}
                 >
                   {featured && (
-                    <span className="absolute -top-3 left-7 rounded-full border border-spruce/40 bg-surface px-3 py-0.5 font-mono text-[10px] font-medium tracking-[0.14em] text-spruce uppercase shadow-sm">
+                    <span className="absolute -top-3 left-7 rounded-full border border-line-strong bg-surface px-3 py-0.5 font-mono text-[10px] font-medium tracking-[0.14em] text-fg uppercase shadow-sm">
                       Recommended
                     </span>
                   )}
@@ -42,7 +42,7 @@ export function Pricing() {
                   <ul className="mt-6 grid gap-3 border-t border-line pt-6 text-[15px]">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex gap-3 text-fg-2">
-                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-spruce/12 text-spruce">
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-2 text-fg ring-1 ring-line">
                           <Check aria-hidden className="size-3.5" strokeWidth={2.5} />
                         </span>
                         {feature}

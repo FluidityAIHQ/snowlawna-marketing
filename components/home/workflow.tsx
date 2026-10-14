@@ -30,12 +30,12 @@ const STEPS = [
   },
 ];
 
-// Stops blend from winter ice to lawn spruce using theme tokens so contrast stays high in both modes.
+// Stops blend from winter charcoal to lawn spruce using theme tokens so contrast stays high in both modes.
 const STOP_COLORS = [
-  "var(--color-ice)",
-  "color-mix(in oklab, var(--color-ice) 75%, var(--color-spruce))",
-  "color-mix(in oklab, var(--color-ice) 50%, var(--color-spruce))",
-  "color-mix(in oklab, var(--color-ice) 25%, var(--color-spruce))",
+  "var(--color-fg)",
+  "color-mix(in oklab, var(--color-fg) 75%, var(--color-spruce))",
+  "color-mix(in oklab, var(--color-fg) 50%, var(--color-spruce))",
+  "color-mix(in oklab, var(--color-fg) 25%, var(--color-spruce))",
   "var(--color-spruce)",
 ];
 
@@ -47,14 +47,14 @@ export function Workflow() {
         className="bg-survey absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,black,transparent_80%)] opacity-80"
       />
       <div className="wrap">
-        <SectionHeading id="how-title" eyebrow="How it works" tone="spruce" title="From satellite trace to scheduled crew.">
+        <SectionHeading id="how-title" eyebrow="How it works" title="From satellite trace to scheduled crew.">
           <p>The same property flows from quote to contract to route without anyone retyping an address.</p>
         </SectionHeading>
 
         <ol className="relative mt-16 grid gap-6 lg:grid-cols-5 lg:gap-5">
           <span
             aria-hidden
-            className="pointer-events-none absolute top-6 bottom-6 left-[27px] hidden w-0.5 bg-linear-to-b from-ice to-spruce opacity-35 lg:top-[38px] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:block lg:h-0.5 lg:w-auto lg:bg-linear-to-r"
+            className="pointer-events-none absolute top-6 bottom-6 left-[27px] hidden w-0.5 bg-linear-to-b from-fg to-spruce opacity-35 lg:top-[38px] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:block lg:h-0.5 lg:w-auto lg:bg-linear-to-r"
           />
           {STEPS.map(({ Icon, title, text }, i) => (
             <li

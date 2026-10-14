@@ -56,7 +56,7 @@ export function DispatchPanel() {
             Tue, Jan 12
             <ChevronRight aria-hidden className="size-3.5 text-fg-3" />
           </span>
-          <span className="inline-flex h-7 items-center rounded-md bg-ice/12 px-2.5 text-[12px] font-medium text-ice">
+          <span className="inline-flex h-7 items-center rounded-md bg-fg/12 px-2.5 text-[12px] font-medium text-fg">
             Storm response
           </span>
           <span className={`${chip} hidden @2xl:inline-flex`}>
@@ -71,7 +71,7 @@ export function DispatchPanel() {
           {[
             ["Jobs", "52", "text-fg"],
             ["Done", "38", "text-success"],
-            ["In progress", "9", "text-ice"],
+            ["In progress", "9", "text-fg"],
             ["Delayed", "5", "text-warning"],
           ].map(([label, value, color]) => (
             <div key={label} className="border-r border-line px-4 py-2.5 last:border-r-0 @xl:px-5">
@@ -95,9 +95,9 @@ export function DispatchPanel() {
             </thead>
             <tbody>
               {JOBS.map((job, i) => (
-                <tr key={job.time} className={`border-b border-line/70 ${i === 2 ? "bg-ice/[0.06]" : ""}`}>
+                <tr key={job.time} className={`border-b border-line/70 ${i === 2 ? "bg-fg/[0.06]" : ""}`}>
                   <td className="relative py-2.5 pr-2 pl-4 font-mono text-[12px] text-fg-3 @xl:pl-5">
-                    {i === 2 && <span className="absolute inset-y-0 left-0 w-0.5 bg-ice" />}
+                    {i === 2 && <span className="absolute inset-y-0 left-0 w-0.5 bg-fg" />}
                     {job.time}
                   </td>
                   <td className="px-2 py-2.5 font-medium text-fg">{job.property}</td>
@@ -187,7 +187,7 @@ export function MapPanel() {
             <span
               key={label as string}
               className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-[12px] shadow-md backdrop-blur ${
-                on ? "border-spruce/40 bg-surface/95 font-medium text-spruce" : "border-line-strong bg-surface/92 text-fg-2"
+                on ? "border-fg/40 bg-surface/95 font-medium text-fg" : "border-line-strong bg-surface/92 text-fg-2"
               }`}
             >
               {on ? <Check aria-hidden className="size-3.5" /> : <Layers aria-hidden className="size-3.5" />}
@@ -215,7 +215,7 @@ export function MapPanel() {
             {ROUTES.map((route) => {
               const [done, total] = ROUTE_PROGRESS[route.id];
               return (
-                <li key={route.id} className={`rounded-lg p-2.5 ${route.id === "r3" ? "bg-ice/[0.07] ring-1 ring-ice/30" : ""}`}>
+                <li key={route.id} className={`rounded-lg p-2.5 ${route.id === "r3" ? "bg-fg/[0.07] ring-1 ring-fg/25" : ""}`}>
                   <div className="flex items-center justify-between text-[12.5px]">
                     <RouteTag color={route.color}>
                       <span className="font-medium text-fg">{route.name}</span>
@@ -288,7 +288,7 @@ export function ContractsPanel() {
         </span>
         <span className={`${chip} text-fg`}>
           <SlidersHorizontal aria-hidden className="size-3.5" /> Filter
-          <span className="rounded bg-ice/15 px-1 font-mono text-[10px] text-ice">2</span>
+          <span className="rounded bg-fg/12 px-1 font-mono text-[10px] text-fg">2</span>
         </span>
         <span className={`${chip} ml-auto hidden @2xl:inline-flex`}>
           <Download aria-hidden className="size-3.5" /> Export CSV
@@ -339,9 +339,9 @@ export function ContractsPanel() {
 
 const TOOLS = [
   { label: "Lawn area", Icon: Square, tone: "text-spruce" },
-  { label: "Snow surface", Icon: Square, tone: "text-ice" },
-  { label: "Driveway", Icon: Spline, tone: "text-ice" },
-  { label: "Walkway", Icon: Spline, tone: "text-ice" },
+  { label: "Snow surface", Icon: Square, tone: "text-fg" },
+  { label: "Driveway", Icon: Spline, tone: "text-fg" },
+  { label: "Walkway", Icon: Spline, tone: "text-fg" },
   { label: "Edit", Icon: PenLine, tone: "text-fg-2" },
   { label: "Delete", Icon: Trash2, tone: "text-fg-2" },
 ];

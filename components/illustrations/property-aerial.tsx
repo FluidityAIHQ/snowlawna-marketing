@@ -121,18 +121,18 @@ const palettes = {
   summer: {
     ground: "#1f422b",
     shadow: "rgb(4 14 8 / 0.52)",
-    roof: { north: "#43484e", west: "#3c4046", south: "#2f3338", east: "#292d31", ridge: "#565c63" },
+    roof: { north: "#45454a", west: "#3d3d42", south: "#303035", east: "#2a2a2e", ridge: "#57575e" },
     leaf: ["#4e845f", "#2f593d", "#16301f"],
     hedgeBase: "#152b1d",
     needles: { low: ["#2f5740", "#1d3b2a", "#102218"], high: ["#467859", "#294d36", "#183122"], seam: "rgb(6 16 10 / 0.38)", apex: "#58916c" },
   },
   winter: {
-    ground: "#788894",
-    shadow: "rgb(14 30 46 / 0.38)",
-    roof: { north: "#93a2ac", west: "#8796a0", south: "#64727d", east: "#5b6973", ridge: "#a8b5be" },
-    leaf: ["#a6b4bd", "#82919b", "#45535d"],
-    hedgeBase: "#283631",
-    needles: { low: ["#2f4038", "#1b2822", "#0f1814"], high: ["#c4d0d6", "#96a5ae", "#46555e"], seam: "rgb(12 22 18 / 0.36)", apex: "#d8e2e7" },
+    ground: "#86868e",
+    shadow: "rgb(15 15 18 / 0.38)",
+    roof: { north: "#9e9ea6", west: "#92929a", south: "#6e6e76", east: "#64646c", ridge: "#b4b4bc" },
+    leaf: ["#b0b0b8", "#8c8c94", "#505058"],
+    hedgeBase: "#2c2c31",
+    needles: { low: ["#35353b", "#222227", "#141418"], high: ["#d0d0d6", "#a0a0a8", "#505058"], seam: "rgb(15 15 18 / 0.36)", apex: "#e2e2e6" },
   },
 } as const;
 
@@ -203,20 +203,20 @@ export function PropertyAerial({
           <>
             {/* Windrows: lit along the near side of the crest, shaded on the far side. */}
             <linearGradient id={id("bank-v")} x1="0" x2="1">
-              <stop offset="0" stopColor="#70808b" />
-              <stop offset="0.38" stopColor="#a9b7c0" />
-              <stop offset="0.72" stopColor="#7a8994" />
-              <stop offset="1" stopColor="#54626c" />
+              <stop offset="0" stopColor="#7c7c84" />
+              <stop offset="0.38" stopColor="#b6b6be" />
+              <stop offset="0.72" stopColor="#86868e" />
+              <stop offset="1" stopColor="#5e5e66" />
             </linearGradient>
             <linearGradient id={id("bank-h")} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stopColor="#70808b" />
-              <stop offset="0.38" stopColor="#a9b7c0" />
-              <stop offset="0.72" stopColor="#7a8994" />
-              <stop offset="1" stopColor="#54626c" />
+              <stop offset="0" stopColor="#7c7c84" />
+              <stop offset="0.38" stopColor="#b6b6be" />
+              <stop offset="0.72" stopColor="#86868e" />
+              <stop offset="1" stopColor="#5e5e66" />
             </linearGradient>
             <radialGradient id={id("crown-haze")}>
-              <stop offset="0" stopColor="#3b3430" stopOpacity="0.28" />
-              <stop offset="1" stopColor="#3b3430" stopOpacity="0" />
+              <stop offset="0" stopColor="#35353a" stopOpacity="0.28" />
+              <stop offset="1" stopColor="#35353a" stopOpacity="0" />
             </radialGradient>
           </>
         ) : (
@@ -244,25 +244,25 @@ export function PropertyAerial({
       <rect width="600" height="520" fill={c.ground} />
       {!winter && <rect y="16" width="600" height="428" fill={url("stripes")} />}
       <rect width="600" height="444" fill="#808080" filter={url("texture")} opacity={winter ? 0.5 : 0.3} style={{ mixBlendMode: "soft-light" }} />
-      <rect width="600" height="16" fill={winter ? "#63707a" : "#18271d"} />
+      <rect width="600" height="16" fill={winter ? "#6c6c74" : "#18271d"} />
 
       {/* Street, sidewalk and boulevard */}
       {winter ? (
         <g>
-          <rect y="444" width="600" height="76" fill="#283036" />
-          <g stroke="#191c20" strokeWidth="5" fill="none" opacity="0.7" filter={url("soften")}>
+          <rect y="444" width="600" height="76" fill="#2b2b30" />
+          <g stroke="#1b1b1f" strokeWidth="5" fill="none" opacity="0.7" filter={url("soften")}>
             <path d="M-10 462C140 460 320 464 610 461M-10 476C140 474 320 478 610 475" />
             <path d="M-10 496C160 498 330 494 610 497M-10 510C160 512 330 508 610 511" />
           </g>
-          <rect y="412" width="600" height="20" fill="#323a40" />
-          <path d="M0 412.5H600M0 431.5H600" stroke="#7c8992" strokeWidth="1.5" opacity="0.6" />
+          <rect y="412" width="600" height="20" fill="#36363c" />
+          <path d="M0 412.5H600M0 431.5H600" stroke="#888890" strokeWidth="1.5" opacity="0.6" />
         </g>
       ) : (
         <g>
-          <rect y="444" width="600" height="76" fill="#1b1d20" />
-          <path d="M0 483H600" stroke="#55585c" strokeWidth="2" strokeDasharray="20 18" opacity="0.8" />
-          <path d="M0 445.5H600" stroke="#3b3d41" strokeWidth="3" />
-          <rect y="412" width="600" height="20" fill="#34363a" />
+          <rect y="444" width="600" height="76" fill="#1c1c1f" />
+          <path d="M0 483H600" stroke="#57575c" strokeWidth="2" strokeDasharray="20 18" opacity="0.8" />
+          <path d="M0 445.5H600" stroke="#3c3c40" strokeWidth="3" />
+          <rect y="412" width="600" height="20" fill="#353539" />
           <path
             d={Array.from({ length: 25 }, (_, i) => `M${i * 24 + 12} 412V432`).join("")}
             stroke="rgb(0 0 0 / 0.25)"
@@ -274,25 +274,25 @@ export function PropertyAerial({
       {/* Driveway, porch and walkway: cleared in winter */}
       {winter ? (
         <g>
-          <rect x="382" y="290" width="74" height="154" fill="#22262a" />
-          <path d="M392 296V444M404 296V444M416 296V444M428 296V444M440 296V444" stroke="#8a97a0" strokeWidth="1.2" opacity="0.07" />
-          <rect x="234" y="290" width="34" height="16" fill="#2b3035" />
-          <rect x="244" y="306" width="14" height="106" fill="#2b3035" />
+          <rect x="382" y="290" width="74" height="154" fill="#242428" />
+          <path d="M392 296V444M404 296V444M416 296V444M428 296V444M440 296V444" stroke="#94949c" strokeWidth="1.2" opacity="0.07" />
+          <rect x="234" y="290" width="34" height="16" fill="#2e2e33" />
+          <rect x="244" y="306" width="14" height="106" fill="#2e2e33" />
         </g>
       ) : (
         <g>
-          <rect x="382" y="290" width="74" height="154" fill="#3a3c40" />
+          <rect x="382" y="290" width="74" height="154" fill="#3b3b40" />
           <path d="M382 322H456M382 354H456M382 386H456M382 412H456M419 290V444" stroke="rgb(0 0 0 / 0.22)" strokeWidth="1.2" />
           <ellipse cx="420" cy="336" rx="9" ry="13" fill="rgb(0 0 0 / 0.12)" filter={url("soften")} />
-          <rect x="234" y="290" width="34" height="16" fill="#45474b" />
-          <rect x="244" y="306" width="14" height="106" fill="#404246" />
+          <rect x="234" y="290" width="34" height="16" fill="#46464b" />
+          <rect x="244" y="306" width="14" height="106" fill="#414146" />
           <path d="M244 318H258M244 330H258M244 342H258M244 354H258M244 366H258M244 378H258M244 390H258M244 402H258" stroke="rgb(0 0 0 / 0.2)" strokeWidth="1" />
         </g>
       )}
 
       {/* Deck */}
       {winter ? (
-        <rect x="330" y="112" width="74" height="40" rx="1.5" fill="#7f8c95" />
+        <rect x="330" y="112" width="74" height="40" rx="1.5" fill="#8a8a92" />
       ) : (
         <g>
           <rect x="330" y="112" width="74" height="40" fill="#3d3229" />
@@ -348,12 +348,12 @@ export function PropertyAerial({
           </g>
         )}
         <path d={RIDGES} fill="none" stroke={c.roof.ridge} strokeWidth="1.4" strokeLinecap="round" opacity={winter ? 0.7 : 0.8} />
-        <path d={ROOF_OUTLINE} fill="none" stroke={winter ? "rgb(30 44 58 / 0.45)" : "rgb(0 0 0 / 0.4)"} strokeWidth="1.2" />
+        <path d={ROOF_OUTLINE} fill="none" stroke={winter ? "rgb(20 20 24 / 0.45)" : "rgb(0 0 0 / 0.4)"} strokeWidth="1.2" />
         {/* Chimney (snow melts off it) and two roof vents */}
         <rect x="330" y="172" width="14" height="14" fill={c.shadow} filter={url("soften")} />
-        <rect x="326" y="168" width="14" height="14" rx="1" fill={winter ? "#3d3633" : "#4a3c35"} />
+        <rect x="326" y="168" width="14" height="14" rx="1" fill={winter ? "#38383d" : "#4a3c35"} />
         <rect x="329.5" y="171.5" width="7" height="7" rx="0.5" fill="#141211" />
-        <g fill={winter ? "#4c5861" : "#1f2124"}>
+        <g fill={winter ? "#54545c" : "#202024"}>
           <circle cx="246" cy="262" r="2.6" />
           <circle cx="334" cy="258" r="2.6" />
         </g>
@@ -374,13 +374,13 @@ export function PropertyAerial({
       )}
 
       {/* Back fence: posts every few metres, capped with snow in winter */}
-      <path d="M26 16H574" stroke={winter ? "#2c3033" : "#2f2c27"} strokeWidth="2.5" />
-      <g fill={winter ? "#2a2d30" : "#3a362f"}>
+      <path d="M26 16H574" stroke={winter ? "#2e2e33" : "#2f2c27"} strokeWidth="2.5" />
+      <g fill={winter ? "#2a2a2f" : "#3a362f"}>
         {Array.from({ length: 17 }, (_, i) => (
           <rect key={i} x={26 + i * 34 - 2} y="14" width="4" height="4" />
         ))}
       </g>
-      {winter && <path d="M26 14.6H574" stroke="#8d9aa2" strokeWidth="1.2" opacity="0.8" />}
+      {winter && <path d="M26 14.6H574" stroke="#9898a0" strokeWidth="1.2" opacity="0.8" />}
 
       {/* Hedges along the side lot lines: dark foliage, shrub tops lit (or snow-capped) above it */}
       <g filter={url("foliage")}>
@@ -404,12 +404,12 @@ export function PropertyAerial({
                 <path d={twigs} strokeWidth="0.8" />
               </g>
               <circle cx={tree.x} cy={tree.y} r={tree.r} fill={url("crown-haze")} />
-              <g stroke="#433b37">
+              <g stroke="#3e3e44">
                 <path d={limbs} strokeWidth="1.8" opacity="0.9" />
                 <path d={branches} strokeWidth="1" opacity="0.8" />
                 <path d={twigs} strokeWidth="0.55" opacity="0.65" />
               </g>
-              <circle cx={tree.x} cy={tree.y} r="2.6" fill="#332d2a" />
+              <circle cx={tree.x} cy={tree.y} r="2.6" fill="#2e2e33" />
             </g>
           );
         })

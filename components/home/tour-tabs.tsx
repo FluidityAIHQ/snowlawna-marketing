@@ -90,7 +90,7 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
                     : "text-fg-2 hover:bg-surface-2 hover:text-fg"
                 }`}
               >
-                <tab.Icon aria-hidden className={`size-4 ${selected ? "text-canvas" : "text-spruce"}`} strokeWidth={1.8} />
+                <tab.Icon aria-hidden className={`size-4 ${selected ? "text-canvas" : "text-fg-3"}`} strokeWidth={1.8} />
                 {tab.label}
               </button>
             );

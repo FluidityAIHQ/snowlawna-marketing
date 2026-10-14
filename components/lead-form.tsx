@@ -47,7 +47,7 @@ const inputClass = (invalid: boolean) =>
   `w-full rounded-xl border bg-canvas px-3.5 text-[15px] text-fg placeholder:text-fg-3/75 outline-none transition-[border-color,box-shadow] duration-200 focus:ring-4 ${
     invalid
       ? "border-danger/70 focus:border-danger focus:ring-danger/15"
-      : "border-line-strong hover:border-fg-3/60 focus:border-spruce focus:ring-spruce/15"
+      : "border-line-strong hover:border-fg-3/60 focus:border-fg focus:ring-fg/12"
   }`;
 
 function FieldError({ id, message }: { id: string; message?: string }) {
@@ -220,7 +220,7 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
           {LEAD_INTENTS.map((value) => (
             <label
               key={value}
-              className="cursor-pointer rounded-full px-2 py-2 text-center text-[13px] font-medium whitespace-nowrap text-fg-2 transition-colors hover:text-fg has-[:checked]:bg-primary has-[:checked]:text-canvas has-[:checked]:shadow-sm has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-spruce"
+              className="cursor-pointer rounded-full px-2 py-2 text-center text-[13px] font-medium whitespace-nowrap text-fg-2 transition-colors hover:text-fg has-[:checked]:bg-primary has-[:checked]:text-canvas has-[:checked]:shadow-sm has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-fg"
             >
               <input
                 type="radio"
@@ -331,18 +331,32 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
           <div className="flex flex-wrap gap-2">
             {(
               [
-                ["snow", "Snow", Snowflake, "text-ice"],
-                ["lawn", "Lawn", Sprout, "text-spruce"],
+                [
+                  "snow",
+                  "Snow",
+                  Snowflake,
+                  "text-fg",
+                  "has-[:checked]:border-fg/60 has-[:checked]:bg-surface-3 has-[:focus-visible]:outline-fg",
+                  "text-fg",
+                ],
+                [
+                  "lawn",
+                  "Lawn",
+                  Sprout,
+                  "text-spruce",
+                  "has-[:checked]:border-spruce/60 has-[:checked]:bg-spruce/12 has-[:focus-visible]:outline-spruce",
+                  "text-spruce",
+                ],
               ] as const
-            ).map(([value, label, Icon, color]) => (
+            ).map(([value, label, Icon, color, checkedTone, checkColor]) => (
               <label
                 key={value}
-                className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-canvas px-4 text-sm text-fg-2 transition-colors select-none hover:border-fg-3/50 has-[:checked]:border-spruce/60 has-[:checked]:bg-spruce/12 has-[:checked]:font-medium has-[:checked]:text-snow has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-spruce"
+                className={`inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-canvas px-4 text-sm text-fg-2 transition-colors select-none hover:border-fg-3/50 has-[:checked]:font-medium has-[:checked]:text-snow has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 ${checkedTone}`}
               >
                 <input type="checkbox" name="services" value={value} className="peer sr-only" />
                 <Icon aria-hidden className={`size-4 ${color}`} />
                 {label}
-                <Check aria-hidden className="hidden size-3.5 text-spruce peer-checked:block" strokeWidth={2.5} />
+                <Check aria-hidden className={`hidden size-3.5 ${checkColor} peer-checked:block`} strokeWidth={2.5} />
               </label>
             ))}
           </div>
@@ -392,7 +406,7 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
           {status.mailto && (
             <p className="mt-2 pl-[26px] text-fg-2">
               Or email us at{" "}
-              <a href={status.mailto} className="text-ice underline underline-offset-4">
+              <a href={status.mailto} className="font-medium text-fg underline underline-offset-4 hover:text-snow">
                 {site.contactEmail}
               </a>
               .

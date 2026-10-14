@@ -7,7 +7,7 @@ export function Testimonials() {
     <section aria-labelledby="stories-title" className="relative border-t border-line bg-surface-2/35 py-24 sm:py-32">
       <div className="wrap">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading id="stories-title" eyebrow="From the field" tone="ice" title="Built for the people who run both seasons." />
+          <SectionHeading id="stories-title" eyebrow="From the field" title="Built for the people who run both seasons." />
           {testimonials.isPlaceholder && (
             <p
               data-reveal
@@ -24,11 +24,11 @@ export function Testimonials() {
               <figure className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface p-7 shadow-card">
                 <span
                   aria-hidden
-                  className={`absolute inset-x-0 top-0 h-1 ${item.tone === "spruce" ? "bg-spruce" : "bg-ice"}`}
+                  className={`absolute inset-x-0 top-0 h-1 ${item.tone === "spruce" ? "bg-spruce" : "bg-fg"}`}
                 />
                 <span
                   aria-hidden
-                  className={`h-2 w-4 -skew-x-[32deg] rounded-[1px] ${item.tone === "spruce" ? "bg-spruce" : "bg-ice"}`}
+                  className={`h-2 w-4 -skew-x-[32deg] rounded-[1px] ${item.tone === "spruce" ? "bg-spruce" : "bg-fg"}`}
                 />
                 <blockquote className="mt-6 flex-1 text-[17px] leading-relaxed text-fg">
                   <p>&ldquo;{item.quote}&rdquo;</p>
