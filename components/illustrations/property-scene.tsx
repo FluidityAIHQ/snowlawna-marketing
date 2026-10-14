@@ -455,8 +455,12 @@ export const LAWN_ZONES: readonly TraceZone[] = [
   { x: 270, y: 310, width: 100, height: 90, rx: 14, label: [332, 355], sqft: 969 },
 ] as const;
 
+// The whole driveway, from the garage door to the street: the paved pad, then the apron across the sidewalk
+// and boulevard, out to the curb at y 444. It's straight all the way down, so a rectangle traces it.
+const DRIVEWAY = { x: 384, y: 294, width: 70, height: 150 } as const;
+
 export const SNOW_ZONES = [
-  { x: 384, y: 294, width: 70, height: 112, rx: 12, delay: 1150, sqft: 842 },
+  { ...DRIVEWAY, rx: 12, delay: 1150, sqft: sqftFromPoints(corners(DRIVEWAY)) },
   // The walkway is narrower than its label, so the label sits on the sidewalk just below it.
   { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, label: [251, 422], sqft: 168 },
 ] as const;
