@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react";
 import { FilePenLine, Headset, Map as MapIcon, Printer, Ruler } from "lucide-react";
+import { Mark } from "@/components/brand/logo";
+import { GreenworksMark, HarbourMark, NorthlineMark } from "@/components/home/example-marks";
 import { sampleQuote } from "@/lib/sample-quote";
 
 // Example companies (fictional) showing how one workspace takes on each customer's brand.
@@ -10,7 +12,7 @@ const TENANTS = [
     id: "snowlawna",
     name: "Snowlawna",
     tagline: "Two seasons. One operation.",
-    initial: "S",
+    logo: Mark,
     primary: "#14633a",
     onPrimary: "#f6faf8",
     accent: "#136b3d",
@@ -26,7 +28,7 @@ const TENANTS = [
     id: "northline",
     name: "Northline Snow Co.",
     tagline: "Cleared before you wake up.",
-    initial: "N",
+    logo: NorthlineMark,
     primary: "#f2a33a",
     onPrimary: "#1d1204",
     accent: "#f2a33a",
@@ -42,7 +44,7 @@ const TENANTS = [
     id: "greenworks",
     name: "Rideau Greenworks",
     tagline: "Lawns that look after themselves.",
-    initial: "R",
+    logo: GreenworksMark,
     primary: "#6cd488",
     onPrimary: "#08170b",
     accent: "#6cd488",
@@ -58,7 +60,7 @@ const TENANTS = [
     id: "harbour",
     name: "Harbour & Pine",
     tagline: "Property care, every season.",
-    initial: "H",
+    logo: HarbourMark,
     primary: "#ebdfca",
     onPrimary: "#241d12",
     accent: "#df8a62",
@@ -98,15 +100,8 @@ const themeVars = (tenant: Tenant) =>
 const themed = "transition-[background-color,border-color,color,box-shadow] duration-500";
 
 function TenantMark({ tenant, size = "md" }: { tenant: Tenant; size?: "sm" | "md" }) {
-  return (
-    <span
-      className={`flex shrink-0 items-center justify-center rounded-lg border border-[var(--t-line)] bg-[var(--t-raised)] font-wide font-bold text-[var(--t-accent)] ${themed} ${
-        size === "sm" ? "size-7 text-xs" : "size-9 text-sm"
-      }`}
-    >
-      {tenant.initial}
-    </span>
-  );
+  const Logo = tenant.logo;
+  return <Logo className={`shrink-0 ${size === "sm" ? "size-7" : "size-9"}`} />;
 }
 
 const RECENT = [
