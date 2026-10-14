@@ -54,7 +54,7 @@ type Gesture = {
 };
 
 const tag =
-  "season-mover pointer-events-none absolute top-1/2 flex w-[5.5rem] -translate-y-1/2 items-center justify-center gap-1.5 rounded-full border border-white/10 bg-canvas/80 py-1 font-mono text-[10px] font-medium tracking-[0.12em] uppercase will-change-transform sm:text-[11px]";
+  "season-mover pointer-events-none absolute top-1/2 flex w-[5.75rem] -translate-y-1/2 items-center justify-center gap-1.5 rounded-full border border-line-strong bg-surface/92 py-1 font-mono text-[10px] font-medium tracking-[0.12em] uppercase shadow-sm backdrop-blur-md will-change-transform sm:text-[11px]";
 
 export function SeasonSlider({
   winter,
@@ -204,7 +204,7 @@ export function SeasonSlider({
       onPointerUp={onPointerUp}
       onPointerCancel={end}
       onLostPointerCapture={end}
-      className={`group/season @container relative isolate aspect-[600/520] cursor-ew-resize overflow-hidden rounded-2xl border border-line-strong bg-surface shadow-[0_50px_120px_-40px_rgb(0_0_0/0.9),0_0_0_1px_rgb(255_255_255/0.02)] select-none [touch-action:pan-y_pinch-zoom] [@media(scripting:none)]:cursor-auto ${
+      className={`group/season @container relative isolate aspect-[600/520] cursor-ew-resize overflow-hidden rounded-2xl border border-line-strong bg-surface shadow-stage select-none [touch-action:pan-y_pinch-zoom] [@media(scripting:none)]:cursor-auto ${
         intro ? "anim-season-intro" : ""
       }`}
     >
@@ -236,18 +236,18 @@ export function SeasonSlider({
           when --season changes, because the movers inherit it explicitly. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(125%_95%_at_50%_42%,transparent_55%,rgb(14_15_17/0.5))]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(125%_95%_at_50%_42%,transparent_58%,rgb(8_19_13/0.28))]"
       >
         {overlay}
       </div>
 
       <span
         aria-hidden
-        className="season-mover pointer-events-none absolute inset-y-0 left-0 w-0.5 -translate-x-1/2 bg-snow/90 shadow-[0_0_0_1px_rgb(14_15_17/0.18),0_0_16px_rgb(146_198_210/0.45)] will-change-transform group-has-[[role=slider]:focus-visible]/season:bg-ice"
+        className="season-mover pointer-events-none absolute inset-y-0 left-0 w-0.5 -translate-x-1/2 bg-white/95 shadow-[0_0_0_1px_rgb(8_19_13/0.22),0_0_16px_rgb(86_202_139/0.4)] will-change-transform group-has-[[role=slider]:focus-visible]/season:bg-spruce"
         style={{ transform: `translateX(${LINE})` }}
       />
 
-      <div className="pointer-events-none absolute inset-0 rounded-[calc(1rem-1px)] shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]">
+      <div className="pointer-events-none absolute inset-0 rounded-[calc(1rem-1px)] shadow-[inset_0_1px_0_rgb(255_255_255/0.14)]">
         {children}
         <p id={descriptionId} className="sr-only">
           {description}
@@ -282,7 +282,7 @@ export function SeasonSlider({
           aria-valuenow={value}
           aria-valuetext={`${value}% winter, ${100 - value}% summer`}
           onKeyDown={onKeyDown}
-          className="pointer-events-auto absolute flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-canvas shadow-[0_10px_28px_-8px_rgb(0_0_0/0.75),0_0_0_1px_rgb(14_15_17/0.35),inset_0_1px_0_rgb(255_255_255/0.7)] outline-offset-4 hover:bg-primary-hover hover:shadow-[0_10px_28px_-8px_rgb(0_0_0/0.75),0_0_0_6px_rgb(146_198_210/0.22),inset_0_1px_0_rgb(255_255_255/0.7)] motion-safe:transition-[background-color,box-shadow,scale] motion-safe:duration-200 motion-safe:ease-out group-data-dragging/season:scale-95 group-data-dragging/season:shadow-[0_10px_28px_-8px_rgb(0_0_0/0.75),0_0_0_7px_rgb(146_198_210/0.3),inset_0_1px_0_rgb(255_255_255/0.7)] forced-colors:border-2 forced-colors:border-[CanvasText]"
+          className="pointer-events-auto absolute flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-canvas ring-2 ring-white/85 shadow-[0_10px_28px_-6px_rgb(8_19_13/0.55)] outline-offset-4 hover:bg-primary-hover hover:shadow-[0_10px_28px_-6px_rgb(8_19_13/0.55),0_0_0_6px_color-mix(in_oklab,var(--color-spruce)_25%,transparent)] motion-safe:transition-[background-color,box-shadow,scale] motion-safe:duration-200 motion-safe:ease-out group-data-dragging/season:scale-95 group-data-dragging/season:shadow-[0_10px_28px_-6px_rgb(8_19_13/0.55),0_0_0_7px_color-mix(in_oklab,var(--color-spruce)_32%,transparent)] forced-colors:border-2 forced-colors:border-[CanvasText]"
         >
           <svg aria-hidden viewBox="0 0 20 20" className="size-4" fill="currentColor" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
             <path d="M7.6 6.2 3.8 10l3.8 3.8ZM12.4 6.2l3.8 3.8-3.8 3.8Z" />

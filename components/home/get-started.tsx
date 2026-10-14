@@ -12,11 +12,14 @@ const EXPECT = [
 
 export function GetStarted() {
   return (
-    <section id="get-started" aria-labelledby="get-started-title" className="relative overflow-hidden py-24 sm:py-32">
-      <div aria-hidden className="hairline-x absolute inset-x-0 top-0 h-px" />
+    <section id="get-started" aria-labelledby="get-started-title" className="relative overflow-hidden border-t border-line bg-surface-2/45 py-24 sm:py-32">
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(45%_50%_at_85%_40%,rgb(146_198_210/0.09),transparent_70%),radial-gradient(35%_40%_at_10%_90%,rgb(108_187_145/0.06),transparent_70%)]"
+        className="bg-survey absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_75%_65%_at_75%_35%,black_20%,transparent_80%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(45%_50%_at_85%_40%,color-mix(in_oklab,var(--color-spruce)_11%,transparent),transparent_70%),radial-gradient(35%_40%_at_10%_90%,color-mix(in_oklab,var(--color-ice)_9%,transparent),transparent_70%)]"
       />
       {/* Mobile order: heading, form, extras. Desktop: heading and extras left, form right. */}
       <div className="wrap grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
@@ -27,7 +30,7 @@ export function GetStarted() {
         <div
           data-reveal
           id="lead-form"
-          className="rounded-3xl border border-line-strong bg-surface/90 p-5 shadow-[0_40px_100px_-40px_rgb(0_0_0/0.9)] backdrop-blur sm:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+          className="rounded-3xl border border-line-strong bg-surface p-5 shadow-stage sm:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
         >
           <LeadForm />
         </div>
@@ -43,7 +46,7 @@ export function GetStarted() {
               </li>
             ))}
           </ul>
-          <div data-reveal className="mt-10 rounded-2xl border border-line bg-surface/60 p-5">
+          <div data-reveal className="mt-10 rounded-2xl border border-line bg-surface p-5 shadow-card">
             <p className="text-sm text-fg-2">Prefer to look around first? The demo workspace is open to explore without signing in.</p>
             <DemoAppLink href={site.demoAppUrl} size="sm" className="mt-4" />
           </div>

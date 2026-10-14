@@ -119,20 +119,20 @@ const RIDGES = "M150 150 220 220H300L370 150M150 290 220 220M300 220 370 290M204
 
 const palettes = {
   summer: {
-    ground: "#1d2e23",
-    shadow: "rgb(2 8 4 / 0.6)",
-    roof: { north: "#3d4045", west: "#37393e", south: "#2a2c30", east: "#25272a", ridge: "#4e5258" },
-    leaf: ["#456b50", "#2a4834", "#13241a"],
-    hedgeBase: "#122019",
-    needles: { low: ["#2d4d3a", "#1b3326", "#0e1b14"], high: ["#40674f", "#25412f", "#16291e"], seam: "rgb(6 14 10 / 0.4)", apex: "#4d7a5b" },
+    ground: "#1f422b",
+    shadow: "rgb(4 14 8 / 0.52)",
+    roof: { north: "#43484e", west: "#3c4046", south: "#2f3338", east: "#292d31", ridge: "#565c63" },
+    leaf: ["#4e845f", "#2f593d", "#16301f"],
+    hedgeBase: "#152b1d",
+    needles: { low: ["#2f5740", "#1d3b2a", "#102218"], high: ["#467859", "#294d36", "#183122"], seam: "rgb(6 16 10 / 0.38)", apex: "#58916c" },
   },
   winter: {
-    ground: "#6c7983",
-    shadow: "rgb(12 26 42 / 0.42)",
-    roof: { north: "#85929b", west: "#7b8891", south: "#5a6670", east: "#525e67", ridge: "#97a3ab" },
-    leaf: ["#97a4ac", "#76838c", "#3d4952"],
-    hedgeBase: "#24302b",
-    needles: { low: ["#2c3a33", "#18241e", "#0c1511"], high: ["#b6c1c7", "#89969f", "#3e4b53"], seam: "rgb(12 22 18 / 0.4)", apex: "#c9d2d7" },
+    ground: "#788894",
+    shadow: "rgb(14 30 46 / 0.38)",
+    roof: { north: "#93a2ac", west: "#8796a0", south: "#64727d", east: "#5b6973", ridge: "#a8b5be" },
+    leaf: ["#a6b4bd", "#82919b", "#45535d"],
+    hedgeBase: "#283631",
+    needles: { low: ["#2f4038", "#1b2822", "#0f1814"], high: ["#c4d0d6", "#96a5ae", "#46555e"], seam: "rgb(12 22 18 / 0.36)", apex: "#d8e2e7" },
   },
 } as const;
 
@@ -203,19 +203,19 @@ export function PropertyAerial({
           <>
             {/* Windrows: lit along the near side of the crest, shaded on the far side. */}
             <linearGradient id={id("bank-v")} x1="0" x2="1">
-              <stop offset="0" stopColor="#64717a" />
-              <stop offset="0.38" stopColor="#97a4ac" />
-              <stop offset="0.72" stopColor="#6e7b84" />
-              <stop offset="1" stopColor="#4a565f" />
+              <stop offset="0" stopColor="#70808b" />
+              <stop offset="0.38" stopColor="#a9b7c0" />
+              <stop offset="0.72" stopColor="#7a8994" />
+              <stop offset="1" stopColor="#54626c" />
             </linearGradient>
             <linearGradient id={id("bank-h")} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stopColor="#64717a" />
-              <stop offset="0.38" stopColor="#97a4ac" />
-              <stop offset="0.72" stopColor="#6e7b84" />
-              <stop offset="1" stopColor="#4a565f" />
+              <stop offset="0" stopColor="#70808b" />
+              <stop offset="0.38" stopColor="#a9b7c0" />
+              <stop offset="0.72" stopColor="#7a8994" />
+              <stop offset="1" stopColor="#54626c" />
             </linearGradient>
             <radialGradient id={id("crown-haze")}>
-              <stop offset="0" stopColor="#3b3430" stopOpacity="0.32" />
+              <stop offset="0" stopColor="#3b3430" stopOpacity="0.28" />
               <stop offset="1" stopColor="#3b3430" stopOpacity="0" />
             </radialGradient>
           </>
@@ -223,11 +223,11 @@ export function PropertyAerial({
           <>
             {/* Mowing stripes */}
             <linearGradient id={id("stripes")} x1="0" y1="0" x2="0" y2="46" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
-              <stop offset="0" stopColor="#24392b" />
-              <stop offset="0.44" stopColor="#24392b" />
-              <stop offset="0.5" stopColor="#1c2e22" />
-              <stop offset="0.94" stopColor="#1c2e22" />
-              <stop offset="1" stopColor="#24392b" />
+              <stop offset="0" stopColor="#275236" />
+              <stop offset="0.44" stopColor="#275236" />
+              <stop offset="0.5" stopColor="#1e402a" />
+              <stop offset="0.94" stopColor="#1e402a" />
+              <stop offset="1" stopColor="#275236" />
             </linearGradient>
             {/* Shingle courses run parallel to each roof plane's eave. */}
             <pattern id={id("courses-h")} width="8" height="4" patternUnits="userSpaceOnUse">

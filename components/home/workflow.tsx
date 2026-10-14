@@ -30,43 +30,52 @@ const STEPS = [
   },
 ];
 
-// Stops fade from ice (winter) to spruce (lawn) along the route.
-const STOP_COLORS = ["#92c6d2", "#88c3c1", "#7fc0b0", "#76bea0", "#6cbb91"];
+// Stops blend from winter ice to lawn spruce using theme tokens so contrast stays high in both modes.
+const STOP_COLORS = [
+  "var(--color-ice)",
+  "color-mix(in oklab, var(--color-ice) 75%, var(--color-spruce))",
+  "color-mix(in oklab, var(--color-ice) 50%, var(--color-spruce))",
+  "color-mix(in oklab, var(--color-ice) 25%, var(--color-spruce))",
+  "var(--color-spruce)",
+];
 
 export function Workflow() {
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="relative overflow-hidden py-24 sm:py-32">
-      <div aria-hidden className="hairline-x absolute inset-x-0 top-0 h-px" />
+    <section id="how-it-works" aria-labelledby="how-title" className="relative overflow-hidden border-y border-line bg-surface-2/40 py-24 sm:py-32">
       <div
         aria-hidden
-        className="bg-survey absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent_75%)] opacity-70"
+        className="bg-survey absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,black,transparent_80%)] opacity-80"
       />
       <div className="wrap">
         <SectionHeading id="how-title" eyebrow="How it works" tone="spruce" title="From satellite trace to scheduled crew.">
           <p>The same property flows from quote to contract to route without anyone retyping an address.</p>
         </SectionHeading>
 
-        <ol className="relative mt-16 grid gap-10 lg:grid-cols-5 lg:gap-8">
+        <ol className="relative mt-16 grid gap-6 lg:grid-cols-5 lg:gap-5">
           <span
             aria-hidden
-            className="absolute top-0 bottom-0 left-[21px] w-0.5 bg-linear-to-b from-ice to-spruce opacity-40 lg:top-[21px] lg:right-[10%] lg:bottom-auto lg:left-[22px] lg:h-0.5 lg:w-auto lg:bg-linear-to-r"
+            className="pointer-events-none absolute top-6 bottom-6 left-[27px] hidden w-0.5 bg-linear-to-b from-ice to-spruce opacity-35 lg:top-[38px] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:block lg:h-0.5 lg:w-auto lg:bg-linear-to-r"
           />
           {STEPS.map(({ Icon, title, text }, i) => (
             <li
               key={title}
               data-reveal
-              style={{ "--delay": `${i * 110}ms` } as CSSProperties}
-              className="relative grid grid-cols-[44px_1fr] gap-x-5 lg:block"
+              style={{ "--delay": `${i * 100}ms` } as CSSProperties}
+              className="relative"
             >
-              <span
-                className="relative z-10 flex size-11 items-center justify-center rounded-full border-2 bg-canvas shadow-[0_0_0_6px_var(--color-canvas)]"
-                style={{ borderColor: STOP_COLORS[i], color: STOP_COLORS[i] }}
-              >
-                <Icon aria-hidden className="size-[18px]" strokeWidth={1.9} />
-              </span>
-              <div className="lg:mt-6">
-                <p className="font-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">Stop {String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-1.5 text-lg leading-snug font-semibold text-snow">{title}</h3>
+              <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-card">
+                <div className="flex items-center justify-between gap-3">
+                  <span
+                    className="relative z-10 flex size-11 items-center justify-center rounded-xl border-2 bg-surface shadow-sm"
+                    style={{ borderColor: STOP_COLORS[i], color: STOP_COLORS[i] }}
+                  >
+                    <Icon aria-hidden className="size-[18px]" strokeWidth={2} />
+                  </span>
+                  <span className="rounded-full border border-line bg-surface-2 px-2.5 py-0.5 font-mono text-[10px] font-medium tracking-[0.14em] text-fg-3 uppercase">
+                    Stop {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-5 font-wide text-lg leading-snug font-semibold text-snow">{title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{text}</p>
               </div>
             </li>

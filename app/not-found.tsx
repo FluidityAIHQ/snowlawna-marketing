@@ -15,17 +15,17 @@ export default function NotFound() {
       />
       <div className="wrap flex flex-col items-center text-center">
         <svg viewBox="0 0 240 80" className="w-60" aria-hidden fill="none">
-          <path d="M8 60H70V24H130" stroke="#5fccce" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M130 24H170V52H212" stroke="#5fccce" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="2 10" />
+          <path d="M8 60H70V24H130" stroke="var(--color-spruce)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M130 24H170V52H212" stroke="var(--color-ice)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="2 10" />
           {[
             [8, 60],
             [70, 42],
             [100, 24],
           ].map(([x, y]) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill="#5fccce" stroke="#0e0f11" strokeWidth="3" />
+            <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill="var(--color-spruce)" stroke="var(--color-canvas)" strokeWidth="3" />
           ))}
-          <circle cx="212" cy="52" r="11" fill="#0e0f11" stroke="#92c6d2" strokeWidth="2.5" />
-          <text x="212" y="57" textAnchor="middle" fill="#92c6d2" fontSize="14" fontWeight="700">
+          <circle cx="212" cy="52" r="11" fill="var(--color-surface)" stroke="var(--color-ice)" strokeWidth="2.5" />
+          <text x="212" y="57" textAnchor="middle" fill="var(--color-ice)" fontSize="14" fontWeight="700">
             ?
           </text>
         </svg>

@@ -7,7 +7,7 @@ export const ROUTES = [
   {
     id: "r3",
     name: "Route 3",
-    color: "#5fccce",
+    color: "#1ca370",
     vehicle: "Plow 12",
     d: "M120 50H300V230H420C420 290 480 290 480 230V130H680V330",
     stops: [
@@ -26,7 +26,7 @@ export const ROUTES = [
   {
     id: "r5",
     name: "Route 5",
-    color: "#f2a33a",
+    color: "#228fa6",
     vehicle: "Loader 3",
     d: "M200 420V330H420V420H680V480H760",
     stops: [
@@ -42,7 +42,7 @@ export const ROUTES = [
   {
     id: "r7",
     name: "Route 7",
-    color: "#b39cf2",
+    color: "#d9821b",
     vehicle: "Plow 8",
     d: "M560 50H760V230H560V330",
     stops: [
@@ -95,34 +95,34 @@ export function StreetMap({
 }) {
   return (
     <svg viewBox={viewBox} className={className} aria-hidden preserveAspectRatio="xMidYMid slice" fill="none">
-      <rect x="-200" y="-200" width="1200" height="920" fill="#121417" />
+      <rect x="-200" y="-200" width="1200" height="920" fill="var(--map-bg)" />
 
       {/* Parks and river */}
-      <rect x="566" y="344" width="104" height="66" rx="10" fill="#14231b" />
-      <rect x="132" y="146" width="58" height="72" rx="10" fill="#14231b" />
-      <path d="M-30 372C60 356 130 420 214 468S360 540 420 580" stroke="#152730" strokeWidth="46" strokeLinecap="round" />
+      <rect x="566" y="344" width="104" height="66" rx="10" fill="var(--map-park)" />
+      <rect x="132" y="146" width="58" height="72" rx="10" fill="var(--map-park)" />
+      <path d="M-30 372C60 356 130 420 214 468S360 540 420 580" stroke="var(--map-water)" strokeWidth="46" strokeLinecap="round" />
 
       {/* Buildings */}
-      <g fill="#181b1f">
+      <g fill="var(--map-lot)">
         {LOTS.map(([x, y, w, h]) => (
           <rect key={`${x}-${y}`} x={x} y={y} width={w} height={h} rx="1.5" />
         ))}
       </g>
 
       {/* Streets */}
-      <g stroke="#1e2126" strokeWidth="7" strokeLinecap="round">
+      <g stroke="var(--map-street-minor)" strokeWidth="7" strokeLinecap="round">
         {MINOR_STREETS.map((d) => (
           <path key={d} d={d} />
         ))}
       </g>
-      <g stroke="#272b31" strokeWidth="12" strokeLinecap="round">
+      <g stroke="var(--map-street-major)" strokeWidth="12" strokeLinecap="round">
         {MAJOR_STREETS.map((d) => (
           <path key={d} d={d} />
         ))}
       </g>
 
       {labels && (
-        <g fill="#50565d" fontSize="9" letterSpacing="1.5" style={{ fontFamily: "var(--font-plex-mono), monospace" }}>
+        <g fill="var(--map-label)" fontSize="9" letterSpacing="1.5" style={{ fontFamily: "var(--font-plex-mono), monospace" }}>
           <text x="330" y="124">
             FROSTLINE RD
           </text>
@@ -138,17 +138,17 @@ export function StreetMap({
         </g>
       )}
 
-      {/* Routes: the selected one gets the product's ice halo */}
+      {/* Routes: the selected one gets a seasonal halo */}
       {ROUTES.map((route, i) => (
         <g key={route.id}>
           {route.id === selected && (
-            <path d={route.d} stroke="#92c6d2" strokeOpacity="0.28" strokeWidth="15" strokeLinejoin="round" strokeLinecap="round" />
+            <path d={route.d} stroke={route.color} strokeOpacity="0.22" strokeWidth="15" strokeLinejoin="round" strokeLinecap="round" />
           )}
           <path
             d={route.d}
             stroke={route.color}
             strokeWidth={route.id === selected ? 4.5 : 3}
-            strokeOpacity={route.id === selected ? 1 : 0.8}
+            strokeOpacity={route.id === selected ? 1 : 0.85}
             strokeLinejoin="round"
             strokeLinecap="round"
             pathLength={1}
@@ -161,8 +161,8 @@ export function StreetMap({
               cx={x}
               cy={y}
               r="5"
-              fill={done ? route.color : "#121417"}
-              stroke={done ? "#121417" : route.color}
+              fill={done ? route.color : "var(--map-node-bg)"}
+              stroke={done ? "var(--map-node-bg)" : route.color}
               strokeWidth="2"
             />
           ))}
@@ -174,15 +174,24 @@ export function StreetMap({
         const [x, y] = route.truck;
         return (
           <g key={route.vehicle}>
-            <rect x={x - 12} y={y - 12} width="24" height="24" rx="7" fill="#0e0f11" stroke={route.color} strokeWidth="2" />
+            <rect x={x - 12} y={y - 12} width="24" height="24" rx="7" fill="var(--map-chip-bg)" stroke={route.color} strokeWidth="2" />
             <Truck x={x - 7} y={y - 7} width={14} height={14} color={route.color} strokeWidth={2.2} />
             {labels && (
               <g>
-                <rect x={x + 16} y={y - 10} width={route.vehicle.length * 6.4 + 14} height="20" rx="5" fill="#0e0f11" fillOpacity="0.9" stroke="#32353a" />
+                <rect
+                  x={x + 16}
+                  y={y - 10}
+                  width={route.vehicle.length * 6.4 + 14}
+                  height="20"
+                  rx="5"
+                  fill="var(--map-chip-bg)"
+                  fillOpacity="0.94"
+                  stroke="var(--map-chip-stroke)"
+                />
                 <text
                   x={x + 23}
                   y={y + 4}
-                  fill="#e6e7e8"
+                  fill="var(--map-chip-fg)"
                   fontSize="10.5"
                   style={{ fontFamily: "var(--font-plex-mono), monospace" }}
                 >

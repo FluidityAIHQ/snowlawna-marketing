@@ -175,7 +175,7 @@ export function MapPanel() {
     <div className="flex h-full">
       <div className="relative min-w-0 flex-1 overflow-hidden">
         <StreetMap className="absolute inset-0 size-full" animate />
-        <span className="absolute top-3 left-3 flex h-8 w-48 items-center gap-2 rounded-md border border-line-strong bg-canvas/90 px-2.5 text-[12px] text-fg-3 shadow-lg backdrop-blur">
+        <span className="absolute top-3 left-3 flex h-8 w-48 items-center gap-2 rounded-md border border-line-strong bg-surface/92 px-2.5 text-[12px] text-fg-3 shadow-md backdrop-blur">
           <Search aria-hidden className="size-3.5" /> Search routes
         </span>
         <div className="absolute top-3 right-3 hidden gap-1.5 @xl:flex">
@@ -186,8 +186,8 @@ export function MapPanel() {
           ].map(([label, on]) => (
             <span
               key={label as string}
-              className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-[12px] shadow-lg backdrop-blur ${
-                on ? "border-ice/40 bg-ice/15 text-ice" : "border-line-strong bg-canvas/90 text-fg-2"
+              className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-[12px] shadow-md backdrop-blur ${
+                on ? "border-spruce/40 bg-surface/95 font-medium text-spruce" : "border-line-strong bg-surface/92 text-fg-2"
               }`}
             >
               {on ? <Check aria-hidden className="size-3.5" /> : <Layers aria-hidden className="size-3.5" />}
@@ -195,7 +195,7 @@ export function MapPanel() {
             </span>
           ))}
         </div>
-        <div className="absolute right-3 bottom-3 grid overflow-hidden rounded-md border border-line-strong bg-canvas/90 text-fg-2 shadow-lg">
+        <div className="absolute right-3 bottom-3 grid overflow-hidden rounded-md border border-line-strong bg-surface/92 text-fg-2 shadow-md">
           <span className="flex size-8 items-center justify-center border-b border-line">
             <Maximize2 aria-hidden className="size-3.5" />
           </span>
@@ -352,12 +352,12 @@ export function MeasurePanel() {
       <div className="relative min-w-0 flex-1 overflow-hidden bg-canvas">
         <PropertyScene season="summer" idPrefix="tour" className="absolute inset-0 size-full" />
         <PropertyTraces className="absolute inset-0 size-full" />
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1 rounded-lg border border-line-strong bg-canvas/90 p-1 shadow-lg backdrop-blur">
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1 rounded-lg border border-line-strong bg-surface/92 p-1 shadow-md backdrop-blur">
           {TOOLS.map(({ label, Icon, tone }, i) => (
             <span
               key={label}
               className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-[12px] ${
-                i === 0 ? "bg-surface-3 text-fg" : "text-fg-2"
+                i === 0 ? "bg-surface-3 font-medium text-fg" : "text-fg-2"
               } ${i > 1 ? "hidden @2xl:inline-flex" : ""}`}
             >
               <Icon aria-hidden className={`size-3.5 ${tone}`} />
@@ -365,8 +365,8 @@ export function MeasurePanel() {
             </span>
           ))}
         </div>
-        <span className="absolute right-3 bottom-3 inline-flex overflow-hidden rounded-md border border-line-strong bg-canvas/90 text-[11px] shadow-lg">
-          <span className="bg-surface-3 px-2.5 py-1.5 text-fg">Satellite</span>
+        <span className="absolute right-3 bottom-3 inline-flex overflow-hidden rounded-md border border-line-strong bg-surface/92 text-[11px] shadow-md">
+          <span className="bg-surface-3 px-2.5 py-1.5 font-medium text-fg">Satellite</span>
           <span className="px-2.5 py-1.5 text-fg-3">Map</span>
         </span>
       </div>

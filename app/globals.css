@@ -1,35 +1,169 @@
 @import "tailwindcss";
 
-/* Brand tokens mirror the product's charcoal theme (snowlawna THEME.md). The default Tailwind
-   palette is removed so every colour on the site comes from this list. */
+/* Snowlawna brand token system: crisp snow whites and icy neutrals with fresh lawn greens.
+   Light mode is the base palette; dark mode activates via system preference or [data-theme="dark"].
+   The default Tailwind palette is removed so every colour on the site comes from these tokens. */
+:root,
+:root[data-theme="light"] {
+  --theme-canvas: #f6faf8;
+  --theme-surface: #ffffff;
+  --theme-surface-2: #ecf4f0;
+  --theme-surface-3: #ddebe4;
+  --theme-ink: #09140e;
+  --theme-line: #d2e1da;
+  --theme-line-strong: #b2c9be;
+
+  --theme-fg: #102018;
+  --theme-fg-2: #2d4438;
+  --theme-fg-3: #486154;
+  --theme-snow: #08130d;
+
+  --theme-primary: #14633a;
+  --theme-primary-hover: #0f4f2e;
+
+  --theme-ice: #0d6377;
+  --theme-ice-deep: #094d5e;
+  --theme-spruce: #136b3d;
+  --theme-spruce-deep: #0d502d;
+  --theme-success: #126b3c;
+  --theme-warning: #875000;
+  --theme-danger: #b32235;
+
+  --grid-line: rgb(16 40 28 / 0.055);
+  --shadow-card: 0 12px 32px -12px rgb(10 30 20 / 0.08), 0 2px 6px -1px rgb(10 30 20 / 0.04);
+  --shadow-float: 0 24px 56px -16px rgb(10 30 20 / 0.15), 0 4px 12px -2px rgb(10 30 20 / 0.06);
+  --shadow-stage: 0 36px 90px -28px rgb(10 30 20 / 0.16), 0 8px 24px -6px rgb(10 30 20 / 0.06);
+
+  /* Cartographic tokens for inline SVG maps */
+  --map-bg: #e7f0ec;
+  --map-park: #d2e8dc;
+  --map-water: #c7e2eb;
+  --map-lot: #d8e5df;
+  --map-street-minor: #ffffff;
+  --map-street-major: #f7fbf9;
+  --map-label: #486154;
+  --map-node-bg: #ffffff;
+  --map-chip-bg: #ffffff;
+  --map-chip-stroke: #b2c9be;
+  --map-chip-fg: #102018;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --theme-canvas: #0b110f;
+    --theme-surface: #111916;
+    --theme-surface-2: #17221e;
+    --theme-surface-3: #1f2e28;
+    --theme-ink: #070c0a;
+    --theme-line: #21302a;
+    --theme-line-strong: #2e433a;
+
+    --theme-fg: #e7f0ec;
+    --theme-fg-2: #b2c5bc;
+    --theme-fg-3: #82998e;
+    --theme-snow: #f4faf7;
+
+    --theme-primary: #4ec986;
+    --theme-primary-hover: #68d499;
+
+    --theme-ice: #7ec8d8;
+    --theme-ice-deep: #5ab2c6;
+    --theme-spruce: #56ca8b;
+    --theme-spruce-deep: #359f66;
+    --theme-success: #64cf95;
+    --theme-warning: #e5b567;
+    --theme-danger: #f08c99;
+
+    --grid-line: rgb(231 240 236 / 0.045);
+    --shadow-card: 0 20px 50px -24px rgb(0 0 0 / 0.7);
+    --shadow-float: 0 30px 80px -20px rgb(0 0 0 / 0.85);
+    --shadow-stage: 0 50px 120px -40px rgb(0 0 0 / 0.9);
+
+    --map-bg: #0e1613;
+    --map-park: #12241b;
+    --map-water: #12252e;
+    --map-lot: #15201c;
+    --map-street-minor: #1b2823;
+    --map-street-major: #23332d;
+    --map-label: #7a9186;
+    --map-node-bg: #0e1613;
+    --map-chip-bg: #0b110f;
+    --map-chip-stroke: #2e433a;
+    --map-chip-fg: #e7f0ec;
+  }
+}
+
+:root[data-theme="dark"] {
+  --theme-canvas: #0b110f;
+  --theme-surface: #111916;
+  --theme-surface-2: #17221e;
+  --theme-surface-3: #1f2e28;
+  --theme-ink: #070c0a;
+  --theme-line: #21302a;
+  --theme-line-strong: #2e433a;
+
+  --theme-fg: #e7f0ec;
+  --theme-fg-2: #b2c5bc;
+  --theme-fg-3: #82998e;
+  --theme-snow: #f4faf7;
+
+  --theme-primary: #4ec986;
+  --theme-primary-hover: #68d499;
+
+  --theme-ice: #7ec8d8;
+  --theme-ice-deep: #5ab2c6;
+  --theme-spruce: #56ca8b;
+  --theme-spruce-deep: #359f66;
+  --theme-success: #64cf95;
+  --theme-warning: #e5b567;
+  --theme-danger: #f08c99;
+
+  --grid-line: rgb(231 240 236 / 0.045);
+  --shadow-card: 0 20px 50px -24px rgb(0 0 0 / 0.7);
+  --shadow-float: 0 30px 80px -20px rgb(0 0 0 / 0.85);
+  --shadow-stage: 0 50px 120px -40px rgb(0 0 0 / 0.9);
+
+  --map-bg: #0e1613;
+  --map-park: #12241b;
+  --map-water: #12252e;
+  --map-lot: #15201c;
+  --map-street-minor: #1b2823;
+  --map-street-major: #23332d;
+  --map-label: #7a9186;
+  --map-node-bg: #0e1613;
+  --map-chip-bg: #0b110f;
+  --map-chip-stroke: #2e433a;
+  --map-chip-fg: #e7f0ec;
+}
+
 @theme {
   --color-*: initial;
   --color-white: #ffffff;
   --color-black: #000000;
 
-  --color-canvas: #0e0f11;
-  --color-surface: #141518;
-  --color-surface-2: #1a1c1f;
-  --color-surface-3: #222428;
-  --color-ink: #121416;
-  --color-line: #26282c;
-  --color-line-strong: #32353a;
+  --color-canvas: var(--theme-canvas);
+  --color-surface: var(--theme-surface);
+  --color-surface-2: var(--theme-surface-2);
+  --color-surface-3: var(--theme-surface-3);
+  --color-ink: var(--theme-ink);
+  --color-line: var(--theme-line);
+  --color-line-strong: var(--theme-line-strong);
 
-  --color-fg: #e6e7e8;
-  --color-fg-2: #b4b8bc;
-  --color-fg-3: #878c92;
-  --color-snow: #f3f6f7;
+  --color-fg: var(--theme-fg);
+  --color-fg-2: var(--theme-fg-2);
+  --color-fg-3: var(--theme-fg-3);
+  --color-snow: var(--theme-snow);
 
-  --color-primary: #dcdfe1;
-  --color-primary-hover: #eceeef;
+  --color-primary: var(--theme-primary);
+  --color-primary-hover: var(--theme-primary-hover);
 
-  --color-ice: #92c6d2;
-  --color-ice-deep: #7fbccb;
-  --color-spruce: #6cbb91;
-  --color-spruce-deep: #3f9469;
-  --color-success: #7cc49d;
-  --color-warning: #dcb06a;
-  --color-danger: #e58a98;
+  --color-ice: var(--theme-ice);
+  --color-ice-deep: var(--theme-ice-deep);
+  --color-spruce: var(--theme-spruce);
+  --color-spruce-deep: var(--theme-spruce-deep);
+  --color-success: var(--theme-success);
+  --color-warning: var(--theme-warning);
+  --color-danger: var(--theme-danger);
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
@@ -68,30 +202,50 @@
   line-height: 1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-ice);
+  color: var(--color-spruce);
 }
 
 /* Survey-sheet grid used behind the hero and a few panels. */
 @utility bg-survey {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 @utility hairline-x {
-  background-image: linear-gradient(90deg, transparent, var(--color-line-strong) 20%, var(--color-line-strong) 80%, transparent);
+  background-image: linear-gradient(90deg, transparent, var(--color-line-strong) 18%, var(--color-line-strong) 82%, transparent);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@utility shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+@utility shadow-stage {
+  box-shadow: var(--shadow-stage);
 }
 
 /* ---------- Base ---------- */
 
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light dark;
     background-color: var(--color-canvas);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     interpolate-size: allow-keywords;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
   }
 
   body {
@@ -116,12 +270,12 @@
   }
 
   ::selection {
-    background-color: rgb(146 198 210 / 0.32);
+    background-color: color-mix(in oklab, var(--color-spruce) 24%, transparent);
     color: var(--color-snow);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-ice);
+    outline: 2px solid var(--color-spruce);
     outline-offset: 3px;
   }
 
@@ -342,9 +496,9 @@
   }
 
   & a {
-    color: var(--color-ice);
+    color: var(--color-spruce);
     text-decoration: underline;
-    text-decoration-color: rgb(146 198 210 / 0.4);
+    text-decoration-color: color-mix(in oklab, var(--color-spruce) 40%, transparent);
     text-underline-offset: 3px;
   }
 

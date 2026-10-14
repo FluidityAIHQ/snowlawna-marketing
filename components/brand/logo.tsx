@@ -20,15 +20,15 @@ const LETTERS: [number, string][] = [
 function Glyph() {
   return (
     <>
-      <path fill="#f3f6f7" d={RIDGE} />
-      <path fill="#92c6d2" d={SWEEP} />
-      <path fill="#6cbb91" d={BLADE} />
+      <path fill="#f4faf7" d={RIDGE} />
+      <path fill="#7ec8d8" d={SWEEP} />
+      <path fill="#56ca8b" d={BLADE} />
     </>
   );
 }
 
 function Tile() {
-  return <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#1a1c1f" stroke="#32353a" strokeWidth="1.5" />;
+  return <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#0d1b14" stroke="#243c30" strokeWidth="1.5" />;
 }
 
 /** Mark + lettering. Lettering uses currentColor. */

@@ -67,7 +67,7 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
           role="tablist"
           aria-label="Product areas"
           onKeyDown={onKeyDown}
-          className="grid w-full max-w-sm grid-cols-2 gap-1 rounded-3xl border border-line bg-surface/70 p-1 backdrop-blur sm:inline-flex sm:w-auto sm:max-w-none sm:rounded-full"
+          className="grid w-full max-w-sm grid-cols-2 gap-1.5 rounded-3xl border border-line-strong bg-surface p-1.5 shadow-card sm:inline-flex sm:w-auto sm:max-w-none sm:rounded-full"
         >
           {TABS.map((tab, i) => {
             const selected = i === active;
@@ -84,11 +84,13 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
                 aria-controls={`tour-panel-${tab.id}`}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(i)}
-                className={`inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-4 text-sm font-medium transition-colors ${
-                  selected ? "bg-surface-3 text-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]" : "text-fg-3 hover:text-fg"
+                className={`inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-4.5 text-sm font-medium transition-colors ${
+                  selected
+                    ? "bg-primary text-canvas shadow-sm"
+                    : "text-fg-2 hover:bg-surface-2 hover:text-fg"
                 }`}
               >
-                <tab.Icon aria-hidden className={`size-4 ${selected ? "text-ice" : ""}`} strokeWidth={1.8} />
+                <tab.Icon aria-hidden className={`size-4 ${selected ? "text-canvas" : "text-spruce"}`} strokeWidth={1.8} />
                 {tab.label}
               </button>
             );

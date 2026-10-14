@@ -3,15 +3,88 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { Wordmark } from "@/components/brand/logo";
 import { IntentLink } from "@/components/intent-link";
 import { ButtonArrow, DemoAppLink, buttonClass } from "@/components/ui/button";
 import { mainNav, site } from "@/lib/site";
 
+const THEME_EVENT = "snowlawna:theme";
+
 function subscribeToScroll(onChange: () => void) {
   window.addEventListener("scroll", onChange, { passive: true });
   return () => window.removeEventListener("scroll", onChange);
+}
+
+function subscribeToTheme(onChange: () => void) {
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  const onMediaChange = () => {
+    try {
+      const stored = localStorage.getItem("theme");
+      if (stored === "light" || stored === "dark") return;
+    } catch {
+      // Ignore storage access errors
+    }
+    const next = media.matches ? "dark" : "light";
+    const root = document.documentElement;
+    root.dataset.theme = next;
+    root.classList.toggle("dark", media.matches);
+    root.classList.toggle("light", !media.matches);
+    root.style.colorScheme = next;
+    onChange();
+  };
+  window.addEventListener(THEME_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  media.addEventListener("change", onMediaChange);
+  return () => {
+    window.removeEventListener(THEME_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+    media.removeEventListener("change", onMediaChange);
+  };
+}
+
+function getIsDarkSnapshot(): boolean {
+  const root = document.documentElement;
+  if (root.dataset.theme === "dark") return true;
+  if (root.dataset.theme === "light") return false;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+function ThemeToggle({ className = "" }: { className?: string }) {
+  const isDark = useSyncExternalStore(subscribeToTheme, getIsDarkSnapshot, () => false);
+
+  const toggleTheme = () => {
+    const nextDark = !isDark;
+    const next = nextDark ? "dark" : "light";
+    const root = document.documentElement;
+    root.dataset.theme = next;
+    root.classList.toggle("dark", nextDark);
+    root.classList.toggle("light", !nextDark);
+    root.style.colorScheme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Ignore storage write errors in restricted contexts
+    }
+    window.dispatchEvent(new Event(THEME_EVENT));
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={isDark}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface/85 text-fg-2 shadow-[0_1px_2px_rgb(10_30_20/0.05)] backdrop-blur-sm transition-colors hover:border-spruce/50 hover:bg-surface-2 hover:text-fg ${className}`}
+    >
+      {isDark ? (
+        <Sun aria-hidden className="size-4 text-ice transition-transform duration-200" strokeWidth={2} />
+      ) : (
+        <Moon aria-hidden className="size-4 text-spruce transition-transform duration-200" strokeWidth={2} />
+      )}
+    </button>
+  );
 }
 
 export function SiteHeader() {
@@ -49,23 +122,25 @@ export function SiteHeader() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div
         aria-hidden
-        className={`absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter] duration-300 ${
-          solid ? "border-line/80 bg-canvas/80 backdrop-blur-xl backdrop-saturate-150" : "border-transparent"
+        className={`absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter,box-shadow] duration-300 ${
+          solid
+            ? "border-line bg-canvas/85 shadow-[0_8px_30px_-16px_rgb(10_30_20/0.12)] backdrop-blur-xl backdrop-saturate-150"
+            : "border-transparent bg-canvas/40 backdrop-blur-md"
         }`}
       />
-      <div className="wrap relative flex h-16 items-center gap-6">
+      <div className="wrap relative flex h-16 items-center gap-5">
         <Link href="/" className="-m-1 rounded-lg p-1" aria-label="Snowlawna home" onClick={close}>
-          <Wordmark className="h-7 w-auto text-fg" />
+          <Wordmark className="h-7 w-auto text-snow" />
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-0.5">
+          <ul className="flex items-center gap-0.5 rounded-full border border-line/80 bg-surface/70 px-1.5 py-1 backdrop-blur-sm">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={pathname === item.href ? "page" : undefined}
-                  className="rounded-full px-3 py-2 text-sm text-fg-2 transition-colors hover:text-fg aria-[current=page]:text-fg"
+                  className="rounded-full px-3.5 py-1.5 text-sm font-medium text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg aria-[current=page]:bg-surface-3 aria-[current=page]:text-fg"
                 >
                   {item.label}
                 </Link>
@@ -74,25 +149,27 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="ml-auto hidden items-center gap-1.5 md:flex">
-          <DemoAppLink href={site.demoAppUrl} variant="ghost" size="sm" />
-          <IntentLink intent="demo" className={buttonClass({ size: "sm" })}>
-            Book a demo
-            <ButtonArrow />
-          </IntentLink>
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle />
+          <div className="hidden items-center gap-2 md:flex">
+            <DemoAppLink href={site.demoAppUrl} variant="ghost" size="sm" />
+            <IntentLink intent="demo" className={buttonClass({ size: "sm" })}>
+              Book a demo
+              <ButtonArrow />
+            </IntentLink>
+          </div>
+          <button
+            ref={toggleRef}
+            type="button"
+            className="-mr-1 inline-flex size-9 items-center justify-center rounded-full border border-line-strong bg-surface/85 text-fg transition-colors hover:bg-surface-2 lg:hidden"
+            aria-expanded={open}
+            aria-controls={menuId}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            {open ? <X aria-hidden className="size-4" /> : <Menu aria-hidden className="size-4" />}
+          </button>
         </div>
-
-        <button
-          ref={toggleRef}
-          type="button"
-          className="-mr-2 inline-flex size-10 items-center justify-center rounded-full text-fg transition-colors hover:bg-surface-2 max-md:ml-auto lg:hidden"
-          aria-expanded={open}
-          aria-controls={menuId}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          {open ? <X aria-hidden className="size-5" /> : <Menu aria-hidden className="size-5" />}
-        </button>
       </div>
 
       <div
@@ -107,7 +184,7 @@ export function SiteHeader() {
                 <Link
                   href={item.href}
                   onClick={close}
-                  className="flex items-center justify-between py-4 font-wide text-2xl font-semibold tracking-tight text-fg"
+                  className="flex items-center justify-between py-4 font-wide text-2xl font-semibold tracking-tight text-snow"
                 >
                   {item.label}
                   <ButtonArrow />
@@ -124,7 +201,7 @@ export function SiteHeader() {
             <IntentLink
               intent="waitlist"
               onNavigate={close}
-              className="py-2 text-center text-sm text-ice underline-offset-4 hover:underline"
+              className="py-2 text-center text-sm font-medium text-spruce underline-offset-4 hover:underline"
             >
               Join the waitlist
             </IntentLink>

@@ -77,11 +77,11 @@ export function RouteTag({ color, children }: { color: string; children: ReactNo
 
 function Sidebar({ active }: { active: NavKey }) {
   return (
-    <aside className="hidden w-52 shrink-0 flex-col border-r border-line bg-canvas/70 p-3 @3xl:flex">
+    <aside className="hidden w-52 shrink-0 flex-col border-r border-line bg-surface-2/50 p-3 @3xl:flex">
       <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5">
         <Mark className="size-7" />
         <div className="min-w-0">
-          <p className="truncate text-[13px] leading-tight font-semibold text-fg">Snowlawna Demo</p>
+          <p className="truncate text-[13px] leading-tight font-semibold text-snow">Snowlawna Demo</p>
           <p className="text-[11px] leading-tight text-fg-3">Ottawa, ON</p>
         </div>
       </div>
@@ -94,11 +94,11 @@ function Sidebar({ active }: { active: NavKey }) {
                 <li
                   key={key}
                   className={`relative flex items-center gap-2.5 rounded-md px-2 py-1.5 text-[13px] ${
-                    key === active ? "bg-surface-2 text-fg" : "text-fg-2"
+                    key === active ? "bg-spruce/12 font-medium text-snow" : "text-fg-2"
                   }`}
                 >
-                  {key === active && <span className="absolute top-1.5 bottom-1.5 -left-3 w-0.5 rounded-full bg-ice" />}
-                  <Icon aria-hidden className={`size-4 ${key === active ? "text-ice" : "text-fg-3"}`} strokeWidth={1.8} />
+                  {key === active && <span className="absolute top-1.5 bottom-1.5 -left-3 w-0.5 rounded-full bg-spruce" />}
+                  <Icon aria-hidden className={`size-4 ${key === active ? "text-spruce" : "text-fg-3"}`} strokeWidth={1.8} />
                   {label}
                 </li>
               ))}
@@ -106,8 +106,8 @@ function Sidebar({ active }: { active: NavKey }) {
           </div>
         ))}
       </nav>
-      <div className="mt-auto flex items-center gap-2.5 rounded-lg border border-line bg-surface/60 p-2">
-        <span className="flex size-7 items-center justify-center rounded-full bg-surface-3 text-[11px] font-semibold text-fg">
+      <div className="mt-auto flex items-center gap-2.5 rounded-lg border border-line bg-surface p-2">
+        <span className="flex size-7 items-center justify-center rounded-full bg-spruce/15 text-[11px] font-semibold text-spruce">
           AR
         </span>
         <div className="min-w-0">
@@ -135,15 +135,15 @@ export function AppFrame({
   children: ReactNode;
 }) {
   return (
-    <div className="@container overflow-hidden rounded-2xl border border-line-strong bg-surface shadow-[0_60px_140px_-50px_rgb(0_0_0/0.95),0_0_0_1px_rgb(255_255_255/0.02)]">
-      <div className="flex h-10 items-center gap-3 border-b border-line bg-canvas/80 px-4">
+    <div className="@container overflow-hidden rounded-2xl border border-line-strong bg-surface shadow-stage">
+      <div className="flex h-10 items-center gap-3 border-b border-line bg-surface-2/80 px-4">
         <div aria-hidden className="flex gap-1.5">
           <span className="size-2.5 rounded-full bg-line-strong" />
           <span className="size-2.5 rounded-full bg-line-strong" />
           <span className="size-2.5 rounded-full bg-line-strong" />
         </div>
         <div className="mx-auto flex h-6 max-w-[70%] min-w-0 items-center gap-1.5 rounded-md border border-line bg-surface px-3 font-mono text-[11px] text-fg-3">
-          <Lock aria-hidden className="size-3 shrink-0" />
+          <Lock aria-hidden className="size-3 shrink-0 text-spruce" />
           <span className="truncate">snowlawna.vercel.app{path}</span>
         </div>
         <div aria-hidden className="w-10" />
@@ -151,16 +151,16 @@ export function AppFrame({
       <div className="flex h-[30rem] @3xl:h-[37rem]">
         <Sidebar active={active} />
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex h-14 shrink-0 items-center gap-3 border-b border-line px-4 @xl:px-5">
+          <header className="flex h-14 shrink-0 items-center gap-3 border-b border-line bg-surface px-4 @xl:px-5">
             <div className="min-w-0">
               <p className="text-[11px] leading-tight text-fg-3">{section}</p>
-              <p className="truncate text-[15px] leading-tight font-semibold text-fg">{title}</p>
+              <p className="truncate text-[15px] leading-tight font-semibold text-snow">{title}</p>
             </div>
             <div className="ml-auto flex items-center gap-2">
-              <span className="hidden h-8 w-44 items-center gap-2 rounded-md border border-line bg-canvas/60 px-2.5 text-[12px] text-fg-3 @5xl:flex">
+              <span className="hidden h-8 w-44 items-center gap-2 rounded-md border border-line bg-surface-2/60 px-2.5 text-[12px] text-fg-3 @5xl:flex">
                 <Search aria-hidden className="size-3.5" /> Search
               </span>
-              <span className="hidden items-center gap-1.5 rounded-md px-2 py-1 text-[12px] text-fg-2 @2xl:flex">
+              <span className="hidden items-center gap-1.5 rounded-md border border-line bg-surface-2/50 px-2.5 py-1 text-[12px] text-fg-2 @2xl:flex">
                 <CloudSnow aria-hidden className="size-4 text-ice" />
                 <span className="font-medium text-fg">−7°</span> Light snow · Ottawa
               </span>

@@ -315,8 +315,8 @@ export function PropertyTraces({
           <polygon
             key={points}
             points={points}
-            fill="rgb(108 187 145 / 0.17)"
-            stroke="#6cbb91"
+            fill="rgb(86 202 139 / 0.2)"
+            stroke="#56ca8b"
             pathLength={1}
             className={animate ? "anim-draw" : undefined}
             style={animate ? ({ "--delay": `${500 + i * 250}ms` } as React.CSSProperties) : undefined}
@@ -324,17 +324,17 @@ export function PropertyTraces({
         ))}
         <polygon
           points={SNOW_POLYGON}
-          fill="rgb(146 198 210 / 0.2)"
-          stroke="#92c6d2"
+          fill="rgb(126 200 216 / 0.22)"
+          stroke="#7ec8d8"
           pathLength={1}
           className={animate ? "anim-draw" : undefined}
           style={animate ? ({ "--delay": "1250ms" } as React.CSSProperties) : undefined}
         />
       </g>
-      <polyline points={WALKWAY_LINE} fill="none" stroke="#92c6d2" strokeWidth="3" strokeDasharray="5 5" strokeLinecap="round" />
+      <polyline points={WALKWAY_LINE} fill="none" stroke="#7ec8d8" strokeWidth="3" strokeDasharray="5 5" strokeLinecap="round" />
       <g className={animate ? "anim-fade" : undefined} style={animate ? ({ "--delay": "1500ms" } as React.CSSProperties) : undefined}>
         {vertices.map(([x, y]) => (
-          <rect key={`${x}-${y}`} x={x - 4} y={y - 4} width="8" height="8" rx="1.5" fill="#f3f6f7" stroke="#0e0f11" strokeWidth="1.5" />
+          <rect key={`${x}-${y}`} x={x - 4} y={y - 4} width="8" height="8" rx="1.5" fill="#f4faf7" stroke="#0b110f" strokeWidth="1.5" />
         ))}
       </g>
     </svg>

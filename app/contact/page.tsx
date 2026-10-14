@@ -35,8 +35,8 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
       />
       <div className="wrap grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
         <div>
-          <p className="eyebrow anim-rise flex items-center gap-2.5">
-            <span aria-hidden className="h-2 w-3.5 -skew-x-[32deg] rounded-[1px] bg-ice" />
+          <p className="eyebrow anim-rise inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-3.5 py-1 shadow-[0_1px_2px_rgb(10_30_20/0.04)]">
+            <span aria-hidden className="h-2 w-3.5 -skew-x-[32deg] rounded-[1px] bg-spruce" />
             Contact
           </p>
           <h1
@@ -53,12 +53,12 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
           <ul className="anim-rise mt-10 grid gap-6" style={{ "--delay": "240ms" } as React.CSSProperties}>
             {OPTIONS.map(({ Icon, title, text }) => (
               <li key={title} className="flex gap-4">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-surface text-ice">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-spruce/25 bg-spruce/10 text-spruce">
                   <Icon aria-hidden className="size-[18px]" strokeWidth={1.8} />
                 </span>
                 <div>
-                  <p className="font-medium text-fg">{title}</p>
-                  <p className="mt-0.5 text-[15px] leading-relaxed text-fg-3">{text}</p>
+                  <p className="font-semibold text-snow">{title}</p>
+                  <p className="mt-0.5 text-[15px] leading-relaxed text-fg-2">{text}</p>
                 </div>
               </li>
             ))}
@@ -68,7 +68,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
             {site.contactEmail && (
               <p className="flex items-center gap-2.5">
                 <Mail aria-hidden className="size-4 text-fg-3" />
-                <a href={`mailto:${site.contactEmail}`} className="text-ice underline decoration-ice/40 underline-offset-4 hover:decoration-ice">
+                <a href={`mailto:${site.contactEmail}`} className="font-medium text-spruce underline decoration-spruce/40 underline-offset-4 hover:decoration-spruce">
                   {site.contactEmail}
                 </a>
               </p>
@@ -83,7 +83,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
         <div
           id="lead-form"
           data-anchor
-          className="anim-float rounded-3xl border border-line-strong bg-surface/90 p-5 shadow-[0_40px_100px_-40px_rgb(0_0_0/0.9)] backdrop-blur sm:p-8 lg:self-start"
+          className="anim-float rounded-3xl border border-line-strong bg-surface p-5 shadow-stage sm:p-8 lg:self-start"
           style={{ "--delay": "200ms" } as React.CSSProperties}
         >
           <LeadForm key={intent} initialIntent={intent} notice={notice} />

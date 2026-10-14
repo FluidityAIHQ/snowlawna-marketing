@@ -44,10 +44,10 @@ function useHydrated() {
 }
 
 const inputClass = (invalid: boolean) =>
-  `w-full rounded-xl border bg-canvas/70 px-3.5 text-[15px] text-fg placeholder:text-fg-3/70 outline-none transition-[border-color,box-shadow] duration-200 focus:ring-4 ${
+  `w-full rounded-xl border bg-canvas px-3.5 text-[15px] text-fg placeholder:text-fg-3/75 outline-none transition-[border-color,box-shadow] duration-200 focus:ring-4 ${
     invalid
       ? "border-danger/70 focus:border-danger focus:ring-danger/15"
-      : "border-line-strong hover:border-fg-3/50 focus:border-ice/70 focus:ring-ice/15"
+      : "border-line-strong hover:border-fg-3/60 focus:border-spruce focus:ring-spruce/15"
   }`;
 
 function FieldError({ id, message }: { id: string; message?: string }) {
@@ -216,11 +216,11 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
 
       <fieldset>
         <legend className="sr-only">What would you like to do?</legend>
-        <div className="grid grid-cols-3 gap-1 rounded-full border border-line bg-canvas/70 p-1">
+        <div className="grid grid-cols-3 gap-1 rounded-full border border-line bg-surface-2 p-1">
           {LEAD_INTENTS.map((value) => (
             <label
               key={value}
-              className="cursor-pointer rounded-full px-2 py-2 text-center text-[13px] font-medium whitespace-nowrap text-fg-3 transition-colors hover:text-fg has-[:checked]:bg-surface-3 has-[:checked]:text-fg has-[:checked]:shadow-[inset_0_1px_0_rgb(255_255_255/0.06)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ice"
+              className="cursor-pointer rounded-full px-2 py-2 text-center text-[13px] font-medium whitespace-nowrap text-fg-2 transition-colors hover:text-fg has-[:checked]:bg-primary has-[:checked]:text-canvas has-[:checked]:shadow-sm has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-spruce"
             >
               <input
                 type="radio"
@@ -337,12 +337,12 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
             ).map(([value, label, Icon, color]) => (
               <label
                 key={value}
-                className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-canvas/70 px-4 text-sm text-fg-2 transition-colors select-none hover:border-fg-3/50 has-[:checked]:border-ice/50 has-[:checked]:bg-surface-3 has-[:checked]:text-fg has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ice"
+                className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-canvas px-4 text-sm text-fg-2 transition-colors select-none hover:border-fg-3/50 has-[:checked]:border-spruce/60 has-[:checked]:bg-spruce/12 has-[:checked]:font-medium has-[:checked]:text-snow has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-spruce"
               >
                 <input type="checkbox" name="services" value={value} className="peer sr-only" />
                 <Icon aria-hidden className={`size-4 ${color}`} />
                 {label}
-                <Check aria-hidden className="hidden size-3.5 text-ice peer-checked:block" strokeWidth={2.5} />
+                <Check aria-hidden className="hidden size-3.5 text-spruce peer-checked:block" strokeWidth={2.5} />
               </label>
             ))}
           </div>

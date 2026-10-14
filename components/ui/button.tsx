@@ -9,11 +9,10 @@ const base =
   "group/btn relative inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,translate] duration-200 ease-out disabled:pointer-events-none disabled:opacity-60 motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0";
 
 const variants: Record<Variant, string> = {
-  // Light neutral on charcoal, as in the product: primary actions aren't coloured buttons.
   primary:
-    "bg-primary text-canvas shadow-[inset_0_1px_0_rgb(255_255_255/0.6),0_1px_2px_rgb(0_0_0/0.4)] hover:bg-primary-hover hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.6),0_10px_30px_-8px_rgb(146_198_210/0.45)]",
+    "bg-primary text-canvas shadow-[inset_0_1px_0_rgb(255_255_255/0.28),0_2px_6px_rgb(10_30_20/0.18)] hover:bg-primary-hover hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.32),0_10px_26px_-6px_color-mix(in_oklab,var(--color-spruce)_42%,transparent)]",
   secondary:
-    "border border-line-strong bg-surface/70 text-fg backdrop-blur-sm hover:border-fg-3/60 hover:bg-surface-2",
+    "border border-line-strong bg-surface/85 text-fg shadow-[0_1px_2px_rgb(10_30_20/0.05)] backdrop-blur-sm hover:border-spruce/50 hover:bg-surface-2",
   ghost: "text-fg-2 hover:bg-surface-2 hover:text-fg",
 };
 

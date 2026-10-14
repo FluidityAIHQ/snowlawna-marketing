@@ -26,7 +26,7 @@ export function SeasonSplit() {
         <span
           key={label.text}
           aria-hidden
-          className={`anim-fade pointer-events-none absolute flex -translate-y-1/2 items-center ${label.align === "center" ? "-translate-x-1/2" : ""} gap-1.5 rounded-md border border-white/10 bg-canvas/90 px-2 py-1 font-mono text-[10px] leading-none whitespace-nowrap text-fg shadow-[0_6px_16px_-6px_rgb(0_0_0/0.7)] sm:text-[11px]`}
+          className={`anim-fade pointer-events-none absolute flex -translate-y-1/2 items-center ${label.align === "center" ? "-translate-x-1/2" : ""} gap-1.5 rounded-md border border-line-strong bg-surface/92 px-2 py-1 font-mono text-[10px] leading-none whitespace-nowrap text-fg shadow-md backdrop-blur-md sm:text-[11px]`}
           style={{ left: label.left, top: label.top, "--delay": `${1500 + i * 150}ms` } as CSSProperties}
         >
           <span className={`size-1.5 rounded-full ${label.tone === "spruce" ? "bg-spruce" : "bg-ice"}`} />
