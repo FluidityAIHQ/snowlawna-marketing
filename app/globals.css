@@ -87,6 +87,11 @@
 
   --scene-trace-stroke: #00E5FF;
   --scene-trace-fill: rgba(0,229,255,0.14);
+
+  /* Hero video scrim (hero-scrim): canvas strength behind the copy and at the far edge. Light mode washes
+     out the footage's dark roofs and trees under the dark copy. */
+  --hero-scrim-copy: 86%;
+  --hero-scrim-edge: 40%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -172,6 +177,10 @@
 
     --scene-trace-stroke: #00E5FF;
     --scene-trace-fill: rgba(0,229,255,0.14);
+
+    /* Hero video scrim: dark mode dims the bright snow under the light copy. */
+    --hero-scrim-copy: 88%;
+    --hero-scrim-edge: 66%;
   }
 }
 
@@ -257,6 +266,10 @@
 
   --scene-trace-stroke: #00E5FF;
   --scene-trace-fill: rgba(0,229,255,0.14);
+
+  /* Hero video scrim: dark mode dims the bright snow under the light copy. */
+  --hero-scrim-copy: 88%;
+  --hero-scrim-edge: 66%;
 }
 
 @theme {
@@ -334,6 +347,25 @@
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 48px 48px;
+}
+
+/* Canvas-coloured scrim over the hero's snowfall video. Behind the copy it is strong enough for AA contrast
+   against any frame; on wide screens it eases off toward the slider card so the footage shows around it. Stacked
+   layouts keep the copy strength throughout. The last 9rem fades into the page. */
+@utility hero-scrim {
+  background-color: color-mix(in oklab, var(--color-canvas) var(--hero-scrim-copy), transparent);
+  background-image: linear-gradient(to top, var(--color-canvas), transparent 9rem);
+
+  @media (width >= 64rem) {
+    background-color: transparent;
+    background-image:
+      linear-gradient(to top, var(--color-canvas), transparent 9rem),
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--color-canvas) var(--hero-scrim-copy), transparent) 50%,
+        color-mix(in oklab, var(--color-canvas) var(--hero-scrim-edge), transparent) 68%
+      );
+  }
 }
 
 @utility hairline-x {

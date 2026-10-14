@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { ArrowRight, Snowflake } from "lucide-react";
+import { HeroVideo } from "@/components/home/hero-video";
 import { SeasonSplit } from "@/components/home/season-split";
 import { IntentLink } from "@/components/intent-link";
 import { ButtonArrow, buttonClass } from "@/components/ui/button";
@@ -15,6 +16,11 @@ const HIGHLIGHTS = [
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-28 pb-20 sm:pt-32 lg:pt-36 lg:pb-28">
+      {/* Snowfall footage under a canvas scrim (hero-scrim in globals.css) that keeps the copy readable */}
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <HeroVideo className="absolute inset-0 size-full object-cover" />
+        <div className="hero-scrim absolute inset-0" />
+      </div>
       {/* Architectural survey grid and dual-season ambient light */}
       <div
         aria-hidden
@@ -87,7 +93,7 @@ export function Hero() {
           </dl>
         </div>
 
-        <div className="relative xl:-mr-6">
+        <div className="relative z-10 xl:-mr-6">
           <div
             className="anim-float rounded-3xl bg-surface/90 p-2.5 shadow-stage ring-1 ring-line/70 backdrop-blur-xl sm:p-3.5"
             style={delay(150)}
