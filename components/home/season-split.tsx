@@ -1,46 +1,31 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Compass, Snowflake, Sprout } from "lucide-react";
 import { SeasonSlider, type SeasonSliderHandle } from "@/components/home/season-slider";
 import { PropertyAerial } from "@/components/illustrations/property-aerial";
 import {
-  LAWN_OPACITY,
   LAWN_ZONES,
   PropertyTraces,
-  SNOW_OPACITY,
   SNOW_ZONES,
   formatSqm,
-  visualCentroid,
-  zonePoints,
   type Season,
-  type TraceZone,
 } from "@/components/illustrations/property-scene";
 import { sampleQuote } from "@/lib/sample-quote";
 
-const SCENE_WIDTH = 600;
-const SCENE_HEIGHT = 520;
 const ANIMATION_DURATION_MS = 900;
 
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
-const toZoneLabel = (zone: TraceZone, prefix: string, opacity: string) => {
-  const [cx, cy] = visualCentroid(zonePoints(zone));
-  const narrow = zone.width < 30;
-  return {
-    key: `${prefix}-${zone.x}-${zone.y}`,
-    left: `${(cx / SCENE_WIDTH) * 100}%`,
-    top: `${(cy / SCENE_HEIGHT) * 100}%`,
-    area: formatSqm(zone.sqft),
-    opacity,
-    narrow,
-  };
-};
-
-const zoneLabels = [
-  ...LAWN_ZONES.map((zone) => toZoneLabel(zone, "lawn", LAWN_OPACITY)),
-  ...SNOW_ZONES.map((zone) => toZoneLabel(zone, "snow", SNOW_OPACITY)),
-];
+/** One season's aerial with only its own traces and labels on it, so the slider's clip reveals them with the imagery. */
+function SeasonScene({ season }: { season: Season }) {
+  return (
+    <>
+      <PropertyAerial season={season} idPrefix="hero" className="size-full" />
+      <PropertyTraces season={season} className="pointer-events-none absolute inset-0 size-full" animate />
+    </>
+  );
+}
 
 /** The hero's winter/summer comparison: one property, traced once, in both seasons. */
 export function SeasonSplit() {
@@ -139,33 +124,10 @@ export function SeasonSplit() {
         sliderRef={sliderRef}
         onUserInteract={cancelAnimation}
         onSeasonChange={handleSeasonChange}
-        winter={<PropertyAerial season="winter" idPrefix="hero" className="size-full" />}
-        summer={<PropertyAerial season="summer" idPrefix="hero" className="size-full" />}
-        overlay={<PropertyTraces className="pointer-events-none absolute inset-0 size-full" animate seasonFade />}
+        winter={<SeasonScene season="winter" />}
+        summer={<SeasonScene season="summer" />}
         description={`Aerial view of ${sampleQuote.address}, in winter on the left and summer on the right. The property is traced once, with ${formatSqm(LAWN_ZONES[0].sqft)}, ${formatSqm(LAWN_ZONES[1].sqft)} and ${formatSqm(LAWN_ZONES[2].sqft)} in summer and ${formatSqm(SNOW_ZONES[0].sqft)} and ${formatSqm(SNOW_ZONES[1].sqft)} in winter, and the same traces cover both seasons.`}
-      >
-        {zoneLabels.map((zone, i) => (
-          <span
-            key={zone.key}
-            aria-hidden
-            className="season-inherit pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
-            style={{
-              left: zone.left,
-              top: zone.top,
-              opacity: zone.opacity,
-            }}
-          >
-            <span
-              className={`anim-fade block leading-none font-semibold whitespace-nowrap text-ink tabular-nums [text-shadow:0_0_2px_rgb(255_255_255/0.98),0_0_6px_rgb(255_255_255/0.92),0_0_12px_rgb(255_255_255/0.75)] ${
-                zone.narrow ? "text-[9px] tracking-[-0.02em] sm:text-[10px]" : "text-[11px] sm:text-xs"
-              }`}
-              style={{ "--delay": `${1500 + i * 120}ms` } as CSSProperties}
-            >
-              {zone.area}
-            </span>
-          </span>
-        ))}
-      </SeasonSlider>
+      />
     </>
   );
 }

@@ -298,6 +298,8 @@ export type TraceZone = {
   width: number;
   height: number;
   points?: readonly Point[];
+  /** Where the m² label sits, if not at the visual centroid. */
+  label?: Point;
   rx?: number;
   delay?: number;
   sqft: number;
@@ -401,6 +403,11 @@ export function visualCentroid(points: readonly Point[]): Point {
   return [midX, bestY];
 }
 
+/** Where a zone's m² label goes: its own label point, or else its visual centroid. */
+export function labelPoint(zone: TraceZone): Point {
+  return zone.label ?? visualCentroid(zonePoints(zone));
+}
+
 // Single wrap-around lawn polygon covering the back yard and both side yards around the house,
 // excluding the house/deck, driveway, walkway and sidewalk.
 const BACK_AND_SIDE_LAWN_POINTS: readonly Point[] = [
@@ -418,6 +425,8 @@ const BACK_AND_SIDE_LAWN_POINTS: readonly Point[] = [
   [46, 298],
 ] as const;
 
+// The hero slider clips each season's traces at its divider, which rests at x 300, so labels stay clear
+// of that line rather than showing half a number.
 export const LAWN_ZONES: readonly TraceZone[] = [
   {
     x: 46,
@@ -425,22 +434,19 @@ export const LAWN_ZONES: readonly TraceZone[] = [
     width: 508,
     height: 366,
     points: BACK_AND_SIDE_LAWN_POINTS,
+    label: [388, 68],
     sqft: sqftFromPoints(BACK_AND_SIDE_LAWN_POINTS),
   },
   { x: 46, y: 310, width: 180, height: 90, rx: 14, sqft: 1744 },
-  { x: 270, y: 310, width: 100, height: 90, rx: 14, sqft: 969 },
+  { x: 270, y: 310, width: 100, height: 90, rx: 14, label: [332, 355], sqft: 969 },
 ] as const;
 
 export const SNOW_ZONES = [
   { x: 384, y: 294, width: 70, height: 112, rx: 12, delay: 1150, sqft: 842 },
-  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, sqft: 168 },
+  // The walkway is narrower than its label, so the label sits on the sidewalk just below it.
+  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, label: [251, 422], sqft: 168 },
 ] as const;
 
-/** Measurement overlay: point-traced polygons for lawn areas and snow surfaces.
- * With `seasonFade`, snow traces fade linearly to 0 in summer and lawn traces fade linearly to 0 in winter
- * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
-export const SNOW_OPACITY = "calc(var(--season, 50) / 100)";
-export const LAWN_OPACITY = "calc((100 - var(--season, 50)) / 100)";
 export const TRACE_STROKE = "#00E5FF";
 export const TRACE_FILL = "rgba(0,229,255,0.14)";
 
@@ -450,20 +456,18 @@ function Trace({
   stroke = TRACE_STROKE,
   animate,
   delay,
-  opacity,
 }: {
   zone: TraceZone;
   fill?: string;
   stroke?: string;
   animate: boolean;
   delay: number;
-  opacity?: string;
 }) {
   const pts = zonePoints(zone);
   const pointsAttr = pts.map((p) => p.join(",")).join(" ");
-  const [labelX, labelY] = visualCentroid(pts);
+  const [labelX, labelY] = labelPoint(zone);
   return (
-    <g className="season-inherit" style={opacity ? { opacity } : undefined}>
+    <g>
       <polygon
         points={pointsAttr}
         fill="none"
@@ -524,41 +528,43 @@ function Trace({
   );
 }
 
+/** Measurement overlay: point-traced polygons for lawn areas and snow surfaces, each with its m² label. */
 export function PropertyTraces({
   className,
   animate = false,
-  seasonFade = false,
+  season,
   viewBox = "0 0 600 520",
 }: {
   className?: string;
   animate?: boolean;
-  seasonFade?: boolean;
+  /** Only that season's traces: lawns in summer, snow surfaces in winter. Both when omitted. */
+  season?: Season;
   viewBox?: string;
 }) {
   return (
-    <svg viewBox={viewBox} className={`season-inherit ${className ?? ""}`} aria-hidden preserveAspectRatio="xMidYMid slice">
-      {LAWN_ZONES.map((zone, i) => (
-        <Trace
-          key={`${zone.x}-${zone.y}`}
-          zone={zone}
-          fill={TRACE_FILL}
-          stroke={TRACE_STROKE}
-          animate={animate}
-          delay={500 + i * 220}
-          opacity={seasonFade ? LAWN_OPACITY : undefined}
-        />
-      ))}
-      {SNOW_ZONES.map((zone) => (
-        <Trace
-          key={`${zone.x}-${zone.y}`}
-          zone={zone}
-          fill={TRACE_FILL}
-          stroke={TRACE_STROKE}
-          animate={animate}
-          delay={zone.delay}
-          opacity={seasonFade ? SNOW_OPACITY : undefined}
-        />
-      ))}
+    <svg viewBox={viewBox} className={className} aria-hidden preserveAspectRatio="xMidYMid slice">
+      {season !== "winter" &&
+        LAWN_ZONES.map((zone, i) => (
+          <Trace
+            key={`${zone.x}-${zone.y}`}
+            zone={zone}
+            fill={TRACE_FILL}
+            stroke={TRACE_STROKE}
+            animate={animate}
+            delay={500 + i * 220}
+          />
+        ))}
+      {season !== "summer" &&
+        SNOW_ZONES.map((zone) => (
+          <Trace
+            key={`${zone.x}-${zone.y}`}
+            zone={zone}
+            fill={TRACE_FILL}
+            stroke={TRACE_STROKE}
+            animate={animate}
+            delay={zone.delay}
+          />
+        ))}
     </svg>
   );
 }
