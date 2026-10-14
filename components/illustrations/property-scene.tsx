@@ -300,6 +300,8 @@ export type TraceZone = {
   points?: readonly Point[];
   /** Where the m² label sits, if not at the visual centroid. */
   label?: Point;
+  /** Where the label sits instead in a cropped view that leaves `label` out. */
+  cropLabel?: Point;
   rx?: number;
   delay?: number;
   sqft: number;
@@ -403,14 +405,21 @@ export function visualCentroid(points: readonly Point[]): Point {
   return [midX, bestY];
 }
 
-/** Where a zone's m² label goes: its own label point, or else its visual centroid. */
-export function labelPoint(zone: TraceZone): Point {
-  return zone.label ?? visualCentroid(zonePoints(zone));
+/**
+ * Where a zone's m² label goes: its own label point, or else its visual centroid. A view whose
+ * viewBox leaves that point out uses the zone's crop label, if it has one.
+ */
+export function labelPoint(zone: TraceZone, viewBox = "0 0 600 520"): Point {
+  const point = zone.label ?? visualCentroid(zonePoints(zone));
+  const [minX, minY, width, height] = viewBox.split(/[\s,]+/).map(Number);
+  const [x, y] = point;
+  const inView = x >= minX && x <= minX + width && y >= minY && y <= minY + height;
+  return inView ? point : (zone.cropLabel ?? point);
 }
 
-// Single wrap-around lawn polygon covering the back yard and both side yards around the house,
-// excluding the house/deck, driveway, walkway and sidewalk.
-const BACK_AND_SIDE_LAWN_POINTS: readonly Point[] = [
+// One wrap-around lawn polygon: the back yard, both side yards and the front lawn left of the walkway,
+// which all run into each other. It leaves out the house and deck, driveway, walkway and sidewalk.
+const LAWN_POINTS: readonly Point[] = [
   [46, 34],
   [554, 34],
   [554, 400],
@@ -421,8 +430,10 @@ const BACK_AND_SIDE_LAWN_POINTS: readonly Point[] = [
   [196, 102],
   [196, 140],
   [140, 140],
-  [140, 298],
-  [46, 298],
+  [140, 310],
+  [226, 310],
+  [226, 400],
+  [46, 400],
 ] as const;
 
 // The hero slider clips each season's traces at its divider, which rests at x 300, so labels stay clear
@@ -433,11 +444,14 @@ export const LAWN_ZONES: readonly TraceZone[] = [
     y: 34,
     width: 508,
     height: 366,
-    points: BACK_AND_SIDE_LAWN_POINTS,
-    label: [388, 68],
-    sqft: sqftFromPoints(BACK_AND_SIDE_LAWN_POINTS),
+    points: LAWN_POINTS,
+    // Beside the deck: the slider's summer side, and below the product tour's toolbar. The feature
+    // grid's crop of the front yard cuts that off, so there it labels the front lawn.
+    label: [470, 148],
+    cropLabel: [136, 355],
+    sqft: sqftFromPoints(LAWN_POINTS),
   },
-  { x: 46, y: 310, width: 180, height: 90, rx: 14, sqft: 1744 },
+  // The front lawn between the walkway and the driveway, which cut it off from the rest.
   { x: 270, y: 310, width: 100, height: 90, rx: 14, label: [332, 355], sqft: 969 },
 ] as const;
 
@@ -456,16 +470,18 @@ function Trace({
   stroke = TRACE_STROKE,
   animate,
   delay,
+  viewBox,
 }: {
   zone: TraceZone;
   fill?: string;
   stroke?: string;
   animate: boolean;
   delay: number;
+  viewBox: string;
 }) {
   const pts = zonePoints(zone);
   const pointsAttr = pts.map((p) => p.join(",")).join(" ");
-  const [labelX, labelY] = labelPoint(zone);
+  const [labelX, labelY] = labelPoint(zone, viewBox);
   return (
     <g>
       <polygon
@@ -496,10 +512,10 @@ function Trace({
           key={`${cx}-${cy}`}
           cx={cx}
           cy={cy}
-          r="3"
+          r="6"
           fill="#00E5FF"
           stroke="rgba(0,0,0,0.5)"
-          strokeWidth="1"
+          strokeWidth="2"
           style={{
             fill: `var(--scene-trace-stroke, ${stroke})`,
           }}
@@ -552,6 +568,7 @@ export function PropertyTraces({
             stroke={TRACE_STROKE}
             animate={animate}
             delay={500 + i * 220}
+            viewBox={viewBox}
           />
         ))}
       {season !== "summer" &&
@@ -563,6 +580,7 @@ export function PropertyTraces({
             stroke={TRACE_STROKE}
             animate={animate}
             delay={zone.delay}
+            viewBox={viewBox}
           />
         ))}
     </svg>

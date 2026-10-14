@@ -17,6 +17,8 @@ const ANIMATION_DURATION_MS = 900;
 
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
+const areas = (zones: readonly { sqft: number }[]) => zones.map((zone) => formatSqm(zone.sqft)).join(" and ");
+
 /** One season's aerial with only its own traces and labels on it, so the slider's clip reveals them with the imagery. */
 function SeasonScene({ season }: { season: Season }) {
   return (
@@ -126,7 +128,7 @@ export function SeasonSplit() {
         onSeasonChange={handleSeasonChange}
         winter={<SeasonScene season="winter" />}
         summer={<SeasonScene season="summer" />}
-        description={`Aerial view of ${sampleQuote.address}, in winter on the left and summer on the right. The property is traced once, with ${formatSqm(LAWN_ZONES[0].sqft)}, ${formatSqm(LAWN_ZONES[1].sqft)} and ${formatSqm(LAWN_ZONES[2].sqft)} in summer and ${formatSqm(SNOW_ZONES[0].sqft)} and ${formatSqm(SNOW_ZONES[1].sqft)} in winter, and the same traces cover both seasons.`}
+        description={`Aerial view of ${sampleQuote.address}, in winter on the left and summer on the right. The property is traced once, with ${areas(LAWN_ZONES)} in summer and ${areas(SNOW_ZONES)} in winter, and the same traces cover both seasons.`}
       />
     </>
   );
