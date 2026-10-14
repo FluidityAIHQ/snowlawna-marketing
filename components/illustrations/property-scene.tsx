@@ -497,10 +497,32 @@ export const LAWN_ZONES: readonly TraceZone[] = [
 // and boulevard, out to the curb at y 444. It's straight all the way down, so a rectangle traces it.
 const DRIVEWAY = { x: 384, y: 294, width: 70, height: 150 } as const;
 
+// The whole walkway, from the sidewalk at y 412 up to the front door, and the porch step it ends on
+// (x 234–268, y 290–306). The lawn traces on either side run along these same edges.
+const WALKWAY_POINTS: readonly Point[] = [
+  [234, 290],
+  [268, 290],
+  [268, 306],
+  [258, 306],
+  [258, 412],
+  [244, 412],
+  [244, 306],
+  [234, 306],
+] as const;
+
 export const SNOW_ZONES = [
   { ...DRIVEWAY, rx: 12, delay: 1150, sqft: sqftFromPoints(corners(DRIVEWAY)) },
-  // The walkway is narrower than its label, so the label sits on the sidewalk just below it.
-  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, label: [251, 422], sqft: 168 },
+  // The walkway is narrower than its label, so the label sits on the sidewalk below its end points.
+  {
+    x: 234,
+    y: 290,
+    width: 34,
+    height: 122,
+    points: WALKWAY_POINTS,
+    label: [251, 428],
+    delay: 1300,
+    sqft: sqftFromPoints(WALKWAY_POINTS),
+  },
 ] as const;
 
 export const TRACE_STROKE = "#00E5FF";
