@@ -286,19 +286,18 @@ export function PropertyScene({
   );
 }
 
-export const LAWN_POLYGONS = [
-  "50,40 550,40 550,102 322,106 200,106 50,102",
-  "50,308 226,308 234,402 50,402",
-  "268,314 372,304 374,402 266,402",
-];
-export const SNOW_POLYGON = "382,292 456,292 456,408 382,408";
-export const WALKWAY_LINE = "251,308 251,410";
+const LAWN_ZONES = [
+  { x: 46, y: 34, width: 508, height: 68, rx: 16 },
+  { x: 46, y: 310, width: 180, height: 90, rx: 14 },
+  { x: 270, y: 310, width: 100, height: 90, rx: 14 },
+] as const;
 
-const vertices = [...LAWN_POLYGONS, SNOW_POLYGON, WALKWAY_LINE].flatMap((points) =>
-  points.split(" ").map((pair) => pair.split(",").map(Number) as [number, number]),
-);
+const SNOW_ZONES = [
+  { x: 384, y: 294, width: 70, height: 112, rx: 12, delay: 1150 },
+  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300 },
+] as const;
 
-/** Measurement overlay: lawn areas (spruce), a snow surface and a walkway (ice). */
+/** Measurement overlay: soft translucent tonal zones for lawn areas (spruce), driveway and walkway (ice). */
 export function PropertyTraces({
   className,
   animate = false,
@@ -310,33 +309,39 @@ export function PropertyTraces({
 }) {
   return (
     <svg viewBox={viewBox} className={className} aria-hidden preserveAspectRatio="xMidYMid slice">
-      <g strokeLinejoin="round" strokeWidth="2.25">
-        {LAWN_POLYGONS.map((points, i) => (
-          <polygon
-            key={points}
-            points={points}
-            fill="rgb(86 202 139 / 0.2)"
-            stroke="#56ca8b"
+      <g strokeWidth="1.25">
+        {LAWN_ZONES.map((zone, i) => (
+          <rect
+            key={`${zone.x}-${zone.y}`}
+            x={zone.x}
+            y={zone.y}
+            width={zone.width}
+            height={zone.height}
+            rx={zone.rx}
+            fill="rgb(86 202 139 / 0.16)"
+            stroke="rgb(86 202 139 / 0.34)"
             pathLength={1}
             className={animate ? "anim-draw" : undefined}
-            style={animate ? ({ "--delay": `${500 + i * 250}ms` } as React.CSSProperties) : undefined}
+            style={animate ? ({ "--delay": `${500 + i * 220}ms` } as React.CSSProperties) : undefined}
           />
         ))}
-        <polygon
-          points={SNOW_POLYGON}
-          fill="rgb(126 200 216 / 0.22)"
-          stroke="#7ec8d8"
-          pathLength={1}
-          className={animate ? "anim-draw" : undefined}
-          style={animate ? ({ "--delay": "1250ms" } as React.CSSProperties) : undefined}
-        />
-      </g>
-      <polyline points={WALKWAY_LINE} fill="none" stroke="#7ec8d8" strokeWidth="3" strokeDasharray="5 5" strokeLinecap="round" />
-      <g className={animate ? "anim-fade" : undefined} style={animate ? ({ "--delay": "1500ms" } as React.CSSProperties) : undefined}>
-        {vertices.map(([x, y]) => (
-          <rect key={`${x}-${y}`} x={x - 4} y={y - 4} width="8" height="8" rx="1.5" fill="#f4faf7" stroke="#0b110f" strokeWidth="1.5" />
+        {SNOW_ZONES.map((zone) => (
+          <rect
+            key={`${zone.x}-${zone.y}`}
+            x={zone.x}
+            y={zone.y}
+            width={zone.width}
+            height={zone.height}
+            rx={zone.rx}
+            fill="rgb(126 200 216 / 0.18)"
+            stroke="rgb(126 200 216 / 0.36)"
+            pathLength={1}
+            className={animate ? "anim-draw" : undefined}
+            style={animate ? ({ "--delay": `${zone.delay}ms` } as React.CSSProperties) : undefined}
+          />
         ))}
       </g>
     </svg>
   );
 }
+

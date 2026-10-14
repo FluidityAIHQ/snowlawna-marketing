@@ -18,33 +18,33 @@ function EstimateCard({ className = "", style }: { className?: string; style?: C
   return (
     <div
       style={style}
-      className={`w-[18rem] rounded-2xl border border-line-strong bg-surface/95 p-4 shadow-float backdrop-blur-md ${className}`}
+      className={`w-[18.5rem] rounded-2xl bg-surface/95 p-4.5 shadow-float ring-1 ring-line/70 backdrop-blur-xl ${className}`}
     >
       <div className="flex items-center justify-between gap-3">
-        <p className="font-mono text-[10px] font-medium tracking-[0.14em] text-fg-3 uppercase">Seasonal estimate</p>
-        <span className="rounded-full border border-spruce/25 bg-spruce/12 px-2 py-0.5 text-[10px] font-medium text-success">
+        <p className="text-[11px] font-medium tracking-[0.02em] text-fg-3">Seasonal estimate</p>
+        <span className="rounded-full bg-spruce/12 px-2.5 py-0.5 text-[11px] font-medium text-success">
           Ready to send
         </span>
       </div>
-      <p className="mt-2 text-sm font-semibold text-snow">{sampleQuote.address}</p>
-      <p className="text-xs text-fg-3">{sampleQuote.service} · 2026–27 season</p>
-      <dl className="mt-3 grid gap-1.5 border-t border-line pt-3 text-[12px]">
+      <p className="mt-1.5 text-[15px] font-semibold tracking-[-0.01em] text-snow">{sampleQuote.address}</p>
+      <p className="mt-0.5 text-xs text-fg-3">{sampleQuote.service} · 2026–27 season</p>
+      <dl className="mt-3.5 grid gap-2 border-t border-line/80 pt-3.5 text-[12.5px]">
         {sampleQuote.lines.map((line) => (
           <div key={line.label} className="flex items-baseline justify-between gap-3">
             <dt className="text-fg-2">
-              {line.label} <span className="font-mono text-[11px] text-fg-3">{line.qty}</span>
+              {line.label} <span className="ml-1 text-xs text-fg-3 tabular-nums">{line.qty}</span>
             </dt>
-            <dd className="font-mono text-fg tabular-nums">{line.amount}</dd>
+            <dd className="font-medium text-fg tabular-nums">{line.amount}</dd>
           </div>
         ))}
         <div className="flex items-baseline justify-between gap-3">
           <dt className="text-fg-2">{sampleQuote.discount.label}</dt>
-          <dd className="font-mono font-medium text-spruce tabular-nums">{sampleQuote.discount.amount}</dd>
+          <dd className="font-medium text-spruce tabular-nums">{sampleQuote.discount.amount}</dd>
         </div>
       </dl>
-      <div className="mt-3 flex items-baseline justify-between border-t border-line pt-3">
+      <div className="mt-3.5 flex items-baseline justify-between border-t border-line/80 pt-3">
         <span className="text-xs font-medium text-fg-2">Total / season</span>
-        <span className="font-wide text-lg font-bold text-snow tabular-nums">{sampleQuote.total}</span>
+        <span className="text-lg font-semibold tracking-[-0.02em] text-snow tabular-nums">{sampleQuote.total}</span>
       </div>
     </div>
   );
@@ -54,19 +54,26 @@ function DispatchChip({ className = "", style }: { className?: string; style?: C
   return (
     <div
       style={style}
-      className={`w-[16rem] rounded-2xl border border-line-strong bg-surface/95 p-3.5 shadow-float backdrop-blur-md ${className}`}
+      className={`w-[16.5rem] rounded-2xl bg-surface/95 p-4 shadow-float ring-1 ring-line/70 backdrop-blur-xl ${className}`}
     >
-      <div className="flex items-center gap-2.5">
-        <span className="relative flex size-2.5">
-          <span className="anim-ping absolute inset-0 rounded-full bg-spruce" />
-          <span className="relative size-2.5 rounded-full bg-spruce" />
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="relative flex size-2">
+            <span className="anim-ping absolute inset-0 rounded-full bg-spruce" />
+            <span className="relative size-2 rounded-full bg-spruce" />
+          </span>
+          <p className="text-[13px] font-semibold tracking-[-0.01em] text-snow">Route 3 · Plow 12</p>
+        </div>
+        <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[11px] font-medium text-fg-2 tabular-nums">
+          04:52
         </span>
-        <p className="text-[13px] font-semibold text-snow">Route 3 · Plow 12</p>
-        <span className="ml-auto font-mono text-[11px] text-fg-3">04:52</span>
       </div>
-      <p className="mt-1 pl-5 text-xs text-fg-2">En route · 9 of 14 stops</p>
-      <div className="mt-2.5 ml-5 h-1.5 overflow-hidden rounded-full bg-surface-3">
-        <div className="h-full w-[64%] rounded-full bg-linear-to-r from-ice to-spruce" />
+      <div className="mt-2 flex items-center justify-between text-xs text-fg-2">
+        <span>En route</span>
+        <span className="text-fg-3 tabular-nums">9 of 14 stops</span>
+      </div>
+      <div className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+        <div className="h-full w-[64%] rounded-full bg-spruce" />
       </div>
     </div>
   );
@@ -154,15 +161,17 @@ export function Hero() {
 
         <div className="relative xl:-mr-6">
           <div
-            className="anim-float rounded-3xl border border-line-strong bg-surface/80 p-2.5 shadow-stage backdrop-blur-md sm:p-3"
+            className="anim-float rounded-3xl bg-surface/90 p-2.5 shadow-stage ring-1 ring-line/70 backdrop-blur-xl sm:p-3.5"
             style={delay(150)}
           >
-            <div className="mb-2.5 flex items-center justify-between gap-2 px-2 py-1 text-xs">
-              <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-fg-2">
-                <Compass aria-hidden className="size-3.5 text-spruce" />
+            <div className="mb-2.5 flex items-center justify-between gap-2 px-1.5 py-0.5 text-xs">
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-fg-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-spruce/12 text-spruce">
+                  <Compass aria-hidden className="size-3.5" />
+                </span>
                 {sampleQuote.address}
               </span>
-              <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.12em] text-fg-3 uppercase">
+              <span className="inline-flex items-center gap-2 text-[11px] font-medium text-fg-3 sm:hidden lg:inline-flex xl:hidden">
                 <span className="inline-flex items-center gap-1 text-ice">
                   <Snowflake aria-hidden className="size-3" /> Snow
                 </span>
