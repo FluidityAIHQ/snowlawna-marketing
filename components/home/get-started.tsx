@@ -1,8 +1,6 @@
 import { Check } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
 import { SectionHeading } from "@/components/section-heading";
-import { DemoAppLink } from "@/components/ui/button";
-import { site } from "@/lib/site";
 
 const EXPECT = [
   "We'll measure and quote one of your own properties, live.",
@@ -46,10 +44,6 @@ export function GetStarted() {
               </li>
             ))}
           </ul>
-          <div data-reveal className="mt-10 rounded-2xl border border-line bg-surface p-5 shadow-card">
-            <p className="text-sm text-fg-2">Prefer to look around first? The demo workspace is open to explore without signing in.</p>
-            <DemoAppLink href={site.demoAppUrl} size="sm" className="mt-4" />
-          </div>
         </div>
       </div>
     </section>

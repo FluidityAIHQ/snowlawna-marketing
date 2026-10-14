@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { CalendarDays, Mail, MessageSquare, Snowflake } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
-import { DemoAppLink } from "@/components/ui/button";
 import { isLeadIntent } from "@/lib/lead-schema";
 import { site } from "@/lib/site";
 
@@ -64,20 +63,17 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
             ))}
           </ul>
 
-          <div className="anim-rise mt-10 grid gap-3 border-t border-line pt-8 text-sm text-fg-2" style={{ "--delay": "320ms" } as React.CSSProperties}>
-            {site.contactEmail && (
-              <p className="flex items-center gap-2.5">
-                <Mail aria-hidden className="size-4 text-fg-3" />
-                <a href={`mailto:${site.contactEmail}`} className="font-medium text-spruce underline decoration-spruce/40 underline-offset-4 hover:decoration-spruce">
-                  {site.contactEmail}
-                </a>
-              </p>
-            )}
-            <p>Want to look around first? The demo workspace is open without signing in.</p>
-            <div>
-              <DemoAppLink href={site.demoAppUrl} size="sm" />
-            </div>
-          </div>
+          {site.contactEmail && (
+            <p
+              className="anim-rise mt-10 flex items-center gap-2.5 border-t border-line pt-8 text-sm text-fg-2"
+              style={{ "--delay": "320ms" } as React.CSSProperties}
+            >
+              <Mail aria-hidden className="size-4 text-fg-3" />
+              <a href={`mailto:${site.contactEmail}`} className="font-medium text-spruce underline decoration-spruce/40 underline-offset-4 hover:decoration-spruce">
+                {site.contactEmail}
+              </a>
+            </p>
+          )}
         </div>
 
         <div

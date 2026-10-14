@@ -6,8 +6,8 @@ import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react"
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { Wordmark } from "@/components/brand/logo";
 import { IntentLink } from "@/components/intent-link";
-import { ButtonArrow, DemoAppLink, buttonClass } from "@/components/ui/button";
-import { mainNav, site } from "@/lib/site";
+import { ButtonArrow, buttonClass } from "@/components/ui/button";
+import { mainNav } from "@/lib/site";
 
 const THEME_EVENT = "snowlawna:theme";
 
@@ -128,8 +128,9 @@ export function SiteHeader() {
             : "border-transparent bg-canvas/40 backdrop-blur-md"
         }`}
       />
-      <div className="wrap relative flex h-16 items-center gap-5">
-        <Link href="/" className="-m-1 rounded-lg p-1" aria-label="Snowlawna home" onClick={close}>
+      {/* Desktop: equal 1fr side columns keep the nav centred on the full header width. */}
+      <div className="wrap relative flex h-16 items-center gap-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+        <Link href="/" className="-m-1 justify-self-start rounded-lg p-1" aria-label="Snowlawna home" onClick={close}>
           <Wordmark className="h-7 w-auto text-snow" />
         </Link>
 
@@ -152,7 +153,6 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <div className="hidden items-center gap-2 md:flex">
-            <DemoAppLink href={site.demoAppUrl} variant="ghost" size="sm" />
             <IntentLink intent="demo" className={buttonClass({ size: "sm" })}>
               Book a demo
               <ButtonArrow />
@@ -197,7 +197,6 @@ export function SiteHeader() {
               Book a demo
               <ButtonArrow />
             </IntentLink>
-            <DemoAppLink href={site.demoAppUrl} size="lg" />
             <IntentLink
               intent="waitlist"
               onNavigate={close}

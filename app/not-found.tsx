@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { ButtonArrow, ButtonLink, DemoAppLink } from "@/components/ui/button";
-import { site } from "@/lib/site";
+import { ButtonArrow, ButtonLink } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -41,7 +40,6 @@ export default function NotFound() {
             Back to the homepage
             <ButtonArrow />
           </ButtonLink>
-          <DemoAppLink href={site.demoAppUrl} />
         </div>
       </div>
     </section>

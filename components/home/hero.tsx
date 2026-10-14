@@ -2,8 +2,7 @@ import type { CSSProperties } from "react";
 import { ArrowRight, Snowflake } from "lucide-react";
 import { SeasonSplit } from "@/components/home/season-split";
 import { IntentLink } from "@/components/intent-link";
-import { ButtonArrow, DemoAppLink, buttonClass } from "@/components/ui/button";
-import { site } from "@/lib/site";
+import { ButtonArrow, buttonClass } from "@/components/ui/button";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
@@ -61,14 +60,9 @@ export function Hero() {
               Book a demo
               <ButtonArrow />
             </IntentLink>
-            <DemoAppLink href={site.demoAppUrl} size="lg" />
           </div>
 
-          <p className="anim-rise mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-3" style={delay(500)}>
-            <span className="inline-flex items-center gap-2">
-              <span aria-hidden className="size-2 rounded-full bg-spruce" />
-              Explore the live demo without signing in.
-            </span>
+          <p className="anim-rise mt-5 text-sm" style={delay(500)}>
             <IntentLink intent="waitlist" className="font-medium text-spruce underline-offset-4 hover:underline">
               Or join the waitlist
             </IntentLink>
