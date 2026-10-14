@@ -129,7 +129,7 @@ export function SiteHeader() {
         }`}
       />
       {/* Desktop: equal 1fr side columns keep the nav centred on the full header width. */}
-      <div className="wrap relative flex h-16 items-center gap-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+      <div className="wrap relative flex h-header items-center gap-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <Link href="/" className="-m-1 justify-self-start rounded-lg p-1" aria-label="Snowlawna home" onClick={close}>
           <Wordmark className="h-7 w-auto text-snow" />
         </Link>
@@ -175,7 +175,7 @@ export function SiteHeader() {
       <div
         id={menuId}
         hidden={!open}
-        className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto border-t border-line bg-canvas/95 backdrop-blur-xl lg:hidden"
+        className="fixed inset-x-0 top-header bottom-0 overflow-y-auto border-t border-line bg-canvas/95 backdrop-blur-xl lg:hidden"
       >
         <nav aria-label="Mobile" className="wrap flex min-h-full flex-col pt-4 pb-8">
           <ul className="divide-y divide-line">

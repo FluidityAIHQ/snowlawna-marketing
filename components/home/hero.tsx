@@ -15,7 +15,11 @@ const HIGHLIGHTS = [
 
 export function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-28 pb-20 sm:pt-32 lg:pt-36 lg:pb-28">
+    // Fills the screen, under the fixed header (pt-header), so the content centres in the space below it
+    <section
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-viewport flex-col justify-center overflow-hidden pt-header"
+    >
       {/* Snowfall footage under a canvas scrim (hero-scrim in globals.css) that keeps the copy readable */}
       <div aria-hidden className="absolute inset-0 -z-10">
         <HeroVideo className="absolute inset-0 size-full object-cover" />
@@ -31,7 +35,7 @@ export function Hero() {
         className="absolute inset-0 -z-10 bg-[radial-gradient(50%_45%_at_76%_20%,color-mix(in_oklab,var(--color-spruce)_13%,transparent),transparent_70%),radial-gradient(40%_40%_at_20%_15%,color-mix(in_oklab,var(--color-ice)_11%,transparent),transparent_70%)]"
       />
 
-      <div className="wrap grid items-center gap-14 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,1.06fr)] lg:gap-12 xl:gap-16">
+      <div className="wrap grid items-center gap-14 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,1.06fr)] lg:gap-12 lg:py-8 xl:gap-16">
         <div className="max-w-xl">
           <IntentLink
             intent="waitlist"

@@ -301,6 +301,9 @@
   --color-warning: var(--theme-warning);
   --color-danger: var(--theme-danger);
 
+  /* Height of the fixed site header (h-header); full-screen sections pad their top by it (pt-header). */
+  --spacing-header: 4rem;
+
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -320,6 +323,20 @@
 
   @media (width >= 40rem) {
     padding-inline: 2rem;
+  }
+}
+
+/* At least one screen tall. svh is the height with mobile browser bars showing, so nothing sits under them and the
+   height doesn't jump as they collapse; browsers without it fall back to dvh, then vh. The fallbacks sit behind
+   @supports because the CSS minifier drops repeated declarations for units every target browser supports. */
+@utility min-h-viewport {
+  min-height: 100vh;
+
+  @supports (min-height: 100dvh) {
+    min-height: 100dvh;
+  }
+  @supports (min-height: 100svh) {
+    min-height: 100svh;
   }
 }
 
