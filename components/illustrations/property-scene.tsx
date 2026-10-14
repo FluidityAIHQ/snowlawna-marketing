@@ -329,7 +329,7 @@ function Trace({
 }) {
   const pts = corners(zone);
   return (
-    <g className="season-inherit transition-opacity duration-300 motion-reduce:transition-none" style={opacity ? { opacity } : undefined}>
+    <g className="season-inherit" style={opacity ? { opacity } : undefined}>
       <polygon
         points={pts.map((p) => p.join(",")).join(" ")}
         fill={fill}

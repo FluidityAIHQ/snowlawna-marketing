@@ -26,7 +26,7 @@ export function SeasonSplit() {
         <span
           key={label.text}
           aria-hidden
-          className={`season-inherit pointer-events-none absolute -translate-y-1/2 ${label.align === "center" ? "-translate-x-1/2" : ""} transition-opacity duration-300 motion-reduce:transition-none`}
+          className={`season-inherit pointer-events-none absolute -translate-y-1/2 ${label.align === "center" ? "-translate-x-1/2" : ""}`}
           style={{
             left: label.left,
             top: label.top,
