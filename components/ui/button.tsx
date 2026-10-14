@@ -10,9 +10,9 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-primary text-canvas shadow-[inset_0_1px_0_rgb(255_255_255/0.28),0_2px_6px_rgb(10_30_20/0.18)] hover:bg-primary-hover hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.32),0_10px_26px_-6px_color-mix(in_oklab,var(--color-spruce)_42%,transparent)]",
+    "bg-primary text-canvas shadow-[inset_0_1px_0_rgb(255_255_255/0.22),0_2px_6px_rgb(15_15_18/0.18)] hover:bg-primary-hover hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.26),0_10px_24px_-6px_rgb(15_15_18/0.28)]",
   secondary:
-    "border border-line-strong bg-surface/85 text-fg shadow-[0_1px_2px_rgb(10_30_20/0.05)] backdrop-blur-sm hover:border-spruce/50 hover:bg-surface-2",
+    "border border-line-strong bg-surface/85 text-fg shadow-[0_1px_2px_rgb(15_15_18/0.05)] backdrop-blur-sm hover:border-fg/35 hover:bg-surface-2",
   ghost: "text-fg-2 hover:bg-surface-2 hover:text-fg",
 };
 

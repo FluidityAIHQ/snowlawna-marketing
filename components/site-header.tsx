@@ -76,12 +76,12 @@ function ThemeToggle({ className = "" }: { className?: string }) {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={isDark}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface/85 text-fg-2 shadow-[0_1px_2px_rgb(10_30_20/0.05)] backdrop-blur-sm transition-colors hover:border-spruce/50 hover:bg-surface-2 hover:text-fg ${className}`}
+      className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface/85 text-fg-2 shadow-[0_1px_2px_rgb(15_15_18/0.05)] backdrop-blur-sm transition-colors hover:border-fg/35 hover:bg-surface-2 hover:text-fg ${className}`}
     >
       {isDark ? (
-        <Sun aria-hidden className="size-4 text-ice transition-transform duration-200" strokeWidth={2} />
+        <Sun aria-hidden className="size-4 text-fg transition-transform duration-200" strokeWidth={2} />
       ) : (
-        <Moon aria-hidden className="size-4 text-spruce transition-transform duration-200" strokeWidth={2} />
+        <Moon aria-hidden className="size-4 text-fg transition-transform duration-200" strokeWidth={2} />
       )}
     </button>
   );
@@ -124,7 +124,7 @@ export function SiteHeader() {
         aria-hidden
         className={`absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter,box-shadow] duration-300 ${
           solid
-            ? "border-line bg-canvas/85 shadow-[0_8px_30px_-16px_rgb(10_30_20/0.12)] backdrop-blur-xl backdrop-saturate-150"
+            ? "border-line bg-canvas/85 shadow-[0_8px_30px_-16px_rgb(15_15_18/0.12)] backdrop-blur-xl backdrop-saturate-150"
             : "border-transparent bg-canvas/40 backdrop-blur-md"
         }`}
       />
@@ -201,7 +201,7 @@ export function SiteHeader() {
             <IntentLink
               intent="waitlist"
               onNavigate={close}
-              className="py-2 text-center text-sm font-medium text-spruce underline-offset-4 hover:underline"
+              className="py-2 text-center text-sm font-medium text-fg-2 underline-offset-4 hover:text-fg hover:underline"
             >
               Join the waitlist
             </IntentLink>

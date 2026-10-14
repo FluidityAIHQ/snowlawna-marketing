@@ -1,139 +1,139 @@
 @import "tailwindcss";
 
-/* Snowlawna brand token system: crisp snow whites and icy neutrals with fresh lawn greens.
+/* Snowlawna brand token system: neutral whites, grays and charcoal with lawn greens reserved for summer/lawn.
    Light mode is the base palette; dark mode activates via system preference or [data-theme="dark"].
    The default Tailwind palette is removed so every colour on the site comes from these tokens. */
 :root,
 :root[data-theme="light"] {
-  --theme-canvas: #f6faf8;
+  --theme-canvas: #f7f7f8;
   --theme-surface: #ffffff;
-  --theme-surface-2: #ecf4f0;
-  --theme-surface-3: #ddebe4;
-  --theme-ink: #09140e;
-  --theme-line: #d2e1da;
-  --theme-line-strong: #b2c9be;
+  --theme-surface-2: #f0f0f2;
+  --theme-surface-3: #e4e4e8;
+  --theme-ink: #111113;
+  --theme-line: #dedee3;
+  --theme-line-strong: #bebec6;
 
-  --theme-fg: #102018;
-  --theme-fg-2: #2d4438;
-  --theme-fg-3: #486154;
-  --theme-snow: #08130d;
+  --theme-fg: #141417;
+  --theme-fg-2: #38383f;
+  --theme-fg-3: #575760;
+  --theme-snow: #0f0f12;
 
-  --theme-primary: #14633a;
-  --theme-primary-hover: #0f4f2e;
+  --theme-primary: #18181b;
+  --theme-primary-hover: #2c2c32;
 
-  --theme-ice: #0d6377;
-  --theme-ice-deep: #094d5e;
-  --theme-spruce: #136b3d;
-  --theme-spruce-deep: #0d502d;
-  --theme-success: #126b3c;
+  --theme-ice: #27272c;
+  --theme-ice-deep: #18181b;
+  --theme-spruce: #156839;
+  --theme-spruce-deep: #0e4f2a;
+  --theme-success: #156839;
   --theme-warning: #875000;
   --theme-danger: #b32235;
 
-  --grid-line: rgb(16 40 28 / 0.055);
-  --shadow-card: 0 12px 32px -12px rgb(10 30 20 / 0.08), 0 2px 6px -1px rgb(10 30 20 / 0.04);
-  --shadow-float: 0 24px 56px -16px rgb(10 30 20 / 0.15), 0 4px 12px -2px rgb(10 30 20 / 0.06);
-  --shadow-stage: 0 36px 90px -28px rgb(10 30 20 / 0.16), 0 8px 24px -6px rgb(10 30 20 / 0.06);
+  --grid-line: rgb(20 20 24 / 0.055);
+  --shadow-card: 0 12px 32px -12px rgb(15 15 18 / 0.08), 0 2px 6px -1px rgb(15 15 18 / 0.04);
+  --shadow-float: 0 24px 56px -16px rgb(15 15 18 / 0.15), 0 4px 12px -2px rgb(15 15 18 / 0.06);
+  --shadow-stage: 0 36px 90px -28px rgb(15 15 18 / 0.16), 0 8px 24px -6px rgb(15 15 18 / 0.06);
 
   /* Cartographic tokens for inline SVG maps */
-  --map-bg: #e7f0ec;
-  --map-park: #d2e8dc;
-  --map-water: #c7e2eb;
-  --map-lot: #d8e5df;
+  --map-bg: #ededf0;
+  --map-park: #d7ebd9;
+  --map-water: #dfe0e5;
+  --map-lot: #e2e2e7;
   --map-street-minor: #ffffff;
-  --map-street-major: #f7fbf9;
-  --map-label: #486154;
+  --map-street-major: #f7f7f9;
+  --map-label: #52525b;
   --map-node-bg: #ffffff;
   --map-chip-bg: #ffffff;
-  --map-chip-stroke: #b2c9be;
-  --map-chip-fg: #102018;
+  --map-chip-stroke: #bebec6;
+  --map-chip-fg: #141417;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --theme-canvas: #0b110f;
-    --theme-surface: #111916;
-    --theme-surface-2: #17221e;
-    --theme-surface-3: #1f2e28;
-    --theme-ink: #070c0a;
-    --theme-line: #21302a;
-    --theme-line-strong: #2e433a;
+    --theme-canvas: #0c0c0e;
+    --theme-surface: #141417;
+    --theme-surface-2: #1c1c20;
+    --theme-surface-3: #26262b;
+    --theme-ink: #08080a;
+    --theme-line: #27272c;
+    --theme-line-strong: #3a3a42;
 
-    --theme-fg: #e7f0ec;
-    --theme-fg-2: #b2c5bc;
-    --theme-fg-3: #82998e;
-    --theme-snow: #f4faf7;
+    --theme-fg: #f2f2f5;
+    --theme-fg-2: #c2c2c9;
+    --theme-fg-3: #92929c;
+    --theme-snow: #fafafa;
 
-    --theme-primary: #4ec986;
-    --theme-primary-hover: #68d499;
+    --theme-primary: #f2f2f5;
+    --theme-primary-hover: #ffffff;
 
-    --theme-ice: #7ec8d8;
-    --theme-ice-deep: #5ab2c6;
-    --theme-spruce: #56ca8b;
-    --theme-spruce-deep: #359f66;
-    --theme-success: #64cf95;
+    --theme-ice: #d4d4dc;
+    --theme-ice-deep: #a6a6b2;
+    --theme-spruce: #52c882;
+    --theme-spruce-deep: #2e8a53;
+    --theme-success: #52c882;
     --theme-warning: #e5b567;
     --theme-danger: #f08c99;
 
-    --grid-line: rgb(231 240 236 / 0.045);
+    --grid-line: rgb(242 242 245 / 0.045);
     --shadow-card: 0 20px 50px -24px rgb(0 0 0 / 0.7);
     --shadow-float: 0 30px 80px -20px rgb(0 0 0 / 0.85);
     --shadow-stage: 0 50px 120px -40px rgb(0 0 0 / 0.9);
 
-    --map-bg: #0e1613;
-    --map-park: #12241b;
-    --map-water: #12252e;
-    --map-lot: #15201c;
-    --map-street-minor: #1b2823;
-    --map-street-major: #23332d;
-    --map-label: #7a9186;
-    --map-node-bg: #0e1613;
-    --map-chip-bg: #0b110f;
-    --map-chip-stroke: #2e433a;
-    --map-chip-fg: #e7f0ec;
+    --map-bg: #121215;
+    --map-park: #14261a;
+    --map-water: #19191e;
+    --map-lot: #1a1a1f;
+    --map-street-minor: #222228;
+    --map-street-major: #2a2a31;
+    --map-label: #8e8e98;
+    --map-node-bg: #141417;
+    --map-chip-bg: #101013;
+    --map-chip-stroke: #3a3a42;
+    --map-chip-fg: #f2f2f5;
   }
 }
 
 :root[data-theme="dark"] {
-  --theme-canvas: #0b110f;
-  --theme-surface: #111916;
-  --theme-surface-2: #17221e;
-  --theme-surface-3: #1f2e28;
-  --theme-ink: #070c0a;
-  --theme-line: #21302a;
-  --theme-line-strong: #2e433a;
+  --theme-canvas: #0c0c0e;
+  --theme-surface: #141417;
+  --theme-surface-2: #1c1c20;
+  --theme-surface-3: #26262b;
+  --theme-ink: #08080a;
+  --theme-line: #27272c;
+  --theme-line-strong: #3a3a42;
 
-  --theme-fg: #e7f0ec;
-  --theme-fg-2: #b2c5bc;
-  --theme-fg-3: #82998e;
-  --theme-snow: #f4faf7;
+  --theme-fg: #f2f2f5;
+  --theme-fg-2: #c2c2c9;
+  --theme-fg-3: #92929c;
+  --theme-snow: #fafafa;
 
-  --theme-primary: #4ec986;
-  --theme-primary-hover: #68d499;
+  --theme-primary: #f2f2f5;
+  --theme-primary-hover: #ffffff;
 
-  --theme-ice: #7ec8d8;
-  --theme-ice-deep: #5ab2c6;
-  --theme-spruce: #56ca8b;
-  --theme-spruce-deep: #359f66;
-  --theme-success: #64cf95;
+  --theme-ice: #d4d4dc;
+  --theme-ice-deep: #a6a6b2;
+  --theme-spruce: #52c882;
+  --theme-spruce-deep: #2e8a53;
+  --theme-success: #52c882;
   --theme-warning: #e5b567;
   --theme-danger: #f08c99;
 
-  --grid-line: rgb(231 240 236 / 0.045);
+  --grid-line: rgb(242 242 245 / 0.045);
   --shadow-card: 0 20px 50px -24px rgb(0 0 0 / 0.7);
   --shadow-float: 0 30px 80px -20px rgb(0 0 0 / 0.85);
   --shadow-stage: 0 50px 120px -40px rgb(0 0 0 / 0.9);
 
-  --map-bg: #0e1613;
-  --map-park: #12241b;
-  --map-water: #12252e;
-  --map-lot: #15201c;
-  --map-street-minor: #1b2823;
-  --map-street-major: #23332d;
-  --map-label: #7a9186;
-  --map-node-bg: #0e1613;
-  --map-chip-bg: #0b110f;
-  --map-chip-stroke: #2e433a;
-  --map-chip-fg: #e7f0ec;
+  --map-bg: #121215;
+  --map-park: #14261a;
+  --map-water: #19191e;
+  --map-lot: #1a1a1f;
+  --map-street-minor: #222228;
+  --map-street-major: #2a2a31;
+  --map-label: #8e8e98;
+  --map-node-bg: #141417;
+  --map-chip-bg: #101013;
+  --map-chip-stroke: #3a3a42;
+  --map-chip-fg: #f2f2f5;
 }
 
 @theme {
@@ -202,7 +202,7 @@
   line-height: 1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-spruce);
+  color: var(--color-fg-2);
 }
 
 /* Survey-sheet grid used behind the hero and a few panels. */
@@ -270,12 +270,12 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-spruce) 24%, transparent);
+    background-color: color-mix(in oklab, var(--color-fg) 18%, transparent);
     color: var(--color-snow);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-spruce);
+    outline: 2px solid var(--color-fg);
     outline-offset: 3px;
   }
 
@@ -399,7 +399,7 @@
   }
   .anim-check {
     animation: check-pop 0.5s var(--ease-out-quint) both;
-  }
+    }
   .anim-spin {
     animation: spin 0.8s linear infinite;
   }
@@ -496,9 +496,9 @@
   }
 
   & a {
-    color: var(--color-spruce);
+    color: var(--color-fg);
     text-decoration: underline;
-    text-decoration-color: color-mix(in oklab, var(--color-spruce) 40%, transparent);
+    text-decoration-color: color-mix(in oklab, var(--color-fg) 40%, transparent);
     text-underline-offset: 3px;
   }
 
