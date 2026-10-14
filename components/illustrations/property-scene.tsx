@@ -297,50 +297,91 @@ const SNOW_ZONES = [
   { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300 },
 ] as const;
 
-/** Measurement overlay: soft translucent tonal zones for lawn areas (spruce), driveway and walkway (ice). */
+/** Measurement overlay: thin point-traced polygons for lawn areas (green) and snow surfaces (charcoal).
+ * With `seasonFade`, snow traces fade as the slider shows summer and lawn traces fade in winter
+ * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
+const SNOW_OPACITY = "calc(0.2 + 0.8 * var(--season, 50) / 100)";
+const LAWN_OPACITY = "calc(0.2 + 0.8 * (100 - var(--season, 50)) / 100)";
+
+function corners(z: { x: number; y: number; width: number; height: number }) {
+  return [
+    [z.x, z.y],
+    [z.x + z.width, z.y],
+    [z.x + z.width, z.y + z.height],
+    [z.x, z.y + z.height],
+  ] as const;
+}
+
+function Trace({
+  zone,
+  fill,
+  stroke,
+  animate,
+  delay,
+  opacity,
+}: {
+  zone: { x: number; y: number; width: number; height: number };
+  fill: string;
+  stroke: string;
+  animate: boolean;
+  delay: number;
+  opacity?: string;
+}) {
+  const pts = corners(zone);
+  return (
+    <g className="season-inherit transition-opacity duration-300 motion-reduce:transition-none" style={opacity ? { opacity } : undefined}>
+      <polygon
+        points={pts.map((p) => p.join(",")).join(" ")}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.25"
+        strokeLinejoin="round"
+        pathLength={1}
+        className={animate ? "anim-draw" : undefined}
+        style={animate ? ({ "--delay": `${delay}ms` } as React.CSSProperties) : undefined}
+      />
+      {pts.map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.75" fill="#ffffff" stroke={stroke} strokeWidth="1.25" />
+      ))}
+    </g>
+  );
+}
+
 export function PropertyTraces({
   className,
   animate = false,
+  seasonFade = false,
   viewBox = "0 0 600 520",
 }: {
   className?: string;
   animate?: boolean;
+  seasonFade?: boolean;
   viewBox?: string;
 }) {
   return (
-    <svg viewBox={viewBox} className={className} aria-hidden preserveAspectRatio="xMidYMid slice">
-      <g strokeWidth="1.25">
-        {LAWN_ZONES.map((zone, i) => (
-          <rect
-            key={`${zone.x}-${zone.y}`}
-            x={zone.x}
-            y={zone.y}
-            width={zone.width}
-            height={zone.height}
-            rx={zone.rx}
-            fill="rgb(86 202 139 / 0.16)"
-            stroke="rgb(86 202 139 / 0.34)"
-            pathLength={1}
-            className={animate ? "anim-draw" : undefined}
-            style={animate ? ({ "--delay": `${500 + i * 220}ms` } as React.CSSProperties) : undefined}
-          />
-        ))}
-        {SNOW_ZONES.map((zone) => (
-          <rect
-            key={`${zone.x}-${zone.y}`}
-            x={zone.x}
-            y={zone.y}
-            width={zone.width}
-            height={zone.height}
-            rx={zone.rx}
-            fill="rgb(126 200 216 / 0.18)"
-            stroke="rgb(126 200 216 / 0.36)"
-            pathLength={1}
-            className={animate ? "anim-draw" : undefined}
-            style={animate ? ({ "--delay": `${zone.delay}ms` } as React.CSSProperties) : undefined}
-          />
-        ))}
-      </g>
+    <svg viewBox={viewBox} className={`season-inherit ${className ?? ""}`} aria-hidden preserveAspectRatio="xMidYMid slice">
+      {LAWN_ZONES.map((zone, i) => (
+        <Trace
+          key={`${zone.x}-${zone.y}`}
+          zone={zone}
+          fill="rgb(82 200 130 / 0.14)"
+          stroke="rgb(82 200 130 / 0.9)"
+          animate={animate}
+          delay={500 + i * 220}
+          opacity={seasonFade ? LAWN_OPACITY : undefined}
+        />
+      ))}
+      {SNOW_ZONES.map((zone) => (
+        <Trace
+          key={`${zone.x}-${zone.y}`}
+          zone={zone}
+          fill="rgb(39 39 44 / 0.22)"
+          stroke="rgb(250 250 250 / 0.9)"
+          animate={animate}
+          delay={zone.delay}
+          opacity={seasonFade ? SNOW_OPACITY : undefined}
+        />
+      ))}
     </svg>
   );
 }

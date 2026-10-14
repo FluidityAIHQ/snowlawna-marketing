@@ -511,3 +511,8 @@
     font-weight: 600;
   }
 }
+
+/* Let slider overlays read the non-inheriting registered --season property. */
+.season-inherit {
+  --season: inherit;
+}

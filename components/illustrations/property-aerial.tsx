@@ -117,9 +117,32 @@ const MAIN_ROOF = {
 };
 const RIDGES = "M150 150 220 220H300L370 150M150 290 220 220M300 220 370 290M204 132H316M418 196V290";
 
+const SIDEWALK_JOINTS = Array.from({ length: 25 }, (_, i) => `M${i * 24 + 12} 412V432`).join("");
+const DRIVEWAY_JOINTS = "M382 322H456M382 354H456M382 386H456M382 412H456M419 290V444";
+const WALKWAY_JOINTS = "M244 318H258M244 330H258M244 342H258M244 354H258M244 366H258M244 378H258M244 390H258M244 402H258";
+const DECK_BOARDS = Array.from({ length: 7 }, (_, i) => `M330 ${117 + i * 5}H404`).join("");
+const BED_SHRUBS = [160, 176, 192, 208, 224];
+
 const palettes = {
   summer: {
     ground: "#1f422b",
+    neighbour: "#18271d",
+    street: "#1c1c1f",
+    streetMark: "#57575c",
+    curb: "#3c3c40",
+    sidewalk: "#353539",
+    driveway: "#3b3b40",
+    porch: "#46464b",
+    walkway: "#414146",
+    joint: "rgb(0 0 0 / 0.22)",
+    deck: "#3d3229",
+    deckJoint: "rgb(0 0 0 / 0.28)",
+    bed: "#2b231d",
+    fence: "#2f2c27",
+    fencePost: "#3a362f",
+    chimney: "#4a3c35",
+    vent: "#202024",
+    roofStroke: "rgb(0 0 0 / 0.4)",
     shadow: "rgb(4 14 8 / 0.52)",
     roof: { north: "#45454a", west: "#3d3d42", south: "#303035", east: "#2a2a2e", ridge: "#57575e" },
     leaf: ["#4e845f", "#2f593d", "#16301f"],
@@ -128,6 +151,23 @@ const palettes = {
   },
   winter: {
     ground: "#86868e",
+    neighbour: "#6c6c74",
+    street: "#26262b",
+    streetMark: "#52525a",
+    curb: "#686870",
+    sidewalk: "#303036",
+    driveway: "#242429",
+    porch: "#2e2e34",
+    walkway: "#2c2c32",
+    joint: "rgb(0 0 0 / 0.24)",
+    deck: "#8a8a92",
+    deckJoint: "rgb(0 0 0 / 0.14)",
+    bed: "#52525a",
+    fence: "#2e2e33",
+    fencePost: "#3a3a40",
+    chimney: "#38383d",
+    vent: "#54545c",
+    roofStroke: "rgb(20 20 24 / 0.45)",
     shadow: "rgb(15 15 18 / 0.38)",
     roof: { north: "#9e9ea6", west: "#92929a", south: "#6e6e76", east: "#64646c", ridge: "#b4b4bc" },
     leaf: ["#b0b0b8", "#8c8c94", "#505058"],
@@ -164,12 +204,7 @@ export function PropertyAerial({
           <feTurbulence type="fractalNoise" baseFrequency={winter ? "0.004 0.014" : "0.012 0.02"} numOctaves={3} seed={4} />
           <feColorMatrix values="1.7 0 0 0 -0.35 1.7 0 0 0 -0.35 1.7 0 0 0 -0.35 0 0 0 0 1" />
         </filter>
-        {/* Ragged edges for snowbanks. */}
-        <filter id={id("rough")} x="-15%" y="-15%" width="130%" height="130%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves={2} seed={2} />
-          <feDisplacementMap in="SourceGraphic" scale={5} xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-        {/* Foliage: the same ragged edge, plus fine leaf texture inside the shape. */}
+        {/* Foliage: ragged edge plus fine leaf texture inside the shape. */}
         <filter id={id("foliage")} x="-15%" y="-15%" width="130%" height="130%" colorInterpolationFilters="sRGB">
           <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves={2} seed={2} result="warp" />
           <feDisplacementMap in="SourceGraphic" in2="warp" scale={5} xChannelSelector="R" yChannelSelector="G" result="shape" />
@@ -200,25 +235,10 @@ export function PropertyAerial({
         ))}
 
         {winter ? (
-          <>
-            {/* Windrows: lit along the near side of the crest, shaded on the far side. */}
-            <linearGradient id={id("bank-v")} x1="0" x2="1">
-              <stop offset="0" stopColor="#7c7c84" />
-              <stop offset="0.38" stopColor="#b6b6be" />
-              <stop offset="0.72" stopColor="#86868e" />
-              <stop offset="1" stopColor="#5e5e66" />
-            </linearGradient>
-            <linearGradient id={id("bank-h")} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stopColor="#7c7c84" />
-              <stop offset="0.38" stopColor="#b6b6be" />
-              <stop offset="0.72" stopColor="#86868e" />
-              <stop offset="1" stopColor="#5e5e66" />
-            </linearGradient>
-            <radialGradient id={id("crown-haze")}>
-              <stop offset="0" stopColor="#35353a" stopOpacity="0.28" />
-              <stop offset="1" stopColor="#35353a" stopOpacity="0" />
-            </radialGradient>
-          </>
+          <radialGradient id={id("crown-haze")}>
+            <stop offset="0" stopColor="#35353a" stopOpacity="0.28" />
+            <stop offset="1" stopColor="#35353a" stopOpacity="0" />
+          </radialGradient>
         ) : (
           <>
             {/* Mowing stripes */}
@@ -244,61 +264,31 @@ export function PropertyAerial({
       <rect width="600" height="520" fill={c.ground} />
       {!winter && <rect y="16" width="600" height="428" fill={url("stripes")} />}
       <rect width="600" height="444" fill="#808080" filter={url("texture")} opacity={winter ? 0.5 : 0.3} style={{ mixBlendMode: "soft-light" }} />
-      <rect width="600" height="16" fill={winter ? "#6c6c74" : "#18271d"} />
+      <rect width="600" height="16" fill={c.neighbour} />
 
-      {/* Street, sidewalk and boulevard */}
-      {winter ? (
-        <g>
-          <rect y="444" width="600" height="76" fill="#2b2b30" />
-          <g stroke="#1b1b1f" strokeWidth="5" fill="none" opacity="0.7" filter={url("soften")}>
-            <path d="M-10 462C140 460 320 464 610 461M-10 476C140 474 320 478 610 475" />
-            <path d="M-10 496C160 498 330 494 610 497M-10 510C160 512 330 508 610 511" />
-          </g>
-          <rect y="412" width="600" height="20" fill="#36363c" />
-          <path d="M0 412.5H600M0 431.5H600" stroke="#888890" strokeWidth="1.5" opacity="0.6" />
-        </g>
-      ) : (
-        <g>
-          <rect y="444" width="600" height="76" fill="#1c1c1f" />
-          <path d="M0 483H600" stroke="#57575c" strokeWidth="2" strokeDasharray="20 18" opacity="0.8" />
-          <path d="M0 445.5H600" stroke="#3c3c40" strokeWidth="3" />
-          <rect y="412" width="600" height="20" fill="#353539" />
-          <path
-            d={Array.from({ length: 25 }, (_, i) => `M${i * 24 + 12} 412V432`).join("")}
-            stroke="rgb(0 0 0 / 0.25)"
-            strokeWidth="1"
-          />
-        </g>
-      )}
+      {/* Street, sidewalk and boulevard: identical geometry in both seasons */}
+      <g>
+        <rect y="444" width="600" height="76" fill={c.street} />
+        <path d="M0 483H600" stroke={c.streetMark} strokeWidth="2" strokeDasharray="20 18" opacity="0.8" />
+        <path d="M0 445.5H600" stroke={c.curb} strokeWidth="3" />
+        <rect y="412" width="600" height="20" fill={c.sidewalk} />
+        <path d={SIDEWALK_JOINTS} stroke={c.joint} strokeWidth="1" />
+      </g>
 
-      {/* Driveway, porch and walkway: cleared in winter */}
-      {winter ? (
-        <g>
-          <rect x="382" y="290" width="74" height="154" fill="#242428" />
-          <path d="M392 296V444M404 296V444M416 296V444M428 296V444M440 296V444" stroke="#94949c" strokeWidth="1.2" opacity="0.07" />
-          <rect x="234" y="290" width="34" height="16" fill="#2e2e33" />
-          <rect x="244" y="306" width="14" height="106" fill="#2e2e33" />
-        </g>
-      ) : (
-        <g>
-          <rect x="382" y="290" width="74" height="154" fill="#3b3b40" />
-          <path d="M382 322H456M382 354H456M382 386H456M382 412H456M419 290V444" stroke="rgb(0 0 0 / 0.22)" strokeWidth="1.2" />
-          <ellipse cx="420" cy="336" rx="9" ry="13" fill="rgb(0 0 0 / 0.12)" filter={url("soften")} />
-          <rect x="234" y="290" width="34" height="16" fill="#46464b" />
-          <rect x="244" y="306" width="14" height="106" fill="#414146" />
-          <path d="M244 318H258M244 330H258M244 342H258M244 354H258M244 366H258M244 378H258M244 390H258M244 402H258" stroke="rgb(0 0 0 / 0.2)" strokeWidth="1" />
-        </g>
-      )}
+      {/* Driveway, porch and walkway: identical geometry in both seasons */}
+      <g>
+        <rect x="382" y="290" width="74" height="154" fill={c.driveway} />
+        <path d={DRIVEWAY_JOINTS} stroke={c.joint} strokeWidth="1.2" />
+        <rect x="234" y="290" width="34" height="16" fill={c.porch} />
+        <rect x="244" y="306" width="14" height="106" fill={c.walkway} />
+        <path d={WALKWAY_JOINTS} stroke={c.joint} strokeWidth="1" />
+      </g>
 
       {/* Deck */}
-      {winter ? (
-        <rect x="330" y="112" width="74" height="40" rx="1.5" fill="#8a8a92" />
-      ) : (
-        <g>
-          <rect x="330" y="112" width="74" height="40" fill="#3d3229" />
-          <path d={Array.from({ length: 7 }, (_, i) => `M330 ${117 + i * 5}H404`).join("")} stroke="rgb(0 0 0 / 0.28)" strokeWidth="0.8" />
-        </g>
-      )}
+      <g>
+        <rect x="330" y="112" width="74" height="40" fill={c.deck} />
+        <path d={DECK_BOARDS} stroke={c.deckJoint} strokeWidth="0.8" />
+      </g>
 
       {/* Shadows, all cast toward the bottom right */}
       <g fill={c.shadow} filter={url("shadow")}>
@@ -310,26 +300,7 @@ export function PropertyAerial({
         ))}
         <rect x="10" y="-10" width="18" height="424" rx="9" transform="translate(6 6)" />
         <path d="M26 16H574" stroke={c.shadow} strokeWidth="4" transform="translate(2 4)" />
-        {winter && (
-          <>
-            <path d="M380 296V410H386V296Z M464 296V410H470V296Z" opacity={0.8} />
-            <path d="M0 455H382V461H0Z M456 455H600V461H456Z" opacity={0.8} />
-          </>
-        )}
       </g>
-
-      {/* Winter: snowbanks along the plowed driveway, the shovelled walk and the street */}
-      {winter && (
-        <g filter={url("rough")}>
-          <rect x="370" y="292" width="13" height="118" rx="6" fill={url("bank-v")} />
-          <rect x="455" y="292" width="13" height="118" rx="6" fill={url("bank-v")} />
-          <ellipse cx="466" cy="404" rx="11" ry="15" fill={url("bank-v")} />
-          <rect x="238" y="306" width="7" height="104" rx="3.5" fill={url("bank-v")} />
-          <rect x="257" y="306" width="7" height="104" rx="3.5" fill={url("bank-v")} />
-          <rect x="-6" y="444" width="388" height="12" rx="6" fill={url("bank-h")} />
-          <rect x="456" y="444" width="150" height="12" rx="6" fill={url("bank-h")} />
-        </g>
-      )}
 
       {/* House */}
       <g>
@@ -348,46 +319,41 @@ export function PropertyAerial({
           </g>
         )}
         <path d={RIDGES} fill="none" stroke={c.roof.ridge} strokeWidth="1.4" strokeLinecap="round" opacity={winter ? 0.7 : 0.8} />
-        <path d={ROOF_OUTLINE} fill="none" stroke={winter ? "rgb(20 20 24 / 0.45)" : "rgb(0 0 0 / 0.4)"} strokeWidth="1.2" />
+        <path d={ROOF_OUTLINE} fill="none" stroke={c.roofStroke} strokeWidth="1.2" />
         {/* Chimney (snow melts off it) and two roof vents */}
         <rect x="330" y="172" width="14" height="14" fill={c.shadow} filter={url("soften")} />
-        <rect x="326" y="168" width="14" height="14" rx="1" fill={winter ? "#38383d" : "#4a3c35"} />
+        <rect x="326" y="168" width="14" height="14" rx="1" fill={c.chimney} />
         <rect x="329.5" y="171.5" width="7" height="7" rx="0.5" fill="#141211" />
-        <g fill={winter ? "#54545c" : "#202024"}>
+        <g fill={c.vent}>
           <circle cx="246" cy="262" r="2.6" />
           <circle cx="334" cy="258" r="2.6" />
         </g>
       </g>
 
       {/* Planting bed along the front of the house */}
-      {winter ? (
-        <rect x="150" y="291" width="84" height="12" rx="6" fill={url("leaf")} filter={url("rough")} />
-      ) : (
-        <g>
-          <rect x="152" y="292" width="80" height="9" rx="2" fill="#2b231d" />
-          <g fill={url("leaf")} filter={url("foliage")}>
-            {[160, 176, 192, 208, 224].map((x) => (
-              <circle key={x} cx={x} cy="296" r="5.5" />
-            ))}
-          </g>
+      <g>
+        <rect x="152" y="292" width="80" height="9" rx="2" fill={c.bed} />
+        <g fill={url("leaf")} filter={url("foliage")}>
+          {BED_SHRUBS.map((x) => (
+            <circle key={x} cx={x} cy="296" r="5.5" />
+          ))}
         </g>
-      )}
+      </g>
 
-      {/* Back fence: posts every few metres, capped with snow in winter */}
-      <path d="M26 16H574" stroke={winter ? "#2e2e33" : "#2f2c27"} strokeWidth="2.5" />
-      <g fill={winter ? "#2a2a2f" : "#3a362f"}>
+      {/* Back fence: posts every few metres */}
+      <path d="M26 16H574" stroke={c.fence} strokeWidth="2.5" />
+      <g fill={c.fencePost}>
         {Array.from({ length: 17 }, (_, i) => (
           <rect key={i} x={26 + i * 34 - 2} y="14" width="4" height="4" />
         ))}
       </g>
-      {winter && <path d="M26 14.6H574" stroke="#9898a0" strokeWidth="1.2" opacity="0.8" />}
 
       {/* Hedges along the side lot lines: dark foliage, shrub tops lit (or snow-capped) above it */}
       <g filter={url("foliage")}>
         <path d="M-10 -10H20V414H-10ZM582 -10H610V414H582Z" fill={c.hedgeBase} />
         <g fill={url("leaf")}>
           {HEDGES.flat().map(([x, y, r]) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r={winter ? r * 0.82 : r} />
+            <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
           ))}
         </g>
       </g>

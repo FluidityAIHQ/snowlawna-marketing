@@ -208,7 +208,7 @@ export function SeasonSlider({
           when --season changes, because the movers inherit it explicitly. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(125%_95%_at_50%_42%,transparent_62%,rgb(8_19_13/0.22))]"
+        className="season-inherit pointer-events-none absolute inset-0 bg-[radial-gradient(125%_95%_at_50%_42%,transparent_62%,rgb(8_19_13/0.22))]"
       >
         {overlay}
       </div>
