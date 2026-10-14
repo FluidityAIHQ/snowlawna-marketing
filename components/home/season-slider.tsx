@@ -1,6 +1,15 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import {
+  useId,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent,
+  type ReactNode,
+  type Ref,
+} from "react";
 import { Snowflake, Sprout } from "lucide-react";
 
 // The divider position is the --season custom property (0–100, the share of the view in winter),
@@ -19,6 +28,12 @@ const HANDLE = `clamp(1.5rem, ${LINE}, calc(100cqw - 1.5rem))`;
 const TAG_CLEARANCE = "7.25rem";
 
 const clamp = (value: number) => Math.min(100, Math.max(0, value));
+
+export type SeasonSliderHandle = {
+  getSeason: () => number;
+  setSeason: (next: number) => void;
+  setAnimating: (animating: boolean) => void;
+};
 
 type Gesture = {
   id: number;
@@ -39,6 +54,9 @@ export function SeasonSlider({
   overlay,
   description,
   children,
+  sliderRef,
+  onUserInteract,
+  onSeasonChange,
 }: {
   winter: ReactNode;
   summer: ReactNode;
@@ -48,6 +66,11 @@ export function SeasonSlider({
   description: string;
   /** Labels drawn above the divider. */
   children?: ReactNode;
+  sliderRef?: Ref<SeasonSliderHandle>;
+  /** Fired when a pointer or keyboard gesture begins so external animations can cancel. */
+  onUserInteract?: () => void;
+  /** Fired when the user moves the divider via pointer or keyboard. */
+  onSeasonChange?: (season: number) => void;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
@@ -60,10 +83,12 @@ export function SeasonSlider({
   const [intro, setIntro] = useState(true);
   const descriptionId = useId();
 
-  const apply = (next: number) => {
-    position.current = next;
-    rootRef.current?.style.setProperty("--season", next.toFixed(2));
-    setValue(Math.round(next));
+  const apply = (next: number, notifyUser = false) => {
+    const clamped = clamp(next);
+    position.current = clamped;
+    rootRef.current?.style.setProperty("--season", clamped.toFixed(2));
+    setValue(Math.round(clamped));
+    if (notifyUser) onSeasonChange?.(clamped);
   };
 
   const current = () => {
@@ -80,6 +105,18 @@ export function SeasonSlider({
     setIntro(false);
   };
 
+  const setDragging = (dragging: boolean) => rootRef.current?.toggleAttribute("data-dragging", dragging);
+  const setAnimating = (animating: boolean) => rootRef.current?.toggleAttribute("data-animating", animating);
+
+  useImperativeHandle(sliderRef, () => ({
+    getSeason: current,
+    setSeason: (next: number) => {
+      if (intro) setIntro(false);
+      apply(next);
+    },
+    setAnimating,
+  }));
+
   // The frame's on-screen box, so this stays right while the hero's entrance animation scales it.
   const valueAt = (clientX: number) => {
     const box = rootRef.current?.getBoundingClientRect();
@@ -89,14 +126,12 @@ export function SeasonSlider({
 
   const grabFocus = () => handleRef.current?.focus({ preventScroll: true });
 
-  const setDragging = (dragging: boolean) => rootRef.current?.toggleAttribute("data-dragging", dragging);
-
   const follow = (clientX: number) => {
     pointerX.current = clientX;
     if (frame.current) return;
     frame.current = requestAnimationFrame(() => {
       frame.current = 0;
-      apply(valueAt(pointerX.current));
+      apply(valueAt(pointerX.current), true);
     });
   };
 
@@ -115,6 +150,7 @@ export function SeasonSlider({
     const mouse = event.pointerType === "mouse";
     const box = handle?.getBoundingClientRect();
 
+    onUserInteract?.();
     takeOver();
     gesture.current = {
       id: event.pointerId,
@@ -128,7 +164,7 @@ export function SeasonSlider({
     if (onHandle || mouse) grabFocus();
 
     if (onHandle) setDragging(true);
-    else if (mouse) apply(valueAt(event.clientX));
+    else if (mouse) apply(valueAt(event.clientX), true);
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
@@ -139,6 +175,7 @@ export function SeasonSlider({
       if (active.pending) grabFocus();
       active.dragging = true;
       active.pending = false;
+      onUserInteract?.();
       setDragging(true);
     }
     follow(event.clientX - active.offset);
@@ -149,7 +186,7 @@ export function SeasonSlider({
     if (!active || active.id !== event.pointerId) return;
     if (active.pending) {
       grabFocus();
-      apply(valueAt(event.clientX));
+      apply(valueAt(event.clientX), true);
     }
     end();
   };
@@ -169,8 +206,9 @@ export function SeasonSlider({
     };
     if (!(event.key in targets)) return;
     event.preventDefault();
+    onUserInteract?.();
     takeOver();
-    apply(clamp(Math.round(targets[event.key])));
+    apply(clamp(Math.round(targets[event.key])), true);
   };
 
   return (
@@ -219,7 +257,7 @@ export function SeasonSlider({
         style={{ transform: `translateX(${LINE})` }}
       />
 
-      <div className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_1px_0_rgb(255_255_255/0.12)]">
+      <div className="season-inherit pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_1px_0_rgb(255_255_255/0.12)]">
         {children}
         <p id={descriptionId} className="sr-only">
           {description}

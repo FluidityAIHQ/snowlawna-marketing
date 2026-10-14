@@ -84,6 +84,9 @@
   --scene-winter-porch: #505966;
   --scene-winter-walkway: #4e5764;
   --scene-winter-street: #252930;
+
+  --scene-trace-stroke: #326CCB;
+  --scene-trace-fill: rgba(50, 108, 203, 0.16);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -166,6 +169,9 @@
     --scene-winter-porch: #4a5360;
     --scene-winter-walkway: #48515e;
     --scene-winter-street: #22262d;
+
+    --scene-trace-stroke: #326CCB;
+    --scene-trace-fill: rgba(50, 108, 203, 0.16);
   }
 }
 
@@ -248,6 +254,9 @@
   --scene-winter-porch: #4a5360;
   --scene-winter-walkway: #48515e;
   --scene-winter-street: #22262d;
+
+  --scene-trace-stroke: #326CCB;
+  --scene-trace-fill: rgba(50, 108, 203, 0.16);
 }
 
 @theme {
@@ -503,12 +512,13 @@
   .anim-season-intro {
     animation: season-intro 1.8s var(--ease-in-out-quart) 0.9s both;
   }
-  /* Clicks and key presses glide the divider; drags and the intro move it directly. */
+  /* Clicks and key presses glide the divider; drags, JS season animations and the intro move it directly. */
   .season-mover {
     transition: transform 0.35s var(--ease-out-quint);
   }
   .anim-season-intro .season-mover,
-  [data-dragging] .season-mover {
+  [data-dragging] .season-mover,
+  [data-animating] .season-mover {
     transition: none;
   }
   .anim-check {

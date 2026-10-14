@@ -1,9 +1,8 @@
 import type { CSSProperties } from "react";
-import { ArrowRight, Compass, Snowflake, Sprout } from "lucide-react";
+import { ArrowRight, Snowflake } from "lucide-react";
 import { SeasonSplit } from "@/components/home/season-split";
 import { IntentLink } from "@/components/intent-link";
 import { ButtonArrow, DemoAppLink, buttonClass } from "@/components/ui/button";
-import { sampleQuote } from "@/lib/sample-quote";
 import { site } from "@/lib/site";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
@@ -99,23 +98,6 @@ export function Hero() {
             className="anim-float rounded-3xl bg-surface/90 p-2.5 shadow-stage ring-1 ring-line/70 backdrop-blur-xl sm:p-3.5"
             style={delay(150)}
           >
-            <div className="mb-2.5 flex items-center justify-between gap-2 px-1.5 py-0.5 text-xs">
-              <span className="inline-flex items-center gap-2 text-xs font-medium text-fg-2">
-                <span className="flex size-5 items-center justify-center rounded-full bg-spruce/12 text-spruce">
-                  <Compass aria-hidden className="size-3.5" />
-                </span>
-                {sampleQuote.address}
-              </span>
-              <span className="inline-flex items-center gap-2 text-[11px] font-medium text-fg-3 sm:hidden lg:inline-flex xl:hidden">
-                <span className="inline-flex items-center gap-1 text-ice">
-                  <Snowflake aria-hidden className="size-3" /> Snow
-                </span>
-                <span aria-hidden>·</span>
-                <span className="inline-flex items-center gap-1 text-spruce">
-                  <Sprout aria-hidden className="size-3" /> Lawn
-                </span>
-              </span>
-            </div>
             <SeasonSplit />
           </div>
         </div>

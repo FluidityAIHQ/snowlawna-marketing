@@ -287,14 +287,146 @@ export function PropertyScene({
 }
 
 const SQM_PER_SQFT = 0.092903;
+/** Scene scale: 10 SVG units = 1 m, so 100 SVG² = 1 m². */
+const PX2_PER_SQM = 100;
+
+export type Point = readonly [x: number, y: number];
+
+export type TraceZone = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  points?: readonly Point[];
+  rx?: number;
+  delay?: number;
+  sqft: number;
+};
 
 /** Convert square feet to whole square meters (m² = ft² × 0.092903). */
 export function formatSqm(sqft: number) {
   return `${Math.round(sqft * SQM_PER_SQFT)} m²`;
 }
 
-export const LAWN_ZONES = [
-  { x: 46, y: 34, width: 508, height: 68, rx: 16, sqft: 4812 },
+function corners(z: { x: number; y: number; width: number; height: number }): readonly Point[] {
+  return [
+    [z.x, z.y],
+    [z.x + z.width, z.y],
+    [z.x + z.width, z.y + z.height],
+    [z.x, z.y + z.height],
+  ] as const;
+}
+
+export function zonePoints(zone: TraceZone): readonly Point[] {
+  return zone.points ?? corners(zone);
+}
+
+/** Shoelace polygon area in scene square units. */
+export function polygonArea(points: readonly Point[]) {
+  let sum = 0;
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    sum += x1 * y2 - x2 * y1;
+  }
+  return Math.abs(sum) / 2;
+}
+
+function sqftFromPoints(points: readonly Point[]) {
+  return Math.round(polygonArea(points) / PX2_PER_SQM / SQM_PER_SQFT);
+}
+
+function pointInPolygon([px, py]: Point, points: readonly Point[]) {
+  let inside = false;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    const [xi, yi] = points[i];
+    const [xj, yj] = points[j];
+    if (yi > py !== yj > py && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+/** Visual centroid guaranteed to sit inside the polygon (even for concave U-shapes that wrap around the house). */
+export function visualCentroid(points: readonly Point[]): Point {
+  let signedArea2 = 0;
+  let cx = 0;
+  let cy = 0;
+  let minX = Infinity;
+  let maxX = -Infinity;
+
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    const cross = x1 * y2 - x2 * y1;
+    signedArea2 += cross;
+    cx += (x1 + x2) * cross;
+    cy += (y1 + y2) * cross;
+    if (x1 < minX) minX = x1;
+    if (x1 > maxX) maxX = x1;
+  }
+
+  if (signedArea2 !== 0) {
+    const candidate: Point = [cx / (3 * signedArea2), cy / (3 * signedArea2)];
+    if (pointInPolygon(candidate, points)) {
+      return candidate;
+    }
+  }
+
+  // For concave shapes where the area centroid falls outside (e.g. on the house roof),
+  // intersect a vertical line at the horizontal midpoint and pick the longest interior span's center.
+  const midX = (minX + maxX) / 2;
+  const ys: number[] = [];
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    if (x1 === x2) continue;
+    if ((x1 <= midX && midX < x2) || (x2 <= midX && midX < x1)) {
+      const t = (midX - x1) / (x2 - x1);
+      ys.push(y1 + t * (y2 - y1));
+    }
+  }
+  ys.sort((a, b) => a - b);
+
+  let bestY = (points[0][1] + points[Math.floor(points.length / 2)][1]) / 2;
+  let bestSpan = -1;
+  for (let i = 0; i + 1 < ys.length; i += 2) {
+    const span = ys[i + 1] - ys[i];
+    if (span > bestSpan) {
+      bestSpan = span;
+      bestY = (ys[i] + ys[i + 1]) / 2;
+    }
+  }
+  return [midX, bestY];
+}
+
+// Single wrap-around lawn polygon covering the back yard and both side yards around the house,
+// excluding the house/deck, driveway, walkway and sidewalk.
+const BACK_AND_SIDE_LAWN_POINTS: readonly Point[] = [
+  [46, 34],
+  [554, 34],
+  [554, 400],
+  [474, 400],
+  [474, 186],
+  [412, 186],
+  [412, 102],
+  [196, 102],
+  [196, 140],
+  [140, 140],
+  [140, 298],
+  [46, 298],
+] as const;
+
+export const LAWN_ZONES: readonly TraceZone[] = [
+  {
+    x: 46,
+    y: 34,
+    width: 508,
+    height: 366,
+    points: BACK_AND_SIDE_LAWN_POINTS,
+    sqft: sqftFromPoints(BACK_AND_SIDE_LAWN_POINTS),
+  },
   { x: 46, y: 310, width: 180, height: 90, rx: 14, sqft: 1744 },
   { x: 270, y: 310, width: 100, height: 90, rx: 14, sqft: 969 },
 ] as const;
@@ -304,51 +436,62 @@ export const SNOW_ZONES = [
   { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, sqft: 168 },
 ] as const;
 
-/** Measurement overlay: thin point-traced polygons for lawn areas (green) and snow surfaces (charcoal).
- * With `seasonFade`, snow traces fade as the slider shows summer and lawn traces fade in winter
+/** Measurement overlay: point-traced polygons for lawn areas and snow surfaces.
+ * With `seasonFade`, snow traces fade linearly to 0 in summer and lawn traces fade linearly to 0 in winter
  * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
-export const SNOW_OPACITY = "calc(0.2 + 0.8 * var(--season, 50) / 100)";
-export const LAWN_OPACITY = "calc(0.2 + 0.8 * (100 - var(--season, 50)) / 100)";
-
-function corners(z: { x: number; y: number; width: number; height: number }) {
-  return [
-    [z.x, z.y],
-    [z.x + z.width, z.y],
-    [z.x + z.width, z.y + z.height],
-    [z.x, z.y + z.height],
-  ] as const;
-}
+export const SNOW_OPACITY = "calc(var(--season, 50) / 100)";
+export const LAWN_OPACITY = "calc((100 - var(--season, 50)) / 100)";
+export const TRACE_STROKE = "#326CCB";
+export const TRACE_FILL = "rgba(50, 108, 203, 0.16)";
 
 function Trace({
   zone,
-  fill,
-  stroke,
+  fill = TRACE_FILL,
+  stroke = TRACE_STROKE,
   animate,
   delay,
   opacity,
 }: {
-  zone: { x: number; y: number; width: number; height: number };
-  fill: string;
-  stroke: string;
+  zone: TraceZone;
+  fill?: string;
+  stroke?: string;
   animate: boolean;
   delay: number;
   opacity?: string;
 }) {
-  const pts = corners(zone);
+  const pts = zonePoints(zone);
   return (
     <g className="season-inherit" style={opacity ? { opacity } : undefined}>
       <polygon
         points={pts.map((p) => p.join(",")).join(" ")}
         fill={fill}
         stroke={stroke}
-        strokeWidth="1.25"
+        strokeWidth="1.75"
         strokeLinejoin="round"
         pathLength={1}
         className={animate ? "anim-draw" : undefined}
-        style={animate ? ({ "--delay": `${delay}ms` } as React.CSSProperties) : undefined}
+        style={
+          {
+            fill: `var(--scene-trace-fill, ${fill})`,
+            stroke: `var(--scene-trace-stroke, ${stroke})`,
+            ...(animate ? { "--delay": `${delay}ms` } : undefined),
+          } as React.CSSProperties
+        }
       />
       {pts.map(([cx, cy]) => (
-        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.75" fill="#ffffff" stroke={stroke} strokeWidth="1.25" />
+        <circle
+          key={`${cx}-${cy}`}
+          cx={cx}
+          cy={cy}
+          r="3"
+          fill={stroke}
+          stroke={stroke}
+          strokeWidth="1.5"
+          style={{
+            fill: `var(--scene-trace-stroke, ${stroke})`,
+            stroke: `var(--scene-trace-stroke, ${stroke})`,
+          }}
+        />
       ))}
     </g>
   );
@@ -371,8 +514,8 @@ export function PropertyTraces({
         <Trace
           key={`${zone.x}-${zone.y}`}
           zone={zone}
-          fill="rgb(21 104 57 / 0.18)"
-          stroke="rgb(15 78 42 / 0.92)"
+          fill={TRACE_FILL}
+          stroke={TRACE_STROKE}
           animate={animate}
           delay={500 + i * 220}
           opacity={seasonFade ? LAWN_OPACITY : undefined}
@@ -382,8 +525,8 @@ export function PropertyTraces({
         <Trace
           key={`${zone.x}-${zone.y}`}
           zone={zone}
-          fill="rgb(20 24 31 / 0.24)"
-          stroke="rgb(20 24 31 / 0.92)"
+          fill={TRACE_FILL}
+          stroke={TRACE_STROKE}
           animate={animate}
           delay={zone.delay}
           opacity={seasonFade ? SNOW_OPACITY : undefined}
@@ -392,4 +535,6 @@ export function PropertyTraces({
     </svg>
   );
 }
+
+
 
