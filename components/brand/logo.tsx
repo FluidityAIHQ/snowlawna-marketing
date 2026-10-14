@@ -28,7 +28,7 @@ function Glyph() {
 }
 
 function Tile() {
-  return <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#141417" stroke="#2e2e36" strokeWidth="1.5" />;
+  return <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#1c1c1c" stroke="#2e2e2e" strokeWidth="1.5" />;
 }
 
 /** Mark + lettering. Lettering uses currentColor. */

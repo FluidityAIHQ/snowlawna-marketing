@@ -441,8 +441,8 @@ export const SNOW_ZONES = [
  * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
 export const SNOW_OPACITY = "calc(var(--season, 50) / 100)";
 export const LAWN_OPACITY = "calc((100 - var(--season, 50)) / 100)";
-export const TRACE_STROKE = "#326CCB";
-export const TRACE_FILL = "rgba(50, 108, 203, 0.16)";
+export const TRACE_STROKE = "#4AA8FF";
+export const TRACE_FILL = "rgba(74, 168, 255, 0.16)";
 
 function Trace({
   zone,
@@ -466,7 +466,7 @@ function Trace({
         points={pts.map((p) => p.join(",")).join(" ")}
         fill={fill}
         stroke={stroke}
-        strokeWidth="1.75"
+        strokeWidth="2.25"
         strokeLinejoin="round"
         pathLength={1}
         className={animate ? "anim-draw" : undefined}
@@ -483,7 +483,7 @@ function Trace({
           key={`${cx}-${cy}`}
           cx={cx}
           cy={cy}
-          r="3"
+          r="3.25"
           fill={stroke}
           stroke={stroke}
           strokeWidth="1.5"

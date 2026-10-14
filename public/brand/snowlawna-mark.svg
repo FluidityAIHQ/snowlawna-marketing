@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="title desc">
   <title id="title">Snowlawna</title>
   <desc id="desc">The Seasonal Switch S: a snow ridge over an ice sweep, finished with a spruce lawn blade, on a charcoal tile.</desc>
-  <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#1a1c1f" stroke="#32353a" stroke-width="1.5"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="#1c1c1c" stroke="#2e2e2e" stroke-width="1.5"/>
   <path fill="#f3f6f7" d="M48 13H29c-10 0-16 6-16 14 0 5 3 8 9 10l13-8-7-2c-2-.5-3-1-3-2 0-2 2-2 4-2h12Z"/>
   <path fill="#92c6d2" d="M16 51h19c10 0 16-6 16-13 0-5-3-8-9-10l-13 8 7 2c2 .5 3 1 3 2 0 2-2 2-4 2H23Z"/>
   <path fill="#6cbb91" d="m16 51 7-9h16l-14 9Z"/>

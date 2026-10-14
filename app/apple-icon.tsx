@@ -9,7 +9,7 @@ export default function AppleIcon() {
   return new ImageResponse(
     (
       // eslint-disable-next-line jsx-a11y/alt-text
-      <img src={toDataUri(markSvg("#16181b", "#16181b", false))} width={180} height={180} />
+      <img src={toDataUri(markSvg("#1c1c1c", "#1c1c1c", false))} width={180} height={180} />
     ),
     size,
   );

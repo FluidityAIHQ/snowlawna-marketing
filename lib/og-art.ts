@@ -6,7 +6,7 @@ const BLADE = "m16 51 7-9h16l-14 9Z";
 
 export const toDataUri = (svg: string) => `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 
-export const markSvg = (tile = "#1a1c1f", stroke = "#32353a", rounded = true) =>
+export const markSvg = (tile = "#1c1c1c", stroke = "#2e2e2e", rounded = true) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${
     rounded
       ? `<rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="${tile}" stroke="${stroke}" stroke-width="1.5"/>`
