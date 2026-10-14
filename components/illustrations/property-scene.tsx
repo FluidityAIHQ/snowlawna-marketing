@@ -5,11 +5,11 @@ export type Season = "winter" | "summer";
 
 const palettes = {
   summer: {
-    ground: "#17271d",
-    lawnA: "#1f3a2a",
-    lawnB: "#1a3224",
-    hedge: "#132419",
-    hedgeTop: "#1b3526",
+    ground: "var(--scene-summer-neighbour)",
+    lawnA: "var(--scene-summer-lawn-hi)",
+    lawnB: "var(--scene-summer-ground)",
+    hedge: "#2d6e2b",
+    hedgeTop: "var(--scene-summer-leaf-hi)",
     roof: "#35353b",
     roofLine: "#4e4e56",
     roofAlt: "#2f2f35",
@@ -21,30 +21,30 @@ const palettes = {
     curb: "#2c2c32",
     deck: "#4a3a2c",
     deckLine: "#3b2e23",
-    canopy: "#1f4b33",
-    canopyHi: "#2b6443",
-    shadow: "rgba(0,0,0,0.38)",
+    canopy: "var(--scene-summer-leaf-mid)",
+    canopyHi: "var(--scene-summer-leaf-hi)",
+    shadow: "var(--scene-summer-shadow)",
   },
   winter: {
-    ground: "#dcdce2",
-    lawnA: "#e8e8ee",
-    lawnB: "#dedee5",
-    hedge: "#c2c2ca",
-    hedgeTop: "#f2f2f6",
-    roof: "#e4e4ea",
-    roofLine: "#b4b4be",
-    roofAlt: "#dadade",
-    paving: "#26262b",
-    seam: "#303036",
-    walk: "#2c2c32",
-    street: "#1c1c20",
-    streetMark: "#46464e",
-    curb: "#c2c2ca",
-    deck: "#d4d4dc",
-    deckLine: "#b8b8c2",
-    canopy: "#27272c",
-    canopyHi: "#ededf2",
-    shadow: "rgba(15,15,18,0.28)",
+    ground: "var(--scene-winter-ground)",
+    lawnA: "var(--scene-winter-lawn-hi)",
+    lawnB: "var(--scene-winter-lawn-lo)",
+    hedge: "var(--scene-winter-snow-lo)",
+    hedgeTop: "var(--scene-winter-snow-hi)",
+    roof: "var(--scene-winter-roof-s)",
+    roofLine: "var(--scene-winter-roof-ridge)",
+    roofAlt: "var(--scene-winter-roof-e)",
+    paving: "var(--scene-winter-driveway)",
+    seam: "#363d47",
+    walk: "var(--scene-winter-walkway)",
+    street: "var(--scene-winter-street)",
+    streetMark: "#5c6470",
+    curb: "var(--scene-winter-curb)",
+    deck: "var(--scene-winter-deck)",
+    deckLine: "var(--scene-winter-snow-lo)",
+    canopy: "#274736",
+    canopyHi: "var(--scene-winter-snow-hi)",
+    shadow: "var(--scene-winter-shadow)",
   },
 } as const;
 
@@ -131,8 +131,8 @@ export function PropertyScene({
             <rect width="96" height="96" fill={c.lawnA} />
             <ellipse cx="22" cy="30" rx="26" ry="9" fill={c.lawnB} opacity="0.7" />
             <ellipse cx="70" cy="74" rx="30" ry="8" fill={c.lawnB} opacity="0.6" />
-            <ellipse cx="78" cy="18" rx="14" ry="5" fill="#b9c7cd" opacity="0.8" />
-            <ellipse cx="30" cy="80" rx="12" ry="4" fill="#b9c7cd" opacity="0.7" />
+            <ellipse cx="78" cy="18" rx="14" ry="5" fill="var(--scene-winter-drift)" opacity="0.8" />
+            <ellipse cx="30" cy="80" rx="12" ry="4" fill="var(--scene-winter-drift)" opacity="0.7" />
           </pattern>
         ) : (
           <pattern id={lawnId} width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-4)">
@@ -166,7 +166,7 @@ export function PropertyScene({
       ))}
 
       {/* Back fence */}
-      <line x1="26" y1="16" x2="574" y2="16" stroke={winter ? "#7d8e96" : "#2f3a33"} strokeWidth="3" strokeDasharray="10 4" />
+      <line x1="26" y1="16" x2="574" y2="16" stroke={winter ? "#8fa4b8" : "#2f5230"} strokeWidth="3" strokeDasharray="10 4" />
 
       {/* Deck */}
       <rect x="330" y="112" width="74" height="40" rx="2" fill={c.deck} />
@@ -189,14 +189,14 @@ export function PropertyScene({
       </g>
       <rect x="370" y="196" width="96" height="94" fill={c.roofAlt} />
       <line x1="418" y1="196" x2="418" y2="290" stroke={c.roofLine} strokeWidth="2" />
-      <rect x="326" y="168" width="14" height="14" fill={winter ? "#3a3f45" : "#44484e"} />
+      <rect x="326" y="168" width="14" height="14" fill={winter ? "#464b52" : "#44484e"} />
 
       {/* Planting bed along the front */}
       {!winter && (
         <g>
           <rect x="152" y="292" width="80" height="9" rx="2" fill="#3a2e24" />
           {[160, 176, 192, 208, 224].map((x) => (
-            <circle key={x} cx={x} cy="296" r="5" fill="#245a3c" />
+            <circle key={x} cx={x} cy="296" r="5" fill="#3b8c36" />
           ))}
         </g>
       )}
@@ -205,7 +205,7 @@ export function PropertyScene({
       <rect x="234" y="290" width="34" height="16" fill={c.walk} />
       <rect x="244" y="306" width="14" height="106" fill={c.walk} />
       {winter && (
-        <g fill="#5d6368">
+        <g fill="#737d8c">
           {[318, 334, 351, 366, 383, 398].map((y, i) => (
             <circle key={y} cx={i % 2 ? 254 : 248} cy={y} r="1.3" />
           ))}
@@ -216,32 +216,32 @@ export function PropertyScene({
       <rect x="382" y="290" width="74" height="154" fill={c.paving} />
       {winter ? (
         <g>
-          <line x1="400" y1="296" x2="400" y2="444" stroke="#34383d" strokeWidth="6" opacity="0.8" />
-          <line x1="438" y1="296" x2="438" y2="444" stroke="#34383d" strokeWidth="6" opacity="0.8" />
-          <rect x="374" y="292" width="9" height="118" rx="4" fill="#c4d0d5" />
-          <rect x="455" y="292" width="9" height="118" rx="4" fill="#c4d0d5" />
+          <line x1="400" y1="296" x2="400" y2="444" stroke="#363d47" strokeWidth="6" opacity="0.8" />
+          <line x1="438" y1="296" x2="438" y2="444" stroke="#363d47" strokeWidth="6" opacity="0.8" />
+          <rect x="374" y="292" width="9" height="118" rx="4" fill="var(--scene-winter-bank)" />
+          <rect x="455" y="292" width="9" height="118" rx="4" fill="var(--scene-winter-bank)" />
         </g>
       ) : (
         [320, 350, 380].map((y) => <line key={y} x1="382" y1={y} x2="456" y2={y} stroke={c.seam} strokeWidth="1.5" />)
       )}
 
       {/* Sidewalk, boulevard, street */}
-      <rect x="0" y="412" width="600" height="20" fill={winter ? "#2a2d31" : c.walk} />
+      <rect x="0" y="412" width="600" height="20" fill={winter ? "var(--scene-winter-sidewalk)" : c.walk} />
       {!winter &&
         Array.from({ length: 25 }, (_, i) => (
           <line key={i} x1={i * 24 + 12} y1="412" x2={i * 24 + 12} y2="432" stroke={c.seam} strokeWidth="1" />
         ))}
-      {winter && <rect x="0" y="410" width="600" height="5" fill="#b3c1c7" />}
+      {winter && <rect x="0" y="410" width="600" height="5" fill="var(--scene-winter-bank-mid)" />}
       <rect x="0" y="432" width="382" height="12" fill={winter ? c.lawnA : c.lawnA} />
       <rect x="456" y="432" width="144" height="12" fill={winter ? c.lawnA : c.lawnA} />
       <rect x="0" y="444" width="600" height="76" fill={c.street} />
       <rect x="0" y="444" width="600" height="3" fill={c.curb} />
       {winter ? (
         <g>
-          <rect x="0" y="446" width="382" height="7" rx="3" fill="#9fb0b7" />
-          <rect x="456" y="446" width="144" height="7" rx="3" fill="#9fb0b7" />
-          <line x1="0" y1="468" x2="600" y2="468" stroke="#272a2e" strokeWidth="9" />
-          <line x1="0" y1="500" x2="600" y2="500" stroke="#272a2e" strokeWidth="9" />
+          <rect x="0" y="446" width="382" height="7" rx="3" fill="var(--scene-winter-bank)" />
+          <rect x="456" y="446" width="144" height="7" rx="3" fill="var(--scene-winter-bank)" />
+          <line x1="0" y1="468" x2="600" y2="468" stroke="#1e2228" strokeWidth="9" />
+          <line x1="0" y1="500" x2="600" y2="500" stroke="#1e2228" strokeWidth="9" />
         </g>
       ) : (
         <line x1="0" y1="484" x2="600" y2="484" stroke={c.streetMark} strokeWidth="2" strokeDasharray="18 16" />
@@ -253,9 +253,9 @@ export function PropertyScene({
           {kind === "spruce" ? (
             <>
               <polygon points={sprucePoints(x + r * 0.2, y + r * 0.22, r)} fill={c.shadow} />
-              <polygon points={sprucePoints(x, y, r)} fill={winter ? "#1b2a24" : "#1a4230"} />
-              <polygon points={sprucePoints(x, y, r * 0.62, 9)} fill={winter ? "#c3cfd4" : "#24573d"} opacity={winter ? 0.75 : 1} />
-              <circle cx={x} cy={y} r={r * 0.16} fill={winter ? "#dde6e9" : "#2e6a4a"} />
+              <polygon points={sprucePoints(x, y, r)} fill={winter ? "#234434" : "#2d6e2b"} />
+              <polygon points={sprucePoints(x, y, r * 0.62, 9)} fill={winter ? "var(--scene-winter-snow-mid)" : "#4aa043"} opacity={winter ? 0.9 : 1} />
+              <circle cx={x} cy={y} r={r * 0.16} fill={winter ? "var(--scene-winter-snow-hi)" : "#7ed45e"} />
             </>
           ) : winter ? (
             <BareTree x={x} y={y} r={r} />
@@ -277,8 +277,8 @@ export function PropertyScene({
         width="540"
         height="390"
         fill="none"
-        stroke={winter ? "#3d4a50" : "#8fa39a"}
-        strokeOpacity={winter ? 0.55 : 0.35}
+        stroke={winter ? "#647d94" : "#d8f0d4"}
+        strokeOpacity={winter ? 0.55 : 0.45}
         strokeWidth="1.5"
         strokeDasharray="3 6"
       />
@@ -286,22 +286,29 @@ export function PropertyScene({
   );
 }
 
-const LAWN_ZONES = [
-  { x: 46, y: 34, width: 508, height: 68, rx: 16 },
-  { x: 46, y: 310, width: 180, height: 90, rx: 14 },
-  { x: 270, y: 310, width: 100, height: 90, rx: 14 },
+const SQM_PER_SQFT = 0.092903;
+
+/** Convert square feet to whole square meters (m² = ft² × 0.092903). */
+export function formatSqm(sqft: number) {
+  return `${Math.round(sqft * SQM_PER_SQFT)} m²`;
+}
+
+export const LAWN_ZONES = [
+  { x: 46, y: 34, width: 508, height: 68, rx: 16, sqft: 4812 },
+  { x: 46, y: 310, width: 180, height: 90, rx: 14, sqft: 1744 },
+  { x: 270, y: 310, width: 100, height: 90, rx: 14, sqft: 969 },
 ] as const;
 
-const SNOW_ZONES = [
-  { x: 384, y: 294, width: 70, height: 112, rx: 12, delay: 1150 },
-  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300 },
+export const SNOW_ZONES = [
+  { x: 384, y: 294, width: 70, height: 112, rx: 12, delay: 1150, sqft: 842 },
+  { x: 243, y: 308, width: 16, height: 98, rx: 8, delay: 1300, sqft: 168 },
 ] as const;
 
 /** Measurement overlay: thin point-traced polygons for lawn areas (green) and snow surfaces (charcoal).
  * With `seasonFade`, snow traces fade as the slider shows summer and lawn traces fade in winter
  * (driven by the inherited --season custom property, 0–100 = share of the view in winter). */
-const SNOW_OPACITY = "calc(0.2 + 0.8 * var(--season, 50) / 100)";
-const LAWN_OPACITY = "calc(0.2 + 0.8 * (100 - var(--season, 50)) / 100)";
+export const SNOW_OPACITY = "calc(0.2 + 0.8 * var(--season, 50) / 100)";
+export const LAWN_OPACITY = "calc(0.2 + 0.8 * (100 - var(--season, 50)) / 100)";
 
 function corners(z: { x: number; y: number; width: number; height: number }) {
   return [
@@ -364,8 +371,8 @@ export function PropertyTraces({
         <Trace
           key={`${zone.x}-${zone.y}`}
           zone={zone}
-          fill="rgb(82 200 130 / 0.14)"
-          stroke="rgb(82 200 130 / 0.9)"
+          fill="rgb(21 104 57 / 0.18)"
+          stroke="rgb(15 78 42 / 0.92)"
           animate={animate}
           delay={500 + i * 220}
           opacity={seasonFade ? LAWN_OPACITY : undefined}
@@ -375,8 +382,8 @@ export function PropertyTraces({
         <Trace
           key={`${zone.x}-${zone.y}`}
           zone={zone}
-          fill="rgb(39 39 44 / 0.22)"
-          stroke="rgb(250 250 250 / 0.9)"
+          fill="rgb(20 24 31 / 0.24)"
+          stroke="rgb(20 24 31 / 0.92)"
           animate={animate}
           delay={zone.delay}
           opacity={seasonFade ? SNOW_OPACITY : undefined}

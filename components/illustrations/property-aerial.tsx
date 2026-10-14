@@ -125,8 +125,10 @@ const BED_SHRUBS = [160, 176, 192, 208, 224];
 
 const palettes = {
   summer: {
-    ground: "#1f422b",
-    neighbour: "#18271d",
+    ground: "var(--scene-summer-ground)",
+    stripeHi: "var(--scene-summer-lawn-hi)",
+    stripeLo: "var(--scene-summer-ground)",
+    neighbour: "var(--scene-summer-neighbour)",
     street: "#1c1c1f",
     streetMark: "#57575c",
     curb: "#3c3c40",
@@ -135,44 +137,62 @@ const palettes = {
     porch: "#46464b",
     walkway: "#414146",
     joint: "rgb(0 0 0 / 0.22)",
-    deck: "#3d3229",
-    deckJoint: "rgb(0 0 0 / 0.28)",
-    bed: "#2b231d",
+    deck: "#4a3b2f",
+    deckJoint: "rgb(0 0 0 / 0.26)",
+    bed: "#332920",
     fence: "#2f2c27",
     fencePost: "#3a362f",
     chimney: "#4a3c35",
     vent: "#202024",
     roofStroke: "rgb(0 0 0 / 0.4)",
-    shadow: "rgb(4 14 8 / 0.52)",
+    shadow: "var(--scene-summer-shadow)",
     roof: { north: "#45454a", west: "#3d3d42", south: "#303035", east: "#2a2a2e", ridge: "#57575e" },
-    leaf: ["#4e845f", "#2f593d", "#16301f"],
-    hedgeBase: "#152b1d",
-    needles: { low: ["#2f5740", "#1d3b2a", "#102218"], high: ["#467859", "#294d36", "#183122"], seam: "rgb(6 16 10 / 0.38)", apex: "#58916c" },
+    leaf: ["var(--scene-summer-leaf-hi)", "var(--scene-summer-leaf-mid)", "var(--scene-summer-leaf-lo)"],
+    hedgeBase: "var(--scene-summer-hedge-base)",
+    needles: {
+      low: ["#43893f", "#2d642b", "#1c441b"],
+      high: ["#68b85b", "#41863d", "#295a27"],
+      seam: "rgb(12 36 14 / 0.32)",
+      apex: "#82d173",
+    },
   },
   winter: {
-    ground: "#86868e",
-    neighbour: "#6c6c74",
-    street: "#26262b",
-    streetMark: "#52525a",
-    curb: "#686870",
-    sidewalk: "#303036",
-    driveway: "#242429",
-    porch: "#2e2e34",
-    walkway: "#2c2c32",
-    joint: "rgb(0 0 0 / 0.24)",
-    deck: "#8a8a92",
-    deckJoint: "rgb(0 0 0 / 0.14)",
-    bed: "#52525a",
-    fence: "#2e2e33",
-    fencePost: "#3a3a40",
-    chimney: "#38383d",
-    vent: "#54545c",
-    roofStroke: "rgb(20 20 24 / 0.45)",
-    shadow: "rgb(15 15 18 / 0.38)",
-    roof: { north: "#9e9ea6", west: "#92929a", south: "#6e6e76", east: "#64646c", ridge: "#b4b4bc" },
-    leaf: ["#b0b0b8", "#8c8c94", "#505058"],
-    hedgeBase: "#2c2c31",
-    needles: { low: ["#35353b", "#222227", "#141418"], high: ["#d0d0d6", "#a0a0a8", "#505058"], seam: "rgb(15 15 18 / 0.36)", apex: "#e2e2e6" },
+    ground: "var(--scene-winter-ground)",
+    stripeHi: "var(--scene-winter-ground)",
+    stripeLo: "var(--scene-winter-ground)",
+    neighbour: "var(--scene-winter-neighbour)",
+    street: "var(--scene-winter-street)",
+    streetMark: "#646c78",
+    curb: "var(--scene-winter-curb)",
+    sidewalk: "var(--scene-winter-sidewalk)",
+    driveway: "var(--scene-winter-driveway)",
+    porch: "var(--scene-winter-porch)",
+    walkway: "var(--scene-winter-walkway)",
+    joint: "rgb(15 23 34 / 0.24)",
+    deck: "var(--scene-winter-deck)",
+    deckJoint: "rgb(110 138 166 / 0.24)",
+    bed: "var(--scene-winter-bed)",
+    fence: "#4a5562",
+    fencePost: "#3b4450",
+    chimney: "#464b52",
+    vent: "#64707d",
+    roofStroke: "var(--scene-winter-roof-stroke)",
+    shadow: "var(--scene-winter-shadow)",
+    roof: {
+      north: "var(--scene-winter-roof-n)",
+      west: "var(--scene-winter-roof-w)",
+      south: "var(--scene-winter-roof-s)",
+      east: "var(--scene-winter-roof-e)",
+      ridge: "var(--scene-winter-roof-ridge)",
+    },
+    leaf: ["var(--scene-winter-snow-hi)", "var(--scene-winter-snow-mid)", "var(--scene-winter-snow-lo)"],
+    hedgeBase: "var(--scene-winter-hedge-base)",
+    needles: {
+      low: ["#2d5440", "#1e3d2d", "#14291e"],
+      high: ["var(--scene-winter-snow-hi)", "var(--scene-winter-snow-mid)", "var(--scene-winter-snow-lo)"],
+      seam: "rgb(35 55 75 / 0.26)",
+      apex: "var(--scene-winter-snow-hi)",
+    },
   },
 } as const;
 
@@ -236,18 +256,18 @@ export function PropertyAerial({
 
         {winter ? (
           <radialGradient id={id("crown-haze")}>
-            <stop offset="0" stopColor="#35353a" stopOpacity="0.28" />
-            <stop offset="1" stopColor="#35353a" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--scene-winter-haze)" stopOpacity="0.22" />
+            <stop offset="1" stopColor="var(--scene-winter-haze)" stopOpacity="0" />
           </radialGradient>
         ) : (
           <>
             {/* Mowing stripes */}
             <linearGradient id={id("stripes")} x1="0" y1="0" x2="0" y2="46" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
-              <stop offset="0" stopColor="#275236" />
-              <stop offset="0.44" stopColor="#275236" />
-              <stop offset="0.5" stopColor="#1e402a" />
-              <stop offset="0.94" stopColor="#1e402a" />
-              <stop offset="1" stopColor="#275236" />
+              <stop offset="0" stopColor={c.stripeHi} />
+              <stop offset="0.44" stopColor={c.stripeHi} />
+              <stop offset="0.5" stopColor={c.stripeLo} />
+              <stop offset="0.94" stopColor={c.stripeLo} />
+              <stop offset="1" stopColor={c.stripeHi} />
             </linearGradient>
             {/* Shingle courses run parallel to each roof plane's eave. */}
             <pattern id={id("courses-h")} width="8" height="4" patternUnits="userSpaceOnUse">

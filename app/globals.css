@@ -46,6 +46,44 @@
   --map-chip-bg: #ffffff;
   --map-chip-stroke: #bebec6;
   --map-chip-fg: #141417;
+
+  /* Property illustration tokens (light mode) */
+  --scene-summer-ground: #4caf50;
+  --scene-summer-lawn-hi: #66bb4a;
+  --scene-summer-neighbour: #439e46;
+  --scene-summer-hedge-base: #2d6e2b;
+  --scene-summer-leaf-hi: #7ed45e;
+  --scene-summer-leaf-mid: #4aa043;
+  --scene-summer-leaf-lo: #2b6c29;
+  --scene-summer-shadow: rgb(16 48 20 / 0.32);
+
+  --scene-winter-ground: #f7fafe;
+  --scene-winter-lawn-hi: #fafdff;
+  --scene-winter-lawn-lo: #eef5fc;
+  --scene-winter-drift: #d8e5f2;
+  --scene-winter-neighbour: #eef4fb;
+  --scene-winter-deck: #eef4fb;
+  --scene-winter-bed: #d2e0ee;
+  --scene-winter-curb: #cad8e6;
+  --scene-winter-bank: #f2f7fd;
+  --scene-winter-bank-mid: #e5eff9;
+  --scene-winter-hedge-base: #cedce9;
+  --scene-winter-snow-hi: #ffffff;
+  --scene-winter-snow-mid: #e8f0f8;
+  --scene-winter-snow-lo: #bfd1e3;
+  --scene-winter-roof-n: #f4f8fd;
+  --scene-winter-roof-w: #eaf1f9;
+  --scene-winter-roof-s: #d5e2f0;
+  --scene-winter-roof-e: #c6d6e7;
+  --scene-winter-roof-ridge: #7892ac;
+  --scene-winter-roof-stroke: rgb(55 75 98 / 0.62);
+  --scene-winter-shadow: rgb(132 160 188 / 0.38);
+  --scene-winter-haze: #9bb2c8;
+  --scene-winter-driveway: #434b56;
+  --scene-winter-sidewalk: #525b68;
+  --scene-winter-porch: #505966;
+  --scene-winter-walkway: #4e5764;
+  --scene-winter-street: #252930;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,6 +128,44 @@
     --map-chip-bg: #101013;
     --map-chip-stroke: #3a3a42;
     --map-chip-fg: #f2f2f5;
+
+    /* Property illustration tokens (dark mode: slightly dimmer white snow, still clearly white) */
+    --scene-summer-ground: #48a64c;
+    --scene-summer-lawn-hi: #60b546;
+    --scene-summer-neighbour: #3f9442;
+    --scene-summer-hedge-base: #276325;
+    --scene-summer-leaf-hi: #74c856;
+    --scene-summer-leaf-mid: #44963e;
+    --scene-summer-leaf-lo: #266225;
+    --scene-summer-shadow: rgb(12 38 16 / 0.36);
+
+    --scene-winter-ground: #edf2f8;
+    --scene-winter-lawn-hi: #f2f6fb;
+    --scene-winter-lawn-lo: #e5edf6;
+    --scene-winter-drift: #ceddeb;
+    --scene-winter-neighbour: #e3ebf4;
+    --scene-winter-deck: #e4ecf5;
+    --scene-winter-bed: #c7d6e6;
+    --scene-winter-curb: #becee0;
+    --scene-winter-bank: #eaf1f8;
+    --scene-winter-bank-mid: #dbe6f2;
+    --scene-winter-hedge-base: #c2d2e2;
+    --scene-winter-snow-hi: #f5f9fd;
+    --scene-winter-snow-mid: #dde7f2;
+    --scene-winter-snow-lo: #b2c5d8;
+    --scene-winter-roof-n: #eaeff6;
+    --scene-winter-roof-w: #e0e8f2;
+    --scene-winter-roof-s: #cad8e7;
+    --scene-winter-roof-e: #bccde0;
+    --scene-winter-roof-ridge: #6c86a0;
+    --scene-winter-roof-stroke: rgb(45 65 88 / 0.68);
+    --scene-winter-shadow: rgb(112 140 170 / 0.42);
+    --scene-winter-haze: #8ea6be;
+    --scene-winter-driveway: #3d4550;
+    --scene-winter-sidewalk: #4c5562;
+    --scene-winter-porch: #4a5360;
+    --scene-winter-walkway: #48515e;
+    --scene-winter-street: #22262d;
   }
 }
 
@@ -134,6 +210,44 @@
   --map-chip-bg: #101013;
   --map-chip-stroke: #3a3a42;
   --map-chip-fg: #f2f2f5;
+
+  /* Property illustration tokens (dark mode: slightly dimmer white snow, still clearly white) */
+  --scene-summer-ground: #48a64c;
+  --scene-summer-lawn-hi: #60b546;
+  --scene-summer-neighbour: #3f9442;
+  --scene-summer-hedge-base: #276325;
+  --scene-summer-leaf-hi: #74c856;
+  --scene-summer-leaf-mid: #44963e;
+  --scene-summer-leaf-lo: #266225;
+  --scene-winter-shadow: rgb(112 140 170 / 0.42);
+  --scene-summer-shadow: rgb(12 38 16 / 0.36);
+
+  --scene-winter-ground: #edf2f8;
+  --scene-winter-lawn-hi: #f2f6fb;
+  --scene-winter-lawn-lo: #e5edf6;
+  --scene-winter-drift: #ceddeb;
+  --scene-winter-neighbour: #e3ebf4;
+  --scene-winter-deck: #e4ecf5;
+  --scene-winter-bed: #c7d6e6;
+  --scene-winter-curb: #becee0;
+  --scene-winter-bank: #eaf1f8;
+  --scene-winter-bank-mid: #dbe6f2;
+  --scene-winter-hedge-base: #c2d2e2;
+  --scene-winter-snow-hi: #f5f9fd;
+  --scene-winter-snow-mid: #dde7f2;
+  --scene-winter-snow-lo: #b2c5d8;
+  --scene-winter-roof-n: #eaeff6;
+  --scene-winter-roof-w: #e0e8f2;
+  --scene-winter-roof-s: #cad8e7;
+  --scene-winter-roof-e: #bccde0;
+  --scene-winter-roof-ridge: #6c86a0;
+  --scene-winter-roof-stroke: rgb(45 65 88 / 0.68);
+  --scene-winter-haze: #8ea6be;
+  --scene-winter-driveway: #3d4550;
+  --scene-winter-sidewalk: #4c5562;
+  --scene-winter-porch: #4a5360;
+  --scene-winter-walkway: #48515e;
+  --scene-winter-street: #22262d;
 }
 
 @theme {
