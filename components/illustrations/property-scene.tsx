@@ -168,11 +168,11 @@ export function PropertyScene({
       {/* Back fence */}
       <line x1="26" y1="16" x2="574" y2="16" stroke={winter ? "#8fa4b8" : "#2f5230"} strokeWidth="3" strokeDasharray="10 4" />
 
-      {/* Deck */}
-      <rect x="330" y="112" width="74" height="40" rx="2" fill={c.deck} />
+      {/* Deck, against the rear addition and the back of the house. It runs 2 units under both, so no lawn shows at the joins. */}
+      <rect x="314" y="112" width="76" height="40" fill={c.deck} />
       {!winter &&
         Array.from({ length: 6 }, (_, i) => (
-          <line key={i} x1={330 + 12 * (i + 1)} y1="112" x2={330 + 12 * (i + 1)} y2="152" stroke={c.deckLine} strokeWidth="1.5" />
+          <line key={i} x1={316 + 12 * (i + 1)} y1="112" x2={316 + 12 * (i + 1)} y2="152" stroke={c.deckLine} strokeWidth="1.5" />
         ))}
 
       {/* House shadow, then house */}
@@ -437,12 +437,8 @@ const LAWN_POINTS: readonly Point[] = [
   [466, 196],
   [370, 196],
   [370, 152],
-  [404, 152],
-  [404, 112],
-  [330, 112],
-  [330, 150],
-  [316, 150],
-  [316, 112],
+  [390, 152],
+  [390, 112],
   [204, 112],
   [204, 150],
   [150, 150],

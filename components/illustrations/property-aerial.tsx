@@ -120,7 +120,7 @@ const RIDGES = "M150 150 220 220H300L370 150M150 290 220 220M300 220 370 290M204
 const SIDEWALK_JOINTS = Array.from({ length: 25 }, (_, i) => `M${i * 24 + 12} 412V432`).join("");
 const DRIVEWAY_JOINTS = "M382 322H456M382 354H456M382 386H456M382 412H456M419 290V444";
 const WALKWAY_JOINTS = "M244 318H258M244 330H258M244 342H258M244 354H258M244 366H258M244 378H258M244 390H258M244 402H258";
-const DECK_BOARDS = Array.from({ length: 7 }, (_, i) => `M330 ${117 + i * 5}H404`).join("");
+const DECK_BOARDS = Array.from({ length: 7 }, (_, i) => `M314 ${117 + i * 5}H390`).join("");
 const BED_SHRUBS = [160, 176, 192, 208, 224];
 
 const palettes = {
@@ -304,16 +304,16 @@ export function PropertyAerial({
         <path d={WALKWAY_JOINTS} stroke={c.joint} strokeWidth="1" />
       </g>
 
-      {/* Deck */}
+      {/* Deck, against the rear addition and the back of the house. It runs 2 units under both, so no lawn shows at the joins. */}
       <g>
-        <rect x="330" y="112" width="74" height="40" fill={c.deck} />
+        <rect x="314" y="112" width="76" height="40" fill={c.deck} />
         <path d={DECK_BOARDS} stroke={c.deckJoint} strokeWidth="0.8" />
       </g>
 
       {/* Shadows, all cast toward the bottom right */}
       <g fill={c.shadow} filter={url("shadow")}>
         <path d={ROOF_OUTLINE} transform="translate(9 11)" />
-        <rect x="333" y="115" width="74" height="40" opacity={0.6} />
+        <rect x="317" y="115" width="76" height="40" opacity={0.6} />
         {!winter && MAPLES.map(({ x, y, r }) => <circle key={x} cx={x + r * 0.3} cy={y + r * 0.36} r={r * 0.96} />)}
         {SPRUCES.map(({ x, r }, i) => (
           <path key={x} d={CONIFERS[i][0]} transform={`translate(${round(r * 0.32)} ${round(r * 0.38)})`} />
