@@ -417,42 +417,80 @@ export function labelPoint(zone: TraceZone, viewBox = "0 0 600 520"): Point {
   return inView ? point : (zone.cropLabel ?? point);
 }
 
+// The lawn traces follow the grass edges of PropertyAerial, the hero's imagery, which shares this scene's
+// footprint. The back fence's 2.5-wide line at y 16 ends at y 17.25 and the sidewalk starts at y 412. The
+// hedge strips end at x 20 and start at x 582, and their shrubs bulge past that, so the sides run along
+// the hedges' average inner edge, x 21 and 580. (This scene's hedges sit a few units further in, so in the
+// product tour and feature grid the sides run along their inner edge.) Inside, the lawn stops at the house,
+// deck and garage, the driveway (x 382–456), the porch (x 234–268, down to y 306), the walkway
+// (x 244–258) and the planting bed in front of the house (down to y 301).
+
 // One wrap-around lawn polygon: the back yard, both side yards and the front lawn left of the walkway,
-// which all run into each other. It leaves out the house and deck, driveway, walkway and sidewalk.
+// which all run into each other.
 const LAWN_POINTS: readonly Point[] = [
-  [46, 34],
-  [554, 34],
-  [554, 400],
-  [474, 400],
-  [474, 186],
-  [412, 186],
-  [412, 102],
-  [196, 102],
-  [196, 140],
-  [140, 140],
-  [140, 310],
-  [226, 310],
-  [226, 400],
-  [46, 400],
+  [21, 17.25],
+  [580, 17.25],
+  [580, 412],
+  [456, 412],
+  [456, 290],
+  [466, 290],
+  [466, 196],
+  [370, 196],
+  [370, 152],
+  [404, 152],
+  [404, 112],
+  [330, 112],
+  [330, 150],
+  [316, 150],
+  [316, 112],
+  [204, 112],
+  [204, 150],
+  [150, 150],
+  [150, 301],
+  [234, 301],
+  [234, 306],
+  [244, 306],
+  [244, 412],
+  [21, 412],
+] as const;
+
+// The front lawn between the walkway and the driveway, which cut it off from the rest. It's notched
+// where the porch is wider than the walkway.
+const FRONT_LAWN_POINTS: readonly Point[] = [
+  [268, 290],
+  [382, 290],
+  [382, 412],
+  [258, 412],
+  [258, 306],
+  [268, 306],
 ] as const;
 
 // The hero slider clips each season's traces at its divider, which rests at x 300, so labels stay clear
 // of that line rather than showing half a number.
 export const LAWN_ZONES: readonly TraceZone[] = [
   {
-    x: 46,
-    y: 34,
-    width: 508,
-    height: 366,
+    x: 21,
+    y: 17.25,
+    width: 559,
+    height: 394.75,
     points: LAWN_POINTS,
-    // Beside the deck: the slider's summer side, and below the product tour's toolbar. The feature
-    // grid's crop of the front yard cuts that off, so there it labels the front lawn.
-    label: [470, 148],
-    cropLabel: [136, 355],
+    // Centred in the side yard between the deck and the garage, from the house to the hedge: the slider's
+    // summer side, and below the product tour's toolbar. The feature grid's crop of the front yard cuts
+    // that off, so there it labels the front lawn, centred between the hedge, bed, walkway and sidewalk.
+    label: [475, 174],
+    cropLabel: [132, 357],
     sqft: sqftFromPoints(LAWN_POINTS),
   },
-  // The front lawn between the walkway and the driveway, which cut it off from the rest.
-  { x: 270, y: 310, width: 100, height: 90, rx: 14, label: [332, 355], sqft: 969 },
+  {
+    x: 258,
+    y: 290,
+    width: 124,
+    height: 122,
+    points: FRONT_LAWN_POINTS,
+    // Centred on the part of this lawn right of the resting divider (x 300–382), top to bottom.
+    label: [341, 351],
+    sqft: sqftFromPoints(FRONT_LAWN_POINTS),
+  },
 ] as const;
 
 // The whole driveway, from the garage door to the street: the paved pad, then the apron across the sidewalk
