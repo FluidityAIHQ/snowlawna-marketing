@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { FilePenLine, Headset, Map as MapIcon, Ruler, type LucideIcon } from "lucide-react";
 
 const TABS: { id: string; label: string; Icon: LucideIcon; blurb: string; description: string }[] = [
@@ -40,12 +40,32 @@ const TABS: { id: string; label: string; Icon: LucideIcon; blurb: string; descri
 
 export function TourTabs({ panels }: { panels: ReactNode[] }) {
   const [active, setActive] = useState(0);
+  const tabList = useRef<HTMLDivElement>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useLayoutEffect(() => {
+    const list = tabList.current;
+    const button = tabs.current[active];
+    if (!list || !button) return;
+
+    const positionIndicator = () => {
+      list.style.setProperty("--tab-x", `${button.offsetLeft}px`);
+      list.style.setProperty("--tab-y", `${button.offsetTop}px`);
+      list.style.setProperty("--tab-width", `${button.offsetWidth}px`);
+      list.style.setProperty("--tab-height", `${button.offsetHeight}px`);
+      list.dataset.indicatorReady = "true";
+    };
+    positionIndicator();
+    const observer = new ResizeObserver(positionIndicator);
+    observer.observe(list);
+    observer.observe(button);
+    return () => observer.disconnect();
+  }, [active]);
 
   const select = (index: number) => {
     const next = (index + TABS.length) % TABS.length;
     setActive(next);
-    tabs.current[next]?.focus();
+    tabs.current[next]?.focus({ preventScroll: true });
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -64,11 +84,13 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
     <div>
       <div className="flex justify-center">
         <div
+          ref={tabList}
           role="tablist"
           aria-label="Product areas"
           onKeyDown={onKeyDown}
-          className="grid w-full max-w-sm grid-cols-2 gap-1.5 rounded-3xl border border-line-strong bg-surface p-1.5 shadow-card sm:inline-flex sm:w-auto sm:max-w-none sm:rounded-full"
+          className="tour-tabs relative isolate grid w-full max-w-sm grid-cols-2 gap-1.5 rounded-3xl border border-line-strong bg-surface p-1.5 shadow-card sm:inline-flex sm:w-auto sm:max-w-none sm:rounded-full"
         >
+          <span aria-hidden className="tour-tab-indicator pointer-events-none absolute top-0 left-0 -z-10 rounded-full bg-primary shadow-sm" />
           {TABS.map((tab, i) => {
             const selected = i === active;
             return (
@@ -83,8 +105,8 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
                 aria-selected={selected}
                 aria-controls={`tour-panel-${tab.id}`}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => setActive(i)}
-                className={`inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-4.5 text-sm font-medium transition-colors ${
+                onClick={() => select(i)}
+                className={`tour-tab inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-4.5 text-sm font-medium motion-safe:transition-colors ${
                   selected
                     ? "bg-primary text-canvas shadow-sm"
                     : "text-fg-2 hover:bg-surface-2 hover:text-fg"
@@ -98,19 +120,25 @@ export function TourTabs({ panels }: { panels: ReactNode[] }) {
         </div>
       </div>
 
-      <p aria-live="polite" className="mx-auto mt-5 min-h-12 max-w-xl text-center text-[15px] leading-relaxed text-fg-2">
-        {TABS[active].blurb}
-      </p>
+      <div aria-live="polite" className="mx-auto mt-5 grid min-h-12 max-w-xl text-center text-[15px] leading-relaxed text-fg-2">
+        {TABS.map((tab, i) => (
+          <p key={tab.id} aria-hidden={i !== active} data-active={i === active} className="tour-content col-start-1 row-start-1">
+            {tab.blurb}
+          </p>
+        ))}
+      </div>
 
-      <div className="mt-8">
+      <div className="mt-8 grid">
         {TABS.map((tab, i) => (
           <div
             key={tab.id}
             role="tabpanel"
             id={`tour-panel-${tab.id}`}
             aria-labelledby={`tour-tab-${tab.id}`}
-            hidden={i !== active}
-            className="anim-fade"
+            aria-hidden={i !== active}
+            inert={i !== active}
+            data-active={i === active}
+            className="tour-content col-start-1 row-start-1 min-w-0"
           >
             <div role="img" aria-label={tab.description}>
               {panels[i]}
