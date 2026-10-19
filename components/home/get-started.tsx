@@ -22,7 +22,7 @@ export function GetStarted() {
       {/* Mobile order: heading, form, extras. Desktop: heading and extras left, form right. */}
       <div className="wrap grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
         <SectionHeading id="get-started-title" eyebrow="Get started" title="Get set before the first snowfall." className="lg:col-start-1 lg:row-start-1">
-          <p>Book a walkthrough with your own properties, join the waitlist for early access, or ask us anything.</p>
+          <p>Book a demo with your own properties or ask us anything.</p>
         </SectionHeading>
 
         <div

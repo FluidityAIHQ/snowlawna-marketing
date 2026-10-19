@@ -38,13 +38,13 @@ export function Hero() {
       <div className="wrap grid items-center gap-14 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,1.06fr)] lg:gap-12 lg:py-8 xl:gap-16">
         <div className="max-w-xl">
           <IntentLink
-            intent="waitlist"
+            intent="demo"
             className="anim-rise group inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/90 py-1 pr-3.5 pl-1.5 text-xs font-medium text-fg-2 shadow-card backdrop-blur transition-colors hover:border-spruce/50 hover:text-fg"
           >
             <span className="inline-flex items-center gap-1 rounded-full bg-spruce/12 px-2.5 py-0.5 font-mono text-[10px] font-medium tracking-[0.12em] text-spruce uppercase">
               <Snowflake aria-hidden className="size-3" /> New
             </span>
-            Early access for the 2026–27 winter
+            See Snowlawna in action
             <ArrowRight aria-hidden className="size-3.5 text-spruce transition-transform motion-safe:group-hover:translate-x-0.5" />
           </IntentLink>
 
@@ -71,12 +71,6 @@ export function Hero() {
               <ButtonArrow />
             </IntentLink>
           </div>
-
-          <p className="anim-rise mt-5 text-sm" style={delay(500)}>
-            <IntentLink intent="waitlist" className="font-medium text-spruce underline-offset-4 hover:underline">
-              Or join the waitlist
-            </IntentLink>
-          </p>
 
           <dl
             className="anim-rise mt-9 grid grid-cols-3 gap-2.5 border-t border-line pt-6"

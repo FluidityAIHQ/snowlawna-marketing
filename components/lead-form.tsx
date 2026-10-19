@@ -25,12 +25,11 @@ type Status =
   | { state: "success"; intent: LeadIntent }
   | { state: "error"; message: string; mailto: string | null };
 
-const SHORT_TABS: Record<LeadIntent, string> = { demo: "Demo", waitlist: "Waitlist", contact: "Contact" };
+const SHORT_TABS: Record<LeadIntent, string> = { demo: "Demo", contact: "Contact" };
 
 // Which optional fields each intent asks for (name and email are always shown).
 const FIELDS: Record<LeadIntent, { fleet: boolean; services: boolean; message: "optional" | "required" | false }> = {
   demo: { fleet: true, services: true, message: "optional" },
-  waitlist: { fleet: true, services: true, message: false },
   contact: { fleet: false, services: false, message: "required" },
 };
 
@@ -216,7 +215,7 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
 
       <fieldset>
         <legend className="sr-only">What would you like to do?</legend>
-        <div className="grid grid-cols-3 gap-1 rounded-full border border-line bg-surface-2 p-1">
+        <div className="grid grid-cols-2 gap-1 rounded-full border border-line bg-surface-2 p-1">
           {LEAD_INTENTS.map((value) => (
             <label
               key={value}

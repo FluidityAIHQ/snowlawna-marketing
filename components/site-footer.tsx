@@ -82,11 +82,6 @@ export function SiteFooter() {
               </IntentLink>
             </li>
             <li>
-              <IntentLink intent="waitlist" className={linkClass}>
-                Join the waitlist
-              </IntentLink>
-            </li>
-            <li>
               <Link href="/#faq" className={linkClass}>
                 FAQ
               </Link>

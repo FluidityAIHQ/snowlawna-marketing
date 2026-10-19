@@ -4,7 +4,7 @@ The public website for **Snowlawna**, lawn and snow operations software: dispatc
 satellite measure-to-quote, seasonal contracts and multi-company branding.
 
 It includes a landing page, contact, privacy and terms pages, a lead endpoint for "Book a demo",
-"Join the waitlist" and "Contact sales", and generated social images. The product itself lives in a
+and "Contact sales", and generated social images. The product itself lives in a
 separate app; this site links to the app at <https://app.snowlawna.com> and has no runtime
 dependency on it.
 
@@ -61,7 +61,7 @@ Production storage credentials are required; see `.env.example`.
 
 ## Leads: `/api/leads`
 
-The lead form (home page `#get-started` and `/contact`) supports three intents: `demo`, `waitlist`
+The lead form (home page `#get-started` and `/contact`) supports two intents: `demo`
 and `contact`. The browser and the server validate with the same code (`lib/lead-schema.ts`).
 
 - **JSON** (the form, with JavaScript): `201 { ok, id }`, `422 { ok: false, errors }` with
@@ -103,8 +103,6 @@ Run `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` before 
   "Contact sales"; no prices are published. Confirm the tiers match what sales will offer.
 - **Privacy and Terms** are plain-language drafts marked "Draft" on the page. Have them reviewed,
   then remove the notice in `components/legal-page.tsx`.
-- **"Early access for the 2026–27 winter"** (hero pill and `/contact`): update it as the launch
-  status changes.
 - **Product screens** are HTML/SVG replicas of the app with illustrative data (fictional streets,
   clients and example brands), labelled as such on the page. To show real screenshots instead, add
   images under `public/` and swap them into `components/mockups/`.
