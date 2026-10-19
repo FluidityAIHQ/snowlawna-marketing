@@ -376,6 +376,53 @@
 
 /* ---------- Motion ---------- */
 
+/* One measured pill follows the selected tab, including the two-row mobile layout. */
+.tour-tab-indicator {
+  width: var(--tab-width, 0px);
+  height: var(--tab-height, 0px);
+  transform: translate(var(--tab-x, 0px), var(--tab-y, 0px));
+  visibility: hidden;
+}
+
+.tour-tabs[data-indicator-ready="true"] .tour-tab-indicator {
+  visibility: visible;
+}
+
+.tour-tabs[data-indicator-ready="true"] .tour-tab[aria-selected="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Shared grid cells keep the section height stable during the crossfade. */
+.tour-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tour-content[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tour-tab-indicator {
+    transition: transform 360ms var(--ease-out-quint), width 360ms var(--ease-out-quint), height 360ms var(--ease-out-quint);
+  }
+
+  .tour-content {
+    transform: translateY(10px);
+    transition: opacity 280ms ease, transform 360ms var(--ease-out-quint), visibility 0s 360ms;
+  }
+
+  .tour-content[data-active="true"] {
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+}
+
 /* Season slider (components/home/season-slider.tsx): the divider position, 0–100. It doesn't inherit, so
    moving the divider restyles only the parts that opt in with .season-mover, not the big SVG scenes. */
 @property --season {
