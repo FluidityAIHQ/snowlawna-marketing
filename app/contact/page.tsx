@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { CalendarDays, Mail, MessageSquare, Snowflake } from "lucide-react";
+import { CalendarDays, Mail, MessageSquare } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
 import { isLeadIntent } from "@/lib/lead-schema";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Book a Snowlawna demo, join the early-access waitlist or ask the team a question.",
+  description: "Book a Snowlawna demo or ask the team a question.",
   alternates: { canonical: "/contact" },
 };
 
@@ -18,13 +18,12 @@ const NOTICES: Record<string, string> = {
 
 const OPTIONS = [
   { Icon: CalendarDays, title: "Book a demo", text: "A live walkthrough with one of your own properties measured and quoted." },
-  { Icon: Snowflake, title: "Join the waitlist", text: "Early access for the 2026–27 winter season, and news as we open up." },
   { Icon: MessageSquare, title: "Contact sales", text: "Pricing for your fleet, multi-company setups or anything else." },
 ];
 
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
   const params = await searchParams;
-  const intent = isLeadIntent(params.intent) ? params.intent : "contact";
+  const intent = isLeadIntent(params.intent) ? params.intent : "demo";
   const notice = typeof params.error === "string" ? NOTICES[params.error] : undefined;
 
   return (

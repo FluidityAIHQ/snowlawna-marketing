@@ -1,6 +1,6 @@
 // Shared by the lead form (browser) and /api/leads (server), so both apply the same rules.
 
-export const LEAD_INTENTS = ["demo", "waitlist", "contact"] as const;
+export const LEAD_INTENTS = ["demo", "contact"] as const;
 export type LeadIntent = (typeof LEAD_INTENTS)[number];
 
 export const FLEET_SIZES = ["1-3", "4-10", "11-25", "26+"] as const;
@@ -27,15 +27,9 @@ export type LeadErrors = Partial<Record<LeadField, string>>;
 export const intentCopy: Record<LeadIntent, { tab: string; submit: string; successTitle: string; success: string }> = {
   demo: {
     tab: "Book a demo",
-    submit: "Request a demo",
+    submit: "Book a demo",
     successTitle: "Demo request received.",
     success: "We'll be in touch by email to find a time that works for you.",
-  },
-  waitlist: {
-    tab: "Join the waitlist",
-    submit: "Join the waitlist",
-    successTitle: "You're on the list.",
-    success: "We'll email you as soon as early access opens.",
   },
   contact: {
     tab: "Contact sales",

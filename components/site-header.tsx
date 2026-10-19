@@ -197,13 +197,6 @@ export function SiteHeader() {
               Book a demo
               <ButtonArrow />
             </IntentLink>
-            <IntentLink
-              intent="waitlist"
-              onNavigate={close}
-              className="py-2 text-center text-sm font-medium text-fg-2 underline-offset-4 hover:text-fg hover:underline"
-            >
-              Join the waitlist
-            </IntentLink>
           </div>
         </nav>
       </div>

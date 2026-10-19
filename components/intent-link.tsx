@@ -15,7 +15,7 @@ const FORM_ANCHORS: Record<string, string> = {
 };
 
 /**
- * A call to action for one lead intent (book a demo, join the waitlist, contact sales).
+ * A call to action for one lead intent (book a demo or contact sales).
  * On pages with the form it scrolls there and preselects the intent; elsewhere it opens
  * /contact with the intent in the URL.
  */

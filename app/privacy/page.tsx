@@ -19,7 +19,7 @@ export default function PrivacyPage() {
       </p>
 
       <h2>What we collect</h2>
-      <p>When you book a demo, join the waitlist or contact us, we collect what you enter in the form:</p>
+      <p>When you book a demo or contact us, we collect what you enter in the form:</p>
       <ul>
         <li>your name, work email and company;</li>
         <li>optional details such as your fleet size, the services you run and your message;</li>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
 
       <h2>How we use it</h2>
       <ul>
-        <li>to reply to you, arrange a demo or send the early-access updates you asked for;</li>
+        <li>to reply to you and arrange a demo;</li>
         <li>to understand which features and regions interest people, so we can plan the product;</li>
         <li>to keep the site secure and working.</li>
       </ul>
