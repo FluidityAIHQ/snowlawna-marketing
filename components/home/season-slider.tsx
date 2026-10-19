@@ -219,7 +219,7 @@ export function SeasonSlider({
       onPointerUp={onPointerUp}
       onPointerCancel={end}
       onLostPointerCapture={end}
-      className={`group/season @container relative isolate aspect-[600/520] cursor-ew-resize overflow-hidden rounded-2xl bg-surface ring-1 ring-line/60 select-none [touch-action:pan-y_pinch-zoom] [@media(scripting:none)]:cursor-auto ${
+      className={`group/season @container relative isolate aspect-[600/520] cursor-ew-resize overflow-hidden rounded-2xl bg-surface select-none [clip-path:inset(0_round_1rem)] [touch-action:pan-y_pinch-zoom] [@media(scripting:none)]:cursor-auto ${
         intro ? "anim-season-intro" : ""
       }`}
     >
@@ -257,7 +257,7 @@ export function SeasonSlider({
         style={{ transform: `translateX(${LINE})` }}
       />
 
-      <div className="season-inherit pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_1px_0_rgb(255_255_255/0.12)]">
+      <div className="season-inherit pointer-events-none absolute inset-0">
         {children}
         <p id={descriptionId} className="sr-only">
           {description}
