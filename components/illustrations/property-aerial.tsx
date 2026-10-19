@@ -88,12 +88,14 @@ function coniferSprays(x: number, y: number, r: number, seed: number, count: num
   return d;
 }
 
-/** Shrubs planted along a side lot line. */
-function hedgeLobes(x: number, seed: number): Disc[] {
+/** Matching shrubs planted along a side or top lot line. */
+function hedgeLobes(offset: number, seed: number, horizontal = false): Disc[] {
   const rand = random(seed);
   const lobes: Disc[] = [];
-  for (let y = -10; y < 416; y += 12 + rand() * 5) {
-    lobes.push([round(x + (rand() - 0.5) * 7), round(y), round(10 + rand() * 5)]);
+  for (let along = -10; along < (horizontal ? 610 : 416); along += 12 + rand() * 5) {
+    const across = round(offset + (rand() - 0.5) * 7);
+    const radius = round(10 + rand() * 5);
+    lobes.push(horizontal ? [round(along), across, radius] : [across, round(along), radius]);
   }
   return lobes;
 }
@@ -105,7 +107,7 @@ const CONIFERS = SPRUCES.map(({ x, y, r, seed }) => [
   coniferSprays(x, y, r, seed, 20),
   coniferSprays(x - r * 0.05, y - r * 0.06, r * 0.64, seed + 1, 14),
 ]);
-const HEDGES = [hedgeLobes(8, 17), hedgeLobes(593, 41)];
+const HEDGES = [hedgeLobes(8, 17), hedgeLobes(593, 41), hedgeLobes(8, 63, true)];
 
 // House: a hip-roofed main block, a gabled rear addition and a gabled garage (PropertyScene's footprint).
 const ROOF_OUTLINE = "M204 112H316V150H370V196H466V290H150V150H204Z";
@@ -315,6 +317,7 @@ export function PropertyAerial({
           <path key={x} d={CONIFERS[i][0]} transform={`translate(${round(r * 0.32)} ${round(r * 0.38)})`} />
         ))}
         <rect x="10" y="-10" width="18" height="424" rx="9" transform="translate(6 6)" />
+        <rect x="-10" y="10" width="620" height="18" rx="9" transform="translate(6 6)" />
       </g>
 
       {/* House */}
@@ -355,9 +358,9 @@ export function PropertyAerial({
         </g>
       </g>
 
-      {/* Hedges along the side lot lines: dark foliage, shrub tops lit (or snow-capped) above it */}
+      {/* Hedges along the side and top lot lines: dark foliage, lit or snow-capped shrub tops */}
       <g filter={url("foliage")}>
-        <path d="M-10 -10H20V414H-10ZM582 -10H610V414H582Z" fill={c.hedgeBase} />
+        <path d="M-10 -10H20V414H-10ZM582 -10H610V414H582ZM-10 -10H610V20H-10Z" fill={c.hedgeBase} />
         <g fill={url("leaf")}>
           {HEDGES.flat().map(([x, y, r]) => (
             <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
