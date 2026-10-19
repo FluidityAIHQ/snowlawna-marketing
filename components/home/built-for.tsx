@@ -3,9 +3,9 @@ import Image from "next/image";
 const SEGMENTS = [
   { label: "Residential plowing", image: "/features/dispatch.webp", position: "55% 55%" },
   { label: "Commercial lots", image: "/audiences/commercial-lots.webp", position: "50% 60%" },
-  { label: "Condo & HOA contracts", image: "/hero/hero-snowfall-poster.jpg", position: "75% 50%" },
+  { label: "Condo & HOA contracts", image: "/audiences/condo-hoa.webp", position: "50% 60%" },
   { label: "Lawn & landscaping", image: "/features/contracts.webp", position: "40% 65%" },
-  { label: "Property management", image: "/hero/hero-snowfall-poster.jpg", position: "20% 55%" },
+  { label: "Property management", image: "/audiences/property-management.webp", position: "50% 60%" },
 ] as const;
 
 export function BuiltFor() {
