@@ -49,7 +49,7 @@ function Tile({
     <div data-reveal style={{ "--delay": `${delay}ms` } as React.CSSProperties} className={className}>
       <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card hover:border-spruce/45 motion-safe:transition-colors motion-safe:duration-300">
         {imageSrc ? (
-          <div className="relative h-56 overflow-hidden border-b border-line bg-surface-2">
+          <div className="relative h-60 shrink-0 overflow-hidden bg-surface-2">
             <Image
               src={imageSrc}
               alt={imageAlt}
@@ -65,7 +65,7 @@ function Tile({
             {chip && (
               <span
                 aria-hidden
-                className="pointer-events-none absolute right-3.5 bottom-3.5 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface/95 px-3 py-1 font-mono text-[11px] font-medium text-snow shadow-card backdrop-blur-md tabular-nums"
+                className="pointer-events-none absolute right-3.5 bottom-8 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface/95 px-3 py-1 font-mono text-[11px] font-medium text-snow shadow-card backdrop-blur-md tabular-nums"
               >
                 <span className={`size-1.5 rounded-full ${tone === "ice" ? "bg-ice" : "bg-spruce"}`} />
                 {chip}
@@ -73,11 +73,11 @@ function Tile({
             )}
           </div>
         ) : (
-          <div aria-hidden className="relative h-56 overflow-hidden border-b border-line bg-surface-2/60">
+          <div aria-hidden className="relative h-60 shrink-0 overflow-hidden bg-surface-2/60">
             {visual}
           </div>
         )}
-        <div className="flex flex-1 flex-col p-6 sm:p-7">
+        <div className="relative z-10 -mt-4 flex flex-1 flex-col rounded-t-2xl bg-surface p-6 sm:p-7">
           <p className="inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-[0.14em] text-fg-3 uppercase">
             <span aria-hidden className={`size-1.5 rounded-full ${tone === "ice" ? "bg-ice" : "bg-spruce"}`} />
             {index}
@@ -198,7 +198,7 @@ export function FeatureGrid() {
               <>
                 <PropertyScene season="summer" idPrefix="feature" viewBox="20 236 560 300" className="absolute inset-0 size-full" />
                 <PropertyTraces viewBox="20 236 560 300" className="absolute inset-0 size-full" />
-                <span className="absolute right-4 bottom-4 rounded-xl border border-line-strong bg-surface/95 px-3 py-2 shadow-md backdrop-blur">
+                <span className="absolute right-4 bottom-8 rounded-xl border border-line-strong bg-surface/95 px-3 py-2 shadow-md backdrop-blur">
                   <span className="block font-mono text-[10px] tracking-[0.14em] text-fg-3 uppercase">Seasonal total</span>
                   <span className="font-wide text-lg font-semibold text-snow tabular-nums">{sampleQuote.total}</span>
                 </span>
