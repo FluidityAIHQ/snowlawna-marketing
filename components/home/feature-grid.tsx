@@ -116,12 +116,42 @@ function BrandingVisual() {
 }
 
 const EXTRAS = [
-  { Icon: ContactRound, title: "Client records", text: "Contacts, properties and linked contracts in one place." },
-  { Icon: CreditCard, title: "Billing & device licenses", text: "Subscription usage, device licenses and invoice summaries." },
-  { Icon: CloudSnow, title: "Weather at a glance", text: "Temperature and conditions in the top bar, refreshed every 15 minutes." },
-  { Icon: Printer, title: "Printable quote links", text: "A clean share page your customer can open and print." },
-  { Icon: Download, title: "CSV & text exports", text: "Take contract lists and summaries wherever you need them." },
-  { Icon: Maximize2, title: "Full-screen maps", text: "Blow the live map up to fill the dispatch desk's screen." },
+  {
+    Icon: ContactRound,
+    title: "Client records",
+    text: "Contacts, properties and linked contracts in one place.",
+    accent: "border-[#2563eb]/20 bg-[#2563eb]/10 text-[#2563eb] dark:border-[#60a5fa]/25 dark:bg-[#60a5fa]/10 dark:text-[#93c5fd]",
+  },
+  {
+    Icon: CreditCard,
+    title: "Billing & device licenses",
+    text: "Subscription usage, device licenses and invoice summaries.",
+    accent: "border-[#7c3aed]/20 bg-[#7c3aed]/10 text-[#7c3aed] dark:border-[#a78bfa]/25 dark:bg-[#a78bfa]/10 dark:text-[#c4b5fd]",
+  },
+  {
+    Icon: CloudSnow,
+    title: "Weather at a glance",
+    text: "Temperature and conditions in the top bar, refreshed every 15 minutes.",
+    accent: "border-[#b45309]/20 bg-[#d97706]/10 text-[#b45309] dark:border-[#fbbf24]/25 dark:bg-[#fbbf24]/10 dark:text-[#fcd34d]",
+  },
+  {
+    Icon: Printer,
+    title: "Printable quote links",
+    text: "A clean share page your customer can open and print.",
+    accent: "border-[#e11d48]/20 bg-[#e11d48]/10 text-[#be123c] dark:border-[#fb7185]/25 dark:bg-[#fb7185]/10 dark:text-[#fda4af]",
+  },
+  {
+    Icon: Download,
+    title: "CSV & text exports",
+    text: "Take contract lists and summaries wherever you need them.",
+    accent: "border-[#15803d]/20 bg-[#16a34a]/10 text-[#15803d] dark:border-[#4ade80]/25 dark:bg-[#4ade80]/10 dark:text-[#86efac]",
+  },
+  {
+    Icon: Maximize2,
+    title: "Full-screen maps",
+    text: "Blow the live map up to fill the dispatch desk's screen.",
+    accent: "border-[#0e7490]/20 bg-[#0891b2]/10 text-[#0e7490] dark:border-[#22d3ee]/25 dark:bg-[#22d3ee]/10 dark:text-[#67e8f9]",
+  },
 ];
 
 export function FeatureGrid() {
@@ -199,12 +229,12 @@ export function FeatureGrid() {
         <div data-reveal className="mt-16">
           <h3 className="font-mono text-[11px] font-medium tracking-[0.14em] text-fg-3 uppercase">Also in the workspace</h3>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {EXTRAS.map(({ Icon, title, text }) => (
+            {EXTRAS.map(({ Icon, title, text, accent }) => (
               <li
                 key={title}
                 className="flex gap-4 rounded-2xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgb(10_30_20/0.03)]"
               >
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-spruce/20 bg-spruce/10 text-spruce">
+                <span className={`flex size-10 shrink-0 items-center justify-center rounded-xl border ${accent}`}>
                   <Icon aria-hidden className="size-5" strokeWidth={1.8} />
                 </span>
                 <div>
