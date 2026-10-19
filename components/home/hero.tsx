@@ -98,10 +98,7 @@ export function Hero() {
         </div>
 
         <div className="relative z-10 xl:-mr-6">
-          <div
-            className="anim-float rounded-3xl bg-surface/90 p-2.5 shadow-stage ring-1 ring-line/70 backdrop-blur-xl sm:p-3.5"
-            style={delay(150)}
-          >
+          <div className="anim-float" style={delay(150)}>
             <SeasonSplit />
           </div>
         </div>
