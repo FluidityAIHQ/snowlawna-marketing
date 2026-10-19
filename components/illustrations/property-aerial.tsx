@@ -315,7 +315,6 @@ export function PropertyAerial({
           <path key={x} d={CONIFERS[i][0]} transform={`translate(${round(r * 0.32)} ${round(r * 0.38)})`} />
         ))}
         <rect x="10" y="-10" width="18" height="424" rx="9" transform="translate(6 6)" />
-        <path d="M26 16H574" stroke={c.shadow} strokeWidth="4" transform="translate(2 4)" />
       </g>
 
       {/* House */}
