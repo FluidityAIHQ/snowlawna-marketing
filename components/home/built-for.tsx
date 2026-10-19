@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const SEGMENTS = [
-  { label: "Residential plowing", image: "/features/dispatch.webp", position: "55% 55%" },
+  { label: "Residential plowing", image: "/audiences/residential-plowing.webp", position: "58% 65%" },
   { label: "Commercial lots", image: "/audiences/commercial-lots.webp", position: "50% 60%" },
   { label: "Condo & HOA contracts", image: "/audiences/condo-hoa.webp", position: "50% 60%" },
-  { label: "Lawn & landscaping", image: "/features/contracts.webp", position: "40% 65%" },
+  { label: "Lawn & landscaping", image: "/audiences/lawn-landscaping.webp", position: "44% 62%" },
   { label: "Property management", image: "/audiences/property-management.webp", position: "50% 60%" },
 ] as const;
 
