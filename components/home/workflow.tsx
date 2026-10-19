@@ -26,8 +26,8 @@ const STEPS: readonly Step[] = [
     stage: "Locate",
     title: "Find the property",
     text: "Search an address or use your location. The map flies in on satellite imagery and drops a pin.",
-    accent: "var(--scene-trace-stroke)",
-    iconColor: "var(--wf-cyan-ink)",
+    accent: "var(--color-spruce)",
+    iconColor: "var(--color-spruce)",
     Preview: FindPropertyPreview,
   },
   {
@@ -35,8 +35,8 @@ const STEPS: readonly Step[] = [
     stage: "Measure",
     title: "Trace what you'll service",
     text: "Outline lawn areas and snow surfaces, then draw driveways and walkways. Areas and lengths are calculated as you go.",
-    accent: "var(--scene-trace-stroke)",
-    iconColor: "var(--wf-cyan-ink)",
+    accent: "var(--color-spruce)",
+    iconColor: "var(--color-spruce)",
     Preview: TracePropertyPreview,
   },
   {
@@ -44,8 +44,8 @@ const STEPS: readonly Step[] = [
     stage: "Quote",
     title: "Send the estimate",
     text: "Pick Snow, Lawn or Snow & lawn and share a link with the traced property, line items and seasonal total.",
-    accent: "color-mix(in oklab, var(--scene-trace-stroke) 45%, var(--color-spruce))",
-    iconColor: "color-mix(in oklab, var(--wf-cyan-ink) 50%, var(--color-spruce))",
+    accent: "var(--color-spruce)",
+    iconColor: "var(--color-spruce)",
     Preview: SendEstimatePreview,
   },
   {
@@ -84,7 +84,7 @@ export function Workflow() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_18%_28%,rgba(0,229,255,0.09),transparent_70%),radial-gradient(50%_50%_at_82%_68%,color-mix(in_oklab,var(--color-spruce)_12%,transparent),transparent_70%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_50%_at_82%_68%,color-mix(in_oklab,var(--color-spruce)_8%,transparent),transparent_70%)]"
       />
 
       <div className="wrap">
@@ -93,7 +93,7 @@ export function Workflow() {
             <p>The same property flows from quote to contract to route without anyone retyping an address.</p>
           </SectionHeading>
 
-          {/* Seasonal route legend pill */}
+          {/* Services covered by the workflow */}
           <div
             data-reveal
             className="inline-flex items-center gap-3 rounded-full border border-line-strong/80 bg-surface/90 px-3.5 py-1.5 text-xs text-fg-2 shadow-card backdrop-blur-sm"
@@ -104,54 +104,44 @@ export function Workflow() {
             </span>
             <span aria-hidden className="h-3 w-px bg-line-strong" />
             <span className="inline-flex items-center gap-1.5 font-medium text-fg">
-              <span aria-hidden className="size-2 rounded-[2px] bg-[#00E5FF] ring-1 ring-black/20 shadow-[0_0_6px_#00E5FF]" />
-              Satellite trace
-            </span>
-            <span aria-hidden className="h-3 w-px bg-line-strong" />
-            <span className="inline-flex items-center gap-1.5 font-medium text-fg">
               <Sprout aria-hidden className="size-3.5 text-spruce" />
               Lawn
             </span>
           </div>
         </div>
 
-        <ol className="relative mt-14 grid gap-6 lg:mt-16 lg:grid-cols-5 lg:gap-4 xl:gap-5">
-          {/* Mobile / Tablet vertical route line connecting Stops 01–05 */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute top-6 bottom-6 left-[23px] w-3 -translate-x-1/2 overflow-hidden lg:hidden"
-          >
-            <span className="absolute inset-y-0 left-1/2 w-2.5 -translate-x-1/2 rounded-full bg-linear-to-b from-fg/15 via-[#00E5FF]/25 to-spruce/30 blur-[2px]" />
-            <span className="absolute inset-y-0 left-1/2 w-[3px] -translate-x-1/2 rounded-full bg-linear-to-b from-fg/55 via-[#00E5FF] to-spruce" />
-            <span className="wf-connector-dash-y absolute inset-y-0 left-1/2 w-[3px] -translate-x-1/2" />
-            <span className="wf-runner-y absolute left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00E5FF] shadow-[0_0_10px_2px_#00E5FF]" />
-            <span className="wf-runner-y-delayed absolute left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-spruce shadow-[0_0_10px_2px_var(--color-spruce)]" />
-          </div>
-
-          {/* Desktop horizontal route line connecting Stops 01–05 */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute top-6 right-[10%] left-[10%] hidden h-3 -translate-y-1/2 overflow-hidden lg:block"
-          >
-            <span className="absolute inset-x-0 top-1/2 h-2.5 -translate-y-1/2 rounded-full bg-linear-to-r from-fg/15 via-[#00E5FF]/25 to-spruce/30 blur-[2px]" />
-            <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-linear-to-r from-fg/55 via-[#00E5FF] to-spruce" />
-            <span className="wf-connector-dash-x absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2" />
-            <span className="wf-runner-x absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00E5FF] shadow-[0_0_10px_2px_#00E5FF]" />
-            <span className="wf-runner-x-delayed absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-spruce shadow-[0_0_10px_2px_var(--color-spruce)]" />
-          </div>
-
+        <ol data-reveal className="wf-flow relative mt-14 grid gap-6 lg:mt-16 lg:grid-cols-5 lg:gap-4 xl:gap-5">
           {STEPS.map(({ Icon, stage, title, text, accent, iconColor, Preview }, i) => {
             const stopNumber = String(i + 1).padStart(2, "0");
             return (
               <li
                 key={title}
-                data-reveal
-                style={{ "--delay": `${i * 100}ms` } as CSSProperties}
                 className="group/step relative flex flex-col pl-16 lg:pl-0"
               >
+                {i < STEPS.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute top-6 left-[23px] h-[calc(100%+1.5rem)] w-[2px] bg-spruce/20 lg:left-1/2 lg:h-[2px] lg:w-[calc(100%+1rem)] xl:w-[calc(100%+1.25rem)]"
+                  >
+                    <span className="wf-progress-dot absolute size-1.5 rounded-full bg-spruce" style={{ animationDelay: `${i * 1.5}s` }} />
+                  </div>
+                )}
                 {/* Route stop node on the track (left rail on mobile, top rail on desktop) */}
                 <div className="absolute top-0 left-0 z-10 flex items-center lg:static lg:flex-col">
-                  <div className="relative flex size-12 items-center justify-center">
+                  <div className="relative isolate flex size-12 items-center justify-center">
+                    {stage === "Contract" && (
+                      <span aria-hidden className="pointer-events-none absolute inset-0 -z-10 select-none">
+                        {[-25, 0, 25].map((offset, particle) => (
+                          <span
+                            key={offset}
+                            className="wf-dollar absolute top-1/2 left-1/2 font-wide text-xl font-bold text-spruce"
+                            style={{ "--dollar-x": `${offset}px`, animationDelay: `${4.5 + particle * 0.12}s` } as CSSProperties}
+                          >
+                            $
+                          </span>
+                        ))}
+                      </span>
+                    )}
                     <span
                       aria-hidden
                       className="absolute inset-0 rounded-2xl border border-line-strong/75 bg-surface/80 shadow-sm backdrop-blur-sm motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/step:scale-110"
