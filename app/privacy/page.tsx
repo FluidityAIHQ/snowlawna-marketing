@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy policy" updated="September 27, 2026">
+    <LegalPage title="Privacy policy" updated="October 19, 2026">
       <p>
         This policy explains what information Snowlawna (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects through this
         website, how we use it and the choices you have. Use of the Snowlawna product itself is covered by the agreement
@@ -46,9 +46,8 @@ export default function PrivacyPage() {
 
       <h2>Service providers</h2>
       <p>
-        The site is hosted on Vercel. Form submissions may be stored or delivered by providers we use to run our
-        business, such as email and database services, who may only process your information to provide those
-        services to us.
+        The site is hosted on Vercel, and form submissions are stored in our Supabase database. These providers
+        process your information to provide hosting and database services to us.
       </p>
 
       <h2>How long we keep it</h2>

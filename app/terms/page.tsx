@@ -5,15 +5,15 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of use",
-  description: "The terms that apply when you use the Snowlawna website and demo.",
+  description: "The terms that apply when you use the Snowlawna website.",
   alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {
   return (
-    <LegalPage title="Terms of use" updated="September 27, 2026">
+    <LegalPage title="Terms of use" updated="October 19, 2026">
       <p>
-        These terms apply to this website and to the public Snowlawna demo. By using either, you agree to them. Use of
+        These terms apply to this website. By using it, you agree to them. Use of
         the Snowlawna product as a customer is governed by the separate agreement you sign with us.
       </p>
 
@@ -24,18 +24,18 @@ export default function TermsPage() {
         commitment to provide a particular feature or price.
       </p>
 
-      <h2>The demo app</h2>
+      <h2>The Snowlawna app</h2>
       <p>
-        The demo at <a href={site.demoAppUrl}>{site.demoAppUrl.replace("https://", "")}</a> is a shared evaluation
-        environment filled with sample data. It is provided as is, may be reset at any time and isn&apos;t meant for
-        real work. Please don&apos;t enter personal, customer or confidential information into it.
+        The app at <a href={site.demoAppUrl}>{site.demoAppUrl.replace("https://", "")}</a> requires sign-in and uses
+        separate company workspaces. Review the app&apos;s <a href={`${site.demoAppUrl}/terms`}>terms</a> and
+        {" "}<a href={`${site.demoAppUrl}/privacy`}>privacy policy</a> before using it.
       </p>
 
       <h2>Acceptable use</h2>
       <ul>
-        <li>don&apos;t try to disrupt, overload or gain unauthorised access to the site or the demo;</li>
+        <li>don&apos;t try to disrupt, overload or gain unauthorised access to the site;</li>
         <li>don&apos;t scrape, copy or resell the site&apos;s content;</li>
-        <li>don&apos;t use either for anything unlawful.</li>
+        <li>don&apos;t use the site for anything unlawful.</li>
       </ul>
 
       <h2>Intellectual property</h2>
@@ -46,8 +46,8 @@ export default function TermsPage() {
 
       <h2>No warranty</h2>
       <p>
-        The site and the demo are provided &ldquo;as is&rdquo; without warranties of any kind. To the extent the law
-        allows, we aren&apos;t liable for losses arising from your use of them.
+        The site is provided &ldquo;as is&rdquo; without warranties of any kind. To the extent the law
+        allows, we aren&apos;t liable for losses arising from your use of it.
       </p>
 
       <h2>Links to other sites</h2>
