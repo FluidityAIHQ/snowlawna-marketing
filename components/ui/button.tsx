@@ -67,7 +67,7 @@ export function DemoAppLink({
   variant = "secondary",
   size = "md",
   className,
-  children = "Open demo app",
+  children = "Open Snowlawna",
 }: {
   href: string;
   variant?: Variant;

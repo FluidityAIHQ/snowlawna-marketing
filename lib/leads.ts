@@ -4,36 +4,50 @@ import type { LeadInput } from "./lead-schema";
 
 export type StoredLead = LeadInput & { id: string; receivedAt: string };
 
-/**
- * Where the demo file sink writes, one JSON object per line:
- * - `LEADS_FILE` when set.
- * - On Vercel, `/tmp/snowlawna-leads.jsonl`. `/tmp` is the only writable path there, and it is
- *   per-instance and wiped on cold starts — fine for a demo, not for real leads.
- * - Locally, `.data/leads.jsonl` (gitignored).
- */
+export class LeadStorageError extends Error {
+  constructor() {
+    super("Lead storage is temporarily unavailable.");
+    this.name = "LeadStorageError";
+  }
+}
+
+/** Local development only. Production requires durable Supabase storage. */
 export function leadsFilePath() {
-  if (process.env.LEADS_FILE) return path.resolve(process.env.LEADS_FILE);
-  if (process.env.VERCEL) return "/tmp/snowlawna-leads.jsonl";
+  if (process.env.LEADS_FILE) return path.resolve(/* turbopackIgnore: true */ process.env.LEADS_FILE);
   return path.join(process.cwd(), ".data", "leads.jsonl");
 }
 
-/**
- * Demo lead storage. Production should send leads somewhere durable — e.g. insert into a
- * Supabase table and/or notify the team through Resend. See "Wiring leads for production"
- * in the README.
- */
+/** Return success only after the lead has been persisted. Never log lead contents. */
 export async function saveLead(input: LeadInput): Promise<StoredLead> {
   const lead: StoredLead = { id: crypto.randomUUID(), receivedAt: new Date().toISOString(), ...input };
-  const file = leadsFilePath();
-
-  try {
-    await mkdir(path.dirname(file), { recursive: true });
-    await appendFile(file, `${JSON.stringify(lead)}\n`, "utf8");
-  } catch (error) {
-    console.error("[leads] could not append to %s: %s", file, error instanceof Error ? error.message : error);
+  const url = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SECRET_KEY?.trim();
+  if (url && key) {
+    try {
+      const response = await fetch(new URL("/rest/v1/marketing_leads", url), {
+        method: "POST",
+        headers: { apikey: key, "Content-Type": "application/json", Prefer: "return=minimal" },
+        body: JSON.stringify({
+          id: lead.id, received_at: lead.receivedAt, intent: lead.intent,
+          name: lead.name, email: lead.email, company: lead.company || null,
+          fleet_size: lead.fleetSize ?? null, services: lead.services,
+          message: lead.message || null, source: lead.source ?? null,
+        }),
+        cache: "no-store",
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (!response.ok) throw new LeadStorageError();
+      return lead;
+    } catch {
+      // Provider errors can contain credentials or customer data.
+      throw new LeadStorageError();
+    }
   }
-
-  // On Vercel the runtime log is the only copy that outlives the instance until a real sink is wired up.
-  console.info("[leads] %s", JSON.stringify(lead));
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL || url || key) {
+    throw new LeadStorageError();
+  }
+  const file = leadsFilePath();
+  await mkdir(path.dirname(file), { recursive: true });
+  await appendFile(file, `${JSON.stringify(lead)}\n`, "utf8");
   return lead;
 }

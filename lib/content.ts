@@ -1,5 +1,3 @@
-import { site } from "@/lib/site";
-
 // Editable marketing copy. Product claims here are grounded in the product's own docs
 // (README, QUOTATIONS.md, THEME.md) — keep them in sync as the product changes.
 
@@ -96,12 +94,12 @@ export const faqs = [
   },
   {
     question: "Can I try it before booking a demo?",
-    answer: `Yes. Open the demo app and look around without signing in. To try making changes, sign in as ${site.demoLogin}; we'll share the password when you book a demo.`,
+    answer: "Create a company workspace to try Snowlawna with your own data, or book a guided demo. Sign in securely with an email code or passkey; there is no shared demo account.",
   },
   {
     question: "Does it work on a phone?",
     answer:
-      "The workspace is built for the dispatch desk and works in mobile browsers for checking routes and jobs on the go. There are no native apps yet.",
+      "The workspace works in mobile browsers for checking routes and jobs on the go. Ask us about the current availability of the companion mobile apps.",
   },
   {
     question: "How is Snowlawna priced?",

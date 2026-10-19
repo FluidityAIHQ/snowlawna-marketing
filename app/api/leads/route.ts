@@ -74,7 +74,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, errors: result.errors }, { status: 422 });
   }
 
-  const id = result.ok && !isBot ? (await saveLead(result.lead)).id : crypto.randomUUID();
+  let id: string;
+  try {
+    id = result.ok && !isBot ? (await saveLead(result.lead)).id : crypto.randomUUID();
+  } catch {
+    console.error("[leads] persistence unavailable");
+    if (isForm) return backToForm("storage");
+    return NextResponse.json(
+      { ok: false, error: "We couldn't save your request. Please try again shortly." },
+      { status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "30" } },
+    );
+  }
 
   if (isForm) return NextResponse.redirect(new URL(`/thanks?intent=${intent}`, request.url), 303);
   return NextResponse.json({ ok: true, id }, { status: 201 });

@@ -190,7 +190,7 @@ export function LeadForm({ initialIntent = "demo", notice }: { initialIntent?: L
         <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-fg-2">{intentCopy[status.intent].success}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <DemoAppLink href={site.demoAppUrl} size="md">
-            Explore the demo app meanwhile
+            Open Snowlawna
           </DemoAppLink>
           <button type="button" onClick={() => setStatus({ state: "idle" })} className={buttonClass({ variant: "ghost" })}>
             Send another

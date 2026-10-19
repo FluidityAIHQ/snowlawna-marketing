@@ -25,7 +25,7 @@ export default async function ThanksPage({ searchParams }: PageProps<"/thanks">)
       <p className="mt-5 max-w-lg text-lg leading-relaxed text-fg-2">{intentCopy[value].success}</p>
       <div className="mt-10 flex flex-wrap gap-3">
         <DemoAppLink href={site.demoAppUrl} variant="primary">
-          Explore the demo app
+          Open Snowlawna
         </DemoAppLink>
         <ButtonLink href="/" variant="secondary">
           Back to the homepage

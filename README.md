@@ -5,7 +5,7 @@ satellite measure-to-quote, seasonal contracts and multi-company branding.
 
 It includes a landing page, contact, privacy and terms pages, a lead endpoint for "Book a demo",
 "Join the waitlist" and "Contact sales", and generated social images. The product itself lives in a
-separate app; this site links to the live demo at <https://snowlawna.vercel.app> and has no runtime
+separate app; this site links to the app at <https://app.snowlawna.com> and has no runtime
 dependency on it.
 
 **Stack:** Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS 4 ·
@@ -49,13 +49,15 @@ locally.
 
 ### Environment variables
 
-All are optional; see `.env.example`.
+Production storage credentials are required; see `.env.example`.
 
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL for metadata, OG images, robots and sitemap |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on `/contact`, and offered as a prefilled `mailto:` if a form submission fails. Unset = no email shown anywhere |
-| `LEADS_FILE` | Path for the demo lead file (defaults below) |
+| `SUPABASE_URL` | Supabase project URL for durable lead storage |
+| `SUPABASE_SECRET_KEY` | Server-only production storage credential |
+| `LEADS_FILE` | Local-development JSONL file only |
 
 ## Leads: `/api/leads`
 
@@ -76,82 +78,21 @@ curl -X POST http://localhost:3000/api/leads -H 'Content-Type: application/json'
   -d '{"intent":"demo","name":"Jordan Tremblay","email":"jordan@example.com","company":"Northline Snow Co.","fleetSize":"4-10","services":["snow"]}'
 ```
 
-**Demo storage (`lib/leads.ts`)** appends one JSON object per line and logs the lead:
+### Production storage
 
-- locally to `.data/leads.jsonl` (gitignored);
-- on Vercel to `/tmp/snowlawna-leads.jsonl`. That's the only writable path there, but it's
-  **ephemeral and per instance**, so the runtime log line (`[leads] {...}`) is the only copy you
-  can rely on. Vercel keeps runtime logs only briefly.
+Production requires `SUPABASE_URL` and the server-only `SUPABASE_SECRET_KEY`.
+Apply `durable_marketing_leads` from the Snowlawna application repository before deploying.
+The `marketing_leads` table has RLS enabled and no browser-access policies. The website
+inserts via the server only and waits for Supabase confirmation before answering 201.
 
-### Wiring leads for production
+Database or network failure answers 503 (or redirects a non-JavaScript form back with an
+error). There is no production fallback to `/tmp` or runtime logs. Customer details are
+not logged. Review enquiries in the Supabase table editor; email notifications are not enabled.
 
-Before launch, send leads somewhere durable. Both options below replace or extend the body of
-`saveLead()` in `lib/leads.ts`. Once a real sink exists, let failures throw so the API returns a
-`500` and the form shows its error state (and `mailto:` fallback) instead of a false success.
+Without database credentials, local development uses `.data/leads.jsonl` (or `LEADS_FILE`).
+A partial configuration fails instead of silently switching storage.
 
-**Supabase (store every lead).** Create a table that only the server can touch:
-
-```sql
-create table public.marketing_leads (
-  id uuid primary key,
-  received_at timestamptz not null default now(),
-  intent text not null check (intent in ('demo', 'waitlist', 'contact')),
-  name text not null,
-  email text not null,
-  company text,
-  fleet_size text,
-  services text[] not null default '{}',
-  message text,
-  source text
-);
-alter table public.marketing_leads enable row level security; -- no policies: server key only
-```
-
-Then `npm install @supabase/supabase-js`, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` (server-only;
-never a `NEXT_PUBLIC_` variable), and insert from `saveLead()`:
-
-```ts
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SECRET_KEY!, {
-  auth: { persistSession: false },
-});
-
-const { error } = await supabase.from("marketing_leads").insert({
-  id: lead.id,
-  received_at: lead.receivedAt,
-  intent: lead.intent,
-  name: lead.name,
-  email: lead.email,
-  company: lead.company || null,
-  fleet_size: lead.fleetSize ?? null,
-  services: lead.services,
-  message: lead.message || null,
-  source: lead.source ?? null,
-});
-if (error) throw error;
-```
-
-**Resend (email the team about each lead).** Verify a sending domain in Resend, set
-`RESEND_API_KEY` and `LEADS_NOTIFY_EMAIL`, and call the REST API (no SDK needed):
-
-```ts
-const response = await fetch("https://api.resend.com/emails", {
-  method: "POST",
-  headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-  body: JSON.stringify({
-    from: "Snowlawna leads <leads@your-verified-domain.com>",
-    to: [process.env.LEADS_NOTIFY_EMAIL],
-    reply_to: lead.email,
-    subject: `New ${lead.intent} lead: ${lead.company || lead.name}`,
-    text: JSON.stringify(lead, null, 2),
-  }),
-});
-if (!response.ok) throw new Error(`Resend responded ${response.status}`);
-```
-
-For stricter rate limiting across instances, use Vercel Firewall rate-limit rules or a shared store
-(e.g. Upstash Redis) instead of `lib/rate-limit.ts`.
+Run `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` before deployment.
 
 ## Before launch: placeholder content to review
 
