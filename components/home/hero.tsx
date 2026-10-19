@@ -7,12 +7,6 @@ import { ButtonArrow, buttonClass } from "@/components/ui/button";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
-const HIGHLIGHTS = [
-  { label: "Satellite measure", detail: "Trace lawns & snow once", tone: "spruce" },
-  { label: "Seasonal quotes", detail: "Snow, Lawn or combined", tone: "ice" },
-  { label: "Storm & turf dispatch", detail: "One board all year", tone: "spruce" },
-] as const;
-
 export function Hero() {
   return (
     // Fills the screen, under the fixed header (pt-header), so the content centres in the space below it
@@ -72,23 +66,6 @@ export function Hero() {
             </IntentLink>
           </div>
 
-          <dl
-            className="anim-rise mt-9 grid grid-cols-3 gap-2.5 border-t border-line pt-6"
-            style={delay(580)}
-          >
-            {HIGHLIGHTS.map((item) => (
-              <div key={item.label} className="rounded-xl border border-line bg-surface/75 px-3 py-2.5 backdrop-blur-sm">
-                <dt className="flex items-center gap-1.5 font-mono text-[10px] font-medium tracking-[0.1em] text-fg-3 uppercase">
-                  <span
-                    aria-hidden
-                    className={`size-1.5 rounded-full ${item.tone === "spruce" ? "bg-spruce" : "bg-ice"}`}
-                  />
-                  {item.label}
-                </dt>
-                <dd className="mt-1 text-xs font-medium text-fg sm:text-[13px]">{item.detail}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         <div className="relative z-10 xl:-mr-6">
