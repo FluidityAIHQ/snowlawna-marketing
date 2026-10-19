@@ -140,8 +140,6 @@ const palettes = {
     deck: "#4a3b2f",
     deckJoint: "rgb(0 0 0 / 0.26)",
     bed: "#332920",
-    fence: "#2f2c27",
-    fencePost: "#3a362f",
     chimney: "#4a3c35",
     vent: "#202024",
     roofStroke: "rgb(0 0 0 / 0.4)",
@@ -172,8 +170,6 @@ const palettes = {
     deck: "var(--scene-winter-deck)",
     deckJoint: "rgb(110 138 166 / 0.24)",
     bed: "var(--scene-winter-bed)",
-    fence: "#4a5562",
-    fencePost: "#3b4450",
     chimney: "#464b52",
     vent: "#64707d",
     roofStroke: "var(--scene-winter-roof-stroke)",
@@ -280,7 +276,7 @@ export function PropertyAerial({
         )}
       </defs>
 
-      {/* Ground: lawn or snow, with the neighbour's yard beyond the back fence */}
+      {/* Ground: lawn or snow, with the neighbour's yard beyond the back lot line */}
       <rect width="600" height="520" fill={c.ground} />
       {!winter && <rect y="16" width="600" height="428" fill={url("stripes")} />}
       <rect width="600" height="444" fill="#808080" filter={url("texture")} opacity={winter ? 0.5 : 0.3} style={{ mixBlendMode: "soft-light" }} />
@@ -358,14 +354,6 @@ export function PropertyAerial({
             <circle key={x} cx={x} cy="296" r="5.5" />
           ))}
         </g>
-      </g>
-
-      {/* Back fence: posts every few metres */}
-      <path d="M26 16H574" stroke={c.fence} strokeWidth="2.5" />
-      <g fill={c.fencePost}>
-        {Array.from({ length: 17 }, (_, i) => (
-          <rect key={i} x={26 + i * 34 - 2} y="14" width="4" height="4" />
-        ))}
       </g>
 
       {/* Hedges along the side lot lines: dark foliage, shrub tops lit (or snow-capped) above it */}
