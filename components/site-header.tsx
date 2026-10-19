@@ -7,7 +7,7 @@ import { Menu, Moon, Sun, X } from "lucide-react";
 import { Wordmark } from "@/components/brand/logo";
 import { IntentLink } from "@/components/intent-link";
 import { ButtonArrow, buttonClass } from "@/components/ui/button";
-import { mainNav } from "@/lib/site";
+import { mainNav, site } from "@/lib/site";
 
 const THEME_EVENT = "snowlawna:theme";
 
@@ -102,7 +102,7 @@ export function SiteHeader() {
         className={`absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter,box-shadow] duration-300 ${
           solid
             ? "border-line bg-canvas/85 shadow-[0_8px_30px_-16px_rgb(15_15_18/0.12)] backdrop-blur-xl backdrop-saturate-150"
-            : "border-transparent bg-canvas/40 backdrop-blur-md"
+            : "border-transparent bg-transparent"
         }`}
       />
       {/* Desktop: equal 1fr side columns keep the nav centred on the full header width. */}
@@ -112,7 +112,11 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-0.5 rounded-full border border-line/80 bg-surface/70 px-1.5 py-1 backdrop-blur-sm">
+          <ul
+            className={`flex items-center gap-0.5 rounded-full border px-1.5 py-1 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+              solid ? "border-line/80 bg-surface/70 backdrop-blur-sm" : "border-transparent bg-transparent"
+            }`}
+          >
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link
@@ -130,6 +134,9 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <div className="hidden items-center gap-2 md:flex">
+            <a href={site.demoAppUrl} className="rounded-lg px-2 py-2 text-sm font-medium text-fg-2 transition-colors hover:text-fg">
+              Log in
+            </a>
             <IntentLink intent="demo" className={buttonClass({ size: "sm" })}>
               Book a demo
               <ButtonArrow />
@@ -138,7 +145,9 @@ export function SiteHeader() {
           <button
             ref={toggleRef}
             type="button"
-            className="-mr-1 inline-flex size-9 items-center justify-center rounded-full border border-line-strong bg-surface/85 text-fg transition-colors hover:bg-surface-2 lg:hidden"
+            className={`-mr-1 inline-flex size-9 items-center justify-center text-fg transition-colors lg:hidden ${
+              open ? "bg-transparent" : "rounded-full border border-line-strong bg-surface/85 hover:bg-surface-2"
+            }`}
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((value) => !value)}
@@ -174,6 +183,9 @@ export function SiteHeader() {
               Book a demo
               <ButtonArrow />
             </IntentLink>
+            <a href={site.demoAppUrl} onClick={close} className={buttonClass({ variant: "ghost", size: "lg" })}>
+              Log in
+            </a>
           </div>
         </nav>
       </div>
