@@ -34,8 +34,9 @@ export const testimonials = {
 
 export const plans = [
   {
-    name: "Crew",
-    audience: "For owner-operators and small crews getting off spreadsheets.",
+    name: "1 truck",
+    monthly: 128,
+    audience: "One workspace and one truck/driver license.",
     features: [
       "Contracts, clients and quotations",
       "Measure-to-quote with share links",
@@ -44,24 +45,26 @@ export const plans = [
     ],
   },
   {
-    name: "Fleet",
-    audience: "For multi-route fleets running snow and lawn crews.",
+    name: "3 trucks",
+    monthly: 186,
+    audience: "One workspace and three truck/driver licenses.",
     featured: true,
     features: [
-      "Everything in Crew",
-      "Vehicle, crew and device panels",
-      "Device licenses for your trucks",
-      "Prospecting map for new territory",
+      "Contracts, clients and quotations",
+      "Measure-to-quote with share links",
+      "Dispatch board and live map",
+      "Your company branding",
     ],
   },
   {
-    name: "Multi-company",
-    audience: "For groups running more than one company or brand.",
+    name: "10 trucks",
+    monthly: 389,
+    audience: "One workspace and ten truck/driver licenses.",
     features: [
-      "Everything in Fleet",
-      "A separate branded account per company",
-      "Your logo, colors and tagline throughout",
-      "Branded sign-in and customer quotes",
+      "Contracts, clients and quotations",
+      "Measure-to-quote with share links",
+      "Dispatch board and live map",
+      "Your company branding",
     ],
   },
 ] as const;
@@ -85,7 +88,7 @@ export const faqs = [
   {
     question: "What happens when a customer accepts a quote?",
     answer:
-      "Mark the quote paid and Snowlawna creates the client and an active contract at the quoted price, ready to be dispatched. Payment itself is collected outside Snowlawna for now.",
+      "After your business completes Stripe onboarding, customers can pay a shared quote through Stripe. Snowlawna confirms the payment before creating the client and active contract. Funds go to your own Stripe account. You can also record a payment collected outside Snowlawna when no online payment is pending.",
   },
   {
     question: "Can Snowlawna carry our own branding?",
@@ -94,7 +97,7 @@ export const faqs = [
   },
   {
     question: "Can I try it before booking a demo?",
-    answer: "Create a company workspace to try Snowlawna with your own data, or book a guided demo. Sign in securely with an email code or passkey; there is no shared demo account.",
+    answer: "Create a company workspace for a 14-day trial with your own data, or book a guided demo. The subscription is C$99 per workspace plus C$29 per enrolled truck/driver each month, before tax, with no setup fee. Sign in with an email code or passkey.",
   },
   {
     question: "Does it work on a phone?",

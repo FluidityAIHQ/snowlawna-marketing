@@ -12,7 +12,7 @@ export const site = {
   url: configuredUrl.replace(/\/+$/, ""),
   demoAppUrl: "https://app.snowlawna.com",
   // Optional. When set, the contact page lists it and failed form posts offer a mailto: fallback.
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || null,
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "team@fluidityai.com",
 } as const;
 
 export const mainNav = [

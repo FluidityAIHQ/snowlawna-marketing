@@ -13,9 +13,10 @@ export default function PrivacyPage() {
   return (
     <LegalPage title="Privacy policy" updated="October 19, 2026">
       <p>
-        This policy explains what information Snowlawna (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects through this
-        website, how we use it and the choices you have. Use of the Snowlawna product itself is covered by the agreement
-        you sign with us as a customer.
+        This policy explains how 17673108 Canada Inc., 28 Pretoria Avenue, Ottawa ON K1S 1W7, Canada
+        (&ldquo;Snowlawna&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) handles information collected through this website.
+        Use of the app is covered by its <a href={`${site.demoAppUrl}/privacy`}>privacy policy</a> and
+        {" "}<a href={`${site.demoAppUrl}/terms`}>terms of service</a>.
       </p>
 
       <h2>What we collect</h2>
