@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 const NOTICES: Record<string, string> = {
+  storage: "We couldn't save your request. Please try again shortly.",
   invalid: "Some details were missing or didn't look right. Please check the form and try again.",
   rate: "We've received several messages from your connection. Please wait a few minutes and try again.",
 };

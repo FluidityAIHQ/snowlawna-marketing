@@ -60,7 +60,7 @@ export function SiteFooter() {
             </li>
             <li>
               <a href={site.demoAppUrl} target="_blank" rel="noopener" className={linkClass}>
-                Open demo app ↗<span className="sr-only"> (opens in a new tab)</span>
+                Open Snowlawna ↗<span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
           </ul>

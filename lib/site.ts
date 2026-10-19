@@ -10,8 +10,7 @@ export const site = {
   description:
     "Lawn and snow operations software. Dispatch crews, measure properties from satellite imagery, send seasonal quotes and manage contracts under your own brand.",
   url: configuredUrl.replace(/\/+$/, ""),
-  demoAppUrl: "https://snowlawna.vercel.app",
-  demoLogin: "alex@snowlawna.demo",
+  demoAppUrl: "https://app.snowlawna.com",
   // Optional. When set, the contact page lists it and failed form posts offer a mailto: fallback.
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || null,
 } as const;
