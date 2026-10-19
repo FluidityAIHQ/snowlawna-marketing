@@ -393,7 +393,7 @@
   box-shadow: none;
 }
 
-/* Shared grid cells keep the section height stable during the crossfade. */
+/* Shared grid cells keep the section height stable when content switches instantly. */
 .tour-content {
   opacity: 0;
   visibility: hidden;
@@ -410,16 +410,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .tour-tab-indicator {
     transition: transform 360ms var(--ease-out-quint), width 360ms var(--ease-out-quint), height 360ms var(--ease-out-quint);
-  }
-
-  .tour-content {
-    transform: translateY(10px);
-    transition: opacity 280ms ease, transform 360ms var(--ease-out-quint), visibility 0s 360ms;
-  }
-
-  .tour-content[data-active="true"] {
-    transform: translateY(0);
-    transition-delay: 0s;
   }
 }
 
