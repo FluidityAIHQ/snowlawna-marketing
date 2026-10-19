@@ -1,45 +1,38 @@
-import { Building2, KeyRound, ParkingSquare, Snowflake, Sprout, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 
-const SEGMENTS: { label: string; Icon: LucideIcon; tone: "snow" | "lawn" }[] = [
-  { label: "Residential plowing", Icon: Snowflake, tone: "snow" },
-  { label: "Commercial lots", Icon: ParkingSquare, tone: "snow" },
-  { label: "Condo & HOA contracts", Icon: Building2, tone: "snow" },
-  { label: "Lawn & landscaping", Icon: Sprout, tone: "lawn" },
-  { label: "Property management", Icon: KeyRound, tone: "snow" },
-];
-
-const tileClass = {
-  snow: "bg-[#1c1c20] text-[#f2f2f5] ring-1 ring-inset ring-[#00E5FF]/35 shadow-[inset_0_1px_0_rgb(0_229_255/0.16)] dark:bg-surface-2 dark:text-fg",
-  lawn: "bg-spruce text-white ring-1 ring-inset ring-spruce-deep/30 dark:bg-spruce-deep dark:text-white dark:ring-spruce/45 [html[data-theme=dark]_&]:bg-spruce-deep [html[data-theme=dark]_&]:ring-spruce/45",
-} as const;
+const SEGMENTS = [
+  { label: "Residential plowing", image: "/features/dispatch.webp", position: "55% 55%" },
+  { label: "Commercial lots", image: "/audiences/commercial-lots.webp", position: "50% 60%" },
+  { label: "Condo & HOA contracts", image: "/hero/hero-snowfall-poster.jpg", position: "75% 50%" },
+  { label: "Lawn & landscaping", image: "/features/contracts.webp", position: "40% 65%" },
+  { label: "Property management", image: "/hero/hero-snowfall-poster.jpg", position: "20% 55%" },
+] as const;
 
 export function BuiltFor() {
   return (
-    <section aria-label="Who Snowlawna is for" className="border-y border-line bg-surface-2/60">
-      <div className="wrap flex flex-col gap-4 py-7 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-        <div className="flex items-center gap-2.5">
-          <span aria-hidden className="size-2 rounded-full bg-spruce" />
-          <p className="shrink-0 font-mono text-[11px] font-medium tracking-[0.14em] text-fg-3 uppercase">
-            Built for crews in
-          </p>
-        </div>
-        <ul className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-          {SEGMENTS.map(({ label, Icon, tone }) => (
-            <li
-              key={label}
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pr-4 pl-2 text-sm font-medium text-fg shadow-[0_1px_2px_rgb(10_30_20/0.04)]"
-            >
-              <span
-                aria-hidden
-                className={`inline-flex size-6 shrink-0 items-center justify-center rounded-md ${tileClass[tone]}`}
-              >
-                <Icon className="size-3.5" strokeWidth={2} />
-              </span>
+    <section aria-label="Who Snowlawna is for" className="border-y border-line bg-canvas">
+      <h2 className="sr-only">Built for crews in</h2>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+        {SEGMENTS.map(({ label, image, position }) => (
+          <li
+            key={label}
+            className="group relative isolate flex min-h-28 items-center justify-center overflow-hidden border-b border-line px-6 py-9 text-center last:border-b-0 sm:min-h-36 sm:odd:border-r sm:last:col-span-2 sm:last:border-r-0 lg:min-h-44 lg:border-r lg:border-b-0 lg:last:col-span-1 lg:last:border-r-0"
+          >
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-[1.04]"
+              style={{ objectPosition: position }}
+            />
+            <span aria-hidden className="absolute inset-0 bg-canvas/75 dark:bg-canvas/80" />
+            <span className="relative max-w-[16ch] font-wide text-lg leading-snug font-semibold text-balance text-snow">
               {label}
-            </li>
-          ))}
-        </ul>
-      </div>
+            </span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
