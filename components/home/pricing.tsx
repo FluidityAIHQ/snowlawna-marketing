@@ -68,7 +68,7 @@ export function Pricing() {
 
         <p data-reveal className="mt-10 text-center text-sm text-fg-3">
           No setup fee. Cancel anytime. One license per enrolled truck/driver; each company workspace has its own
-          subscription. Stripe processing fees apply to customer payments, with no Snowlawna payment commission at launch.
+          subscription. Each successful CAD customer payment has a C$0.10 Snowlawna fee deducted from your proceeds, plus Stripe processing fees. Your customer’s total stays unchanged. No Snowlawna fee on bank payouts or offline payments.
         </p>
       </div>
     </section>
