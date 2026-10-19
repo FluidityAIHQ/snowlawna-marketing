@@ -26,46 +26,28 @@ export function WorkflowStyles() {
         --wf-map-road-edge: #1e1e25;
       }
 
-      @keyframes wf-dash-x {
-        to {
-          background-position: 32px 0;
-        }
+      .wf-progress-dot, .wf-dollar {
+        opacity: 0;
       }
-      @keyframes wf-dash-y {
-        to {
-          background-position: 0 32px;
-        }
+      @keyframes wf-progress-x {
+        0% { left: 0%; opacity: 0; }
+        1%, 24% { opacity: 1; }
+        25%, 100% { left: 100%; opacity: 0; }
       }
-      @keyframes wf-runner-x {
+      @keyframes wf-progress-y {
+        0% { top: 0%; opacity: 0; }
+        1%, 24% { opacity: 1; }
+        25%, 100% { top: 100%; opacity: 0; }
+      }
+      @keyframes wf-contract-dollars {
         0% {
-          left: 0%;
           opacity: 0;
+          transform: translate(calc(-50% + var(--dollar-x)), 5px) scale(0.7);
         }
-        8% {
-          opacity: 1;
-        }
-        92% {
-          opacity: 1;
-        }
-        100% {
-          left: 100%;
+        4% { opacity: 0.9; }
+        18%, 100% {
           opacity: 0;
-        }
-      }
-      @keyframes wf-runner-y {
-        0% {
-          top: 0%;
-          opacity: 0;
-        }
-        8% {
-          opacity: 1;
-        }
-        92% {
-          opacity: 1;
-        }
-        100% {
-          top: 100%;
-          opacity: 0;
+          transform: translate(calc(-50% + var(--dollar-x)), -70px) scale(1.1);
         }
       }
       @keyframes wf-pin-drop {
@@ -182,35 +164,28 @@ export function WorkflowStyles() {
       }
 
       @media (prefers-reduced-motion: no-preference) {
-        .wf-connector-dash-x {
-          background-image: repeating-linear-gradient(
-            90deg,
-            rgba(0, 229, 255, 0.75) 0 8px,
-            transparent 8px 16px
-          );
-          background-size: 32px 100%;
-          animation: wf-dash-x 1.6s linear infinite;
+        /* Four equal-duration segments make arrival timing independent of card height. */
+        .wf-progress-dot {
+          top: 0;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          animation: wf-progress-y 6s linear infinite;
+          animation-play-state: paused;
         }
-        .wf-connector-dash-y {
-          background-image: repeating-linear-gradient(
-            180deg,
-            rgba(0, 229, 255, 0.75) 0 8px,
-            transparent 8px 16px
-          );
-          background-size: 100% 32px;
-          animation: wf-dash-y 1.6s linear infinite;
+        .wf-dollar {
+          animation: wf-contract-dollars 6s ease-out infinite;
+          animation-play-state: paused;
         }
-        .wf-runner-x {
-          animation: wf-runner-x 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        .wf-flow[data-revealed] .wf-progress-dot,
+        .wf-flow[data-revealed] .wf-dollar {
+          animation-play-state: running;
         }
-        .wf-runner-x-delayed {
-          animation: wf-runner-x 5.5s cubic-bezier(0.4, 0, 0.2, 1) 2.75s infinite;
-        }
-        .wf-runner-y {
-          animation: wf-runner-y 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        .wf-runner-y-delayed {
-          animation: wf-runner-y 5.5s cubic-bezier(0.4, 0, 0.2, 1) 2.75s infinite;
+        @media (min-width: 64rem) {
+          .wf-progress-dot {
+            top: 50%;
+            left: 0;
+            animation-name: wf-progress-x;
+          }
         }
         .wf-pin-drop {
           transform-box: fill-box;
