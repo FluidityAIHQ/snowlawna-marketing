@@ -18,15 +18,6 @@ export function WorkflowStyles() {
         --wf-map-road: #ffffff;
         --wf-map-road-edge: #d8d8e0;
       }
-      @media (prefers-color-scheme: dark) {
-        :root:not([data-theme="light"]) {
-          --wf-cyan-ink: #00E5FF;
-          --wf-cyan-badge-bg: rgba(0, 229, 255, 0.14);
-          --wf-cyan-badge-ring: rgba(0, 229, 255, 0.35);
-          --wf-map-road: #2a2a33;
-          --wf-map-road-edge: #1e1e25;
-        }
-      }
       :root[data-theme="dark"] {
         --wf-cyan-ink: #00E5FF;
         --wf-cyan-badge-bg: rgba(0, 229, 255, 0.14);

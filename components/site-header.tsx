@@ -17,37 +17,14 @@ function subscribeToScroll(onChange: () => void) {
 }
 
 function subscribeToTheme(onChange: () => void) {
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
-  const onMediaChange = () => {
-    try {
-      const stored = localStorage.getItem("theme");
-      if (stored === "light" || stored === "dark") return;
-    } catch {
-      // Ignore storage access errors
-    }
-    const next = media.matches ? "dark" : "light";
-    const root = document.documentElement;
-    root.dataset.theme = next;
-    root.classList.toggle("dark", media.matches);
-    root.classList.toggle("light", !media.matches);
-    root.style.colorScheme = next;
-    onChange();
-  };
   window.addEventListener(THEME_EVENT, onChange);
-  window.addEventListener("storage", onChange);
-  media.addEventListener("change", onMediaChange);
   return () => {
     window.removeEventListener(THEME_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
-    media.removeEventListener("change", onMediaChange);
   };
 }
 
 function getIsDarkSnapshot(): boolean {
-  const root = document.documentElement;
-  if (root.dataset.theme === "dark") return true;
-  if (root.dataset.theme === "light") return false;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return document.documentElement.dataset.theme === "dark";
 }
 
 function ThemeToggle({ className = "" }: { className?: string }) {

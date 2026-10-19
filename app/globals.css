@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* Snowlawna brand token system: neutral whites, grays and charcoal with lawn greens reserved for summer/lawn.
-   Light mode is the base palette; dark mode activates via system preference or [data-theme="dark"].
+   Light mode is the base palette; dark mode activates only via an explicit [data-theme="dark"] choice.
    The default Tailwind palette is removed so every colour on the site comes from these tokens. */
 :root,
 :root[data-theme="light"] {
@@ -92,96 +94,6 @@
      out the footage's dark roofs and trees under the dark copy. */
   --hero-scrim-copy: 86%;
   --hero-scrim-edge: 40%;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --theme-canvas: #0c0c0e;
-    --theme-surface: #141417;
-    --theme-surface-2: #1c1c20;
-    --theme-surface-3: #26262b;
-    --theme-ink: #08080a;
-    --theme-line: #27272c;
-    --theme-line-strong: #3a3a42;
-
-    --theme-fg: #f2f2f5;
-    --theme-fg-2: #c2c2c9;
-    --theme-fg-3: #92929c;
-    --theme-snow: #fafafa;
-
-    --theme-primary: #f2f2f5;
-    --theme-primary-hover: #ffffff;
-
-    --theme-ice: #d4d4dc;
-    --theme-ice-deep: #a6a6b2;
-    --theme-spruce: #52c882;
-    --theme-spruce-deep: #2e8a53;
-    --theme-success: #52c882;
-    --theme-warning: #e5b567;
-    --theme-danger: #f08c99;
-
-    --grid-line: rgb(242 242 245 / 0.045);
-    --shadow-card: 0 20px 50px -24px rgb(0 0 0 / 0.7);
-    --shadow-float: 0 30px 80px -20px rgb(0 0 0 / 0.85);
-    --shadow-stage: 0 50px 120px -40px rgb(0 0 0 / 0.9);
-
-    --map-bg: #121215;
-    --map-park: #14261a;
-    --map-water: #19191e;
-    --map-lot: #1a1a1f;
-    --map-street-minor: #222228;
-    --map-street-major: #2a2a31;
-    --map-label: #8e8e98;
-    --map-node-bg: #141417;
-    --map-chip-bg: #101013;
-    --map-chip-stroke: #3a3a42;
-    --map-chip-fg: #f2f2f5;
-
-    /* Property illustration tokens (dark mode: slightly dimmer white snow, still clearly white) */
-    --scene-summer-ground: #48a64c;
-    --scene-summer-lawn-hi: #60b546;
-    --scene-summer-neighbour: #3f9442;
-    --scene-summer-hedge-base: #276325;
-    --scene-summer-leaf-hi: #74c856;
-    --scene-summer-leaf-mid: #44963e;
-    --scene-summer-leaf-lo: #266225;
-    --scene-summer-shadow: rgb(12 38 16 / 0.36);
-
-    --scene-winter-ground: #edf2f8;
-    --scene-winter-lawn-hi: #f2f6fb;
-    --scene-winter-lawn-lo: #e5edf6;
-    --scene-winter-drift: #ceddeb;
-    --scene-winter-neighbour: #e3ebf4;
-    --scene-winter-deck: #e4ecf5;
-    --scene-winter-bed: #c7d6e6;
-    --scene-winter-curb: #becee0;
-    --scene-winter-bank: #eaf1f8;
-    --scene-winter-bank-mid: #dbe6f2;
-    --scene-winter-hedge-base: #c2d2e2;
-    --scene-winter-snow-hi: #f5f9fd;
-    --scene-winter-snow-mid: #dde7f2;
-    --scene-winter-snow-lo: #b2c5d8;
-    --scene-winter-roof-n: #eaeff6;
-    --scene-winter-roof-w: #e0e8f2;
-    --scene-winter-roof-s: #cad8e7;
-    --scene-winter-roof-e: #bccde0;
-    --scene-winter-roof-ridge: #6c86a0;
-    --scene-winter-roof-stroke: rgb(45 65 88 / 0.68);
-    --scene-winter-shadow: rgb(112 140 170 / 0.42);
-    --scene-winter-haze: #8ea6be;
-    --scene-winter-driveway: #3d4550;
-    --scene-winter-sidewalk: #4c5562;
-    --scene-winter-porch: #4a5360;
-    --scene-winter-walkway: #48515e;
-    --scene-winter-street: #22262d;
-
-    --scene-trace-stroke: #00E5FF;
-    --scene-trace-fill: rgba(0,229,255,0.14);
-
-    /* Hero video scrim: dark mode dims the bright snow under the light copy. */
-    --hero-scrim-copy: 88%;
-    --hero-scrim-edge: 66%;
-  }
 }
 
 :root[data-theme="dark"] {
@@ -405,7 +317,7 @@
 
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: light;
     background-color: var(--color-canvas);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
